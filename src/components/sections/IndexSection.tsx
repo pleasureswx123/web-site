@@ -40,7 +40,7 @@ export default function IndexSection() {
             {/* 标题 */}
             <div className="space-y-4">
               <motion.h1
-                className="text-6xl lg:text-8xl font-bold text-ak-primary"
+                className="text-5xl lg:text-7xl font-bold text-ak-primary font-ak-title tracking-wider"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -54,10 +54,10 @@ export default function IndexSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
-                <div className="text-ak-text-secondary font-ak-secondary text-lg">
+                <div className="text-ak-text-secondary font-ak-secondary text-lg tracking-widest">
                   RHODES ISLAND
                 </div>
-                <div className="text-ak-text-secondary font-ak-secondary text-sm">
+                <div className="text-ak-text-secondary font-ak-secondary text-sm tracking-widest">
                   HTTPS://AK.HYPERGRYPH.COM/
                 </div>
               </motion.div>
@@ -186,13 +186,14 @@ export default function IndexSection() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
+            whileHover={{ scale: 1.02 }}
           >
             {/* 主角色图片 */}
             <div className="relative z-10">
               <motion.div
-                className="relative w-full h-[600px] bg-gradient-to-br from-ak-primary/20 to-ak-secondary/20 rounded-2xl overflow-hidden"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative w-full h-[600px] bg-gradient-to-br from-ak-primary/20 to-ak-secondary/20 rounded-2xl overflow-hidden border border-ak-primary/30"
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
               >
                 {/* 凯尔希角色立绘 */}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -209,12 +210,18 @@ export default function IndexSection() {
 
                 {/* 发光边框 */}
                 <div className="absolute inset-0 border-2 border-ak-primary/30 rounded-2xl" />
-
+                
                 {/* 角落装饰 */}
-                <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-ak-primary" />
-                <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-ak-primary" />
-                <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-ak-primary" />
-                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-ak-primary" />
+                <div className="absolute top-6 left-6 w-10 h-10 border-l-2 border-t-2 border-ak-primary" />
+                <div className="absolute top-6 right-6 w-10 h-10 border-r-2 border-t-2 border-ak-primary" />
+                <div className="absolute bottom-6 left-6 w-10 h-10 border-l-2 border-b-2 border-ak-primary" />
+                <div className="absolute bottom-6 right-6 w-10 h-10 border-r-2 border-b-2 border-ak-primary" />
+                
+                {/* 悬浮光效 */}
+                <motion.div 
+                  className="absolute inset-0 bg-ak-primary/5 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300"
+                  whileHover={{ opacity: 0.2 }}
+                />
               </motion.div>
             </div>
 
