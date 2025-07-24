@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 interface OriginalNavigationProps {
   currentSection: string
@@ -19,100 +19,107 @@ const navigationItems = [
 export default function OriginalNavigation({ currentSection }: OriginalNavigationProps) {
   const [showSocialPopup, setShowSocialPopup] = useState(false)
   const [showUserPopup, setShowUserPopup] = useState(false)
+  const [isMusicPlaying, setIsMusicPlaying] = useState(true)
+
+  const handleMusicToggle = () => {
+    setIsMusicPlaying(!isMusicPlaying)
+    // 这里可以添加实际的音乐控制逻辑
+  }
 
   return (
-    // OriginalNavigation组件：顶部导航内容组件 - 对应 _6066ead1
-    <div className="_6066ead1">
-      {/* logo - 对应 _6532021f */}
-      <motion.a
-        className="_6532021f"
-        href="/#index"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <svg viewBox="0 0 254 119">
-          <use xlinkHref="#svg_def-title_arknights"></use>
-        </svg>
-      </motion.a>
+    <nav className="fixed top-0 left-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
+      <div className="flex items-center justify-between px-6 py-4">
+        {/* Logo */}
+        <motion.a
+          href="/#index"
+          className="flex items-center"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <div className="text-2xl font-bold text-white tracking-wider">
+            明日方舟
+          </div>
+        </motion.a>
 
-      {/* 导航 - 对应 _a5b206bf */}
-      <motion.div
-        className="_a5b206bf"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <div className="_57987e85">
-          {navigationItems.map((item, index) => (
+        {/* Navigation Menu */}
+        <motion.div
+          className="flex items-center space-x-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {navigationItems.map((item) => (
             <motion.a
               key={item.id}
-              className={`_c91e47cc ${currentSection === item.id ? '_f3a31881' : ''}`}
               href={`#${item.id}`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className={`group flex flex-col items-center space-y-1 transition-all duration-300 ${currentSection === item.id
+                ? 'text-blue-400'
+                : 'text-white/80 hover:text-white'
+                }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <div className="_70ad2676">{item.label}</div>
-              <div className="_ae0d96a6">{item.labelCn}</div>
+              <span className="text-sm font-medium tracking-wider font-oswald">
+                {item.label}
+              </span>
+              <span className="text-xs opacity-70">
+                {item.labelCn}
+              </span>
             </motion.a>
           ))}
-        </div>
-      </motion.div>
-
-      {/* 导航右边icon - 对应 _149a6e98 */}
-      <motion.div
-        className="_149a6e98"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-      >
-        {/* icon_social - 对应 _950ab946 */}
-        <motion.div
-          className="_950ab946"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setShowSocialPopup(!showSocialPopup)}
-        >
-          <svg viewBox="0 0 27 35">
-            <use xlinkHref="#svg_def-icon_social"></use>
-          </svg>
         </motion.div>
 
-        {/* icon_sound - 对应 _950ab946 _e6c9defd _5d27adee */}
+        {/* Right Icons */}
         <motion.div
-          className="_950ab946 _e6c9defd _5d27adee"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          className="flex items-center space-x-4"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <svg viewBox="0 0 30 34">
-            <use xlinkHref="#svg_def-icon_sound"></use>
-          </svg>
-        </motion.div>
+          {/* Social Icon */}
+          <motion.button
+            onClick={() => setShowSocialPopup(!showSocialPopup)}
+            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <svg className="w-5 h-5 text-white" viewBox="0 0 27 35">
+              <use xlinkHref="#svg_def-icon_social"></use>
+            </svg>
+          </motion.button>
 
-        {/* icon_user - 对应 _950ab946 */}
-        <motion.div
-          className="_950ab946"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setShowUserPopup(!showUserPopup)}
-        >
-          <svg viewBox="0 0 28 34">
-            <use xlinkHref="#svg_def-icon_user"></use>
-          </svg>
-        </motion.div>
-      </motion.div>
+          {/* Sound Icon */}
+          <motion.button
+            onClick={handleMusicToggle}
+            className={`p-2 rounded-lg transition-colors ${isMusicPlaying
+              ? 'bg-blue-500/20 text-blue-400'
+              : 'bg-white/10 text-white hover:bg-white/20'
+              }`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <svg className="w-5 h-5" viewBox="0 0 30 34">
+              <use xlinkHref="#svg_def-icon_sound"></use>
+            </svg>
+          </motion.button>
 
-      {/* 装饰线条 - 对应 _d6b1e15c */}
-      <div className="_d6b1e15c">
-        <div className="_a174eeef">
-          <div className="_016b1d43 _a1600518"></div>
-          <div className="_016b1d43 _b0d45f10"></div>
-          <div className="_016b1d43 _daaf28c6"></div>
-        </div>
+          {/* User Icon */}
+          <motion.button
+            onClick={() => setShowUserPopup(!showUserPopup)}
+            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <svg className="w-5 h-5 text-white" viewBox="0 0 28 34">
+              <use xlinkHref="#svg_def-icon_user"></use>
+            </svg>
+          </motion.button>
+        </motion.div>
       </div>
 
-      {/* 社交媒体弹出层 */}
+      {/* Social Media Popup */}
       {showSocialPopup && (
         <motion.div
           className="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center"
@@ -122,29 +129,47 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
           onClick={() => setShowSocialPopup(false)}
         >
           <motion.div
-            className="bg-ak-dark border border-ak-primary/30 rounded-lg p-8 max-w-md"
+            className="bg-gray-900/95 backdrop-blur-md border border-blue-500/30 rounded-xl p-8 max-w-md mx-4"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-ak-primary text-xl font-bold mb-4">社交媒体</h3>
-            <div className="space-y-3">
-              <a href="#" className="block text-ak-text-secondary hover:text-ak-primary transition-colors">
-                官方微博
+            <h3 className="text-blue-400 text-xl font-bold mb-6 text-center font-oswald">社交媒体</h3>
+            <div className="space-y-4">
+              <a
+                href="#"
+                className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-blue-500/10 transition-colors text-white/80 hover:text-white"
+              >
+                <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">微</span>
+                </div>
+                <span>官方微博</span>
               </a>
-              <a href="#" className="block text-ak-text-secondary hover:text-ak-primary transition-colors">
-                官方QQ群
+              <a
+                href="#"
+                className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-blue-500/10 transition-colors text-white/80 hover:text-white"
+              >
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">Q</span>
+                </div>
+                <span>官方QQ群</span>
               </a>
-              <a href="#" className="block text-ak-text-secondary hover:text-ak-primary transition-colors">
-                官方微信
+              <a
+                href="#"
+                className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-blue-500/10 transition-colors text-white/80 hover:text-white"
+              >
+                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">微</span>
+                </div>
+                <span>官方微信</span>
               </a>
             </div>
           </motion.div>
         </motion.div>
       )}
 
-      {/* 用户菜单弹出层 */}
+      {/* User Menu Popup */}
       {showUserPopup && (
         <motion.div
           className="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center"
@@ -154,27 +179,27 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
           onClick={() => setShowUserPopup(false)}
         >
           <motion.div
-            className="bg-ak-dark border border-ak-primary/30 rounded-lg p-8 max-w-md"
+            className="bg-gray-900/95 backdrop-blur-md border border-blue-500/30 rounded-xl p-8 max-w-md mx-4"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-ak-primary text-xl font-bold mb-4">用户中心</h3>
-            <div className="space-y-3">
-              <a href="#" className="block text-ak-text-secondary hover:text-ak-primary transition-colors">
+            <h3 className="text-blue-400 text-xl font-bold mb-6 text-center font-oswald">用户中心</h3>
+            <div className="space-y-4">
+              <button className="w-full p-3 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 transition-colors text-blue-400 hover:text-blue-300 border border-blue-500/30">
                 登录
-              </a>
-              <a href="#" className="block text-ak-text-secondary hover:text-ak-primary transition-colors">
+              </button>
+              <button className="w-full p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white/80 hover:text-white border border-white/20">
                 注册
-              </a>
-              <a href="#" className="block text-ak-text-secondary hover:text-ak-primary transition-colors">
+              </button>
+              <button className="w-full p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white/80 hover:text-white border border-white/20">
                 个人中心
-              </a>
+              </button>
             </div>
           </motion.div>
         </motion.div>
       )}
-    </div>
+    </nav>
   )
 }

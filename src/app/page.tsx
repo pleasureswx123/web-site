@@ -206,7 +206,7 @@ export default function Home() {
                     left: sectionIndex === currentIndex ? '0px' : 'auto'
                   }}
                 >
-                  {/* {renderSection(section)} */}
+                  {renderSection(section)}
                 </div>
               </motion.div>
             )

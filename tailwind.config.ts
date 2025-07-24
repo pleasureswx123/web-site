@@ -24,6 +24,7 @@ const config: Config = {
         'ak-primary': ['var(--font-ak-primary)', 'sans-serif'],
         'ak-secondary': ['var(--font-ak-secondary)', 'monospace'],
         'ak-title': ['var(--font-ak-title)', 'sans-serif'],
+        'oswald': ['Oswald', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
