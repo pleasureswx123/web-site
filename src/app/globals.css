@@ -13,6 +13,14 @@
 
 @font-face {
   font-family: 'SourceHanSansSC';
+  src: url('/fonts/SourceHanSansSC-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SourceHanSansSC';
   src: url('/fonts/SourceHanSansSC-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
@@ -60,8 +68,8 @@
 }
 
 :root {
-  --font-ak-primary: 'SourceHanSansSC', system-ui, sans-serif;
-  --font-ak-secondary: 'Novecentosanswide', 'Oswald', monospace;
+  --font-ak-primary: 'Oswald', 'SourceHanSansSC', system-ui, sans-serif;
+  --font-ak-secondary: 'Oswald', 'Novecentosanswide', monospace;
   --font-ak-title: 'Bender', 'Novecentosanswide', sans-serif;
 }
 
@@ -78,6 +86,7 @@ body {
   background-color: #0a0a0a;
   color: #ffffff;
   font-family: var(--font-ak-primary);
+  font-weight: 500; /* 使用 Medium 字重 */
 }
 
 body {
@@ -181,31 +190,6 @@ a {
   -webkit-overflow-scrolling: touch;
 }
 
-/* 各个页面的特定样式 */
-.ak-section-index {
-  /* INDEX页面特定样式 */
-}
-
-.ak-section-information {
-  /* INFORMATION页面特定样式 */
-}
-
-.ak-section-operator {
-  /* OPERATOR页面特定样式 */
-}
-
-.ak-section-world {
-  /* WORLD页面特定样式 */
-}
-
-.ak-section-media {
-  /* MEDIA页面特定样式 */
-}
-
-.ak-section-more {
-  /* MORE页面特定样式 */
-}
-
 /* 各个页面的特定样式类名 */
 ._2a56b767 {
   /* ImprovedIndexSection 首页主要内容 */
@@ -258,7 +242,6 @@ a {
 .ak-section-content {
   transition: none; /* 内容容器不需要额外动画 */
   will-change: auto;
-  background: rgba(0, 0, 0, 0.95); /* 确保背景不透明 */
 }
 
 /* 触摸设备优化 */
@@ -1518,41 +1501,17 @@ a {
   overflow: hidden;
 }
 
-.ak-section-index {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-}
-
-.ak-section-information {
-  background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
-}
-
-.ak-section-operator {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-}
-
-.ak-section-world {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-}
-
-.ak-section-media {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-}
-
-.ak-section-more {
-  background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
   ._ae86e3f9 {
     right: 1rem;
   }
-  
+
   ._10351ad1._6a4a1a75 {
     bottom: 1rem;
     left: 1rem;
   }
-  
+
   ._a6fb5251 {
     font-size: 2rem;
   }
@@ -1804,11 +1763,11 @@ rovedIndexSection specific styles */
   ._eb6721a0 {
     font-size: 3rem;
   }
-  
+
   ._e32dd037 {
     right: 2%;
   }
-  
+
   ._db42efb9 {
     left: 2%;
   }
@@ -1818,28 +1777,28 @@ rovedIndexSection specific styles */
   ._eb6721a0 {
     font-size: 2rem;
   }
-  
+
   ._a4cb003f {
     font-size: 1.25rem;
   }
-  
+
   ._e32dd037 {
     position: static;
     transform: none;
     margin-top: 2rem;
   }
-  
+
   ._db42efb9 {
     position: static;
     transform: none;
     padding: 2rem;
   }
-  
+
   ._d16ac76f {
     bottom: 2%;
     right: 2%;
   }
-  
+
   ._46f42502 {
     min-width: 180px;
     padding: 0.75rem 1rem;
@@ -1864,7 +1823,7 @@ rovedIndexSection specific styles */
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
+  background:
     radial-gradient(ellipse 800px 400px at 20% 30%, rgba(0, 153, 255, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse 600px 300px at 80% 70%, rgba(0, 204, 255, 0.05) 0%, transparent 50%);
   pointer-events: none;
@@ -1912,7 +1871,7 @@ rovedIndexSection specific styles */
   position: relative;
   overflow: hidden;
   border-radius: 12px;
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.05);
   transition: all 0.4s ease;
@@ -1927,7 +1886,7 @@ rovedIndexSection specific styles */
 
 ._c684c97a:hover {
   transform: translateY(-8px);
-  box-shadow: 
+  box-shadow:
     0 30px 60px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(0, 153, 255, 0.3),
     0 0 30px rgba(0, 153, 255, 0.2);
@@ -1963,7 +1922,7 @@ rovedIndexSection specific styles */
   background: linear-gradient(90deg, #0099ff 0%, #00ccff 50%, #0099ff 100%);
   border-radius: 2px;
   transition: all 0.4s ease;
-  box-shadow: 
+  box-shadow:
     0 0 15px rgba(0, 153, 255, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
@@ -2265,11 +2224,11 @@ rovedIndexSection specific styles */
   ._f00913a8 {
     padding: 60px 40px;
   }
-  
+
   ._f00913a8 ._6c630746 {
     left: 40px;
   }
-  
+
   ._6c630746 {
     max-width: 450px;
   }
@@ -2279,17 +2238,17 @@ rovedIndexSection specific styles */
   ._f00913a8 {
     padding: 40px 20px;
   }
-  
+
   ._f00913a8 ._6c630746 {
     position: static;
     transform: none;
     max-width: 100%;
   }
-  
+
   ._8419bfdd {
     gap: 20px;
   }
-  
+
   ._4c6251ec {
     height: 300px;
     margin-top: 40px;

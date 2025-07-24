@@ -32,7 +32,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://web.hycdn.cn" />
         <link rel="dns-prefetch" href="https://web.hycdn.cn" />
       </head>
-      <body className="bg-ak-dark text-ak-text antialiased font-ak-primary">
+      <body className="bg-ak-dark text-ak-text antialiased font-ak-primary font-medium">
         {/* SVG Definitions */}
         <svg xmlns="http://www.w3.org/2000/svg" style={{ display: 'none' }}>
           <defs>

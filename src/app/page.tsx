@@ -201,7 +201,7 @@ export default function Home() {
                 }}
               >
                 <div
-                  className={`ak-section-content ak-section-${section}`}
+                  className={`ak-section-content ak-section-${section} pr-[14.75rem]`}
                   style={{
                     left: sectionIndex === currentIndex ? '0px' : 'auto'
                   }}

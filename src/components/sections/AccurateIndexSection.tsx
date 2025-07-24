@@ -107,9 +107,9 @@ export default function AccurateIndexSection() {
         <div className="space-y-4">
           {/* 巨大的中文标题 */}
           <motion.h1
-            className="text-[12rem] font-black text-white leading-none tracking-tight"
-            style={{ 
-              fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif',
+            className="text-[12rem] font-black text-white leading-none tracking-tight font-ak-primary"
+            style={{
+              fontWeight: 500, // 使用 Medium 字重
               textShadow: '0 0 30px rgba(0,0,0,0.8)'
             }}
             initial={{ opacity: 0, y: 50 }}
