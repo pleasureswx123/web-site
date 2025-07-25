@@ -218,7 +218,7 @@ export default function ImprovedInformationSection() {
             {/* 右侧主轮播横幅区域 - 较宽 */}
             <div className="flex-1 flex flex-col pointer-events-auto">
               {/* 主轮播横幅 */}
-              <div className="relative -mt-20 -mr-60 overflow-hidden aspect-[16/11]">
+              <div className="relative -mt-20 -mr-60 overflow-hidden aspect-[16/8]">
                 <div className="relative w-full h-full">
                   <div
                     className="flex transition-transform duration-500 ease-out h-full"
