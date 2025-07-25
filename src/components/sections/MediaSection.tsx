@@ -119,7 +119,7 @@ export default function MediaSection() {
   }
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
+    <section className="h-full w-full relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
       {/* 动态背景效果 */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
@@ -129,7 +129,7 @@ export default function MediaSection() {
             x: mousePosition.x * 0.02,
             y: mousePosition.y * 0.02,
           }}
-          transition={{ type: "spring", stiffness: 50, damping: 30 }}
+          transition={{type: "spring", stiffness: 50, damping: 30}}
         />
         <motion.div
           className="absolute right-0 bottom-0 w-96 h-96 bg-gradient-to-r from-purple-400/10 to-pink-600/10 rounded-full blur-3xl"
@@ -137,168 +137,165 @@ export default function MediaSection() {
             x: -mousePosition.x * 0.01,
             y: -mousePosition.y * 0.01,
           }}
-          transition={{ type: "spring", stiffness: 50, damping: 30 }}
+          transition={{type: "spring", stiffness: 50, damping: 30}}
         />
       </div>
 
+
+
+      {/*shadow-2xl shadow-ak-primary/5*/}
+      {/*overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30*/}
+      {/**/}
+
+      {/*<div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">*/}
+      {/*  <div className="relative w-full h-full z-10">*/}
+
+      {/*  </div>*/}
+      {/*</div>*/}
       <AnimatePresence mode="wait">
         {!isDetailView ? (
           // 网格视图 - 现代化卡片布局
-          <motion.div
-            key="grid"
-            className="relative z-10 min-h-screen p-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* 页面标题 */}
-            <motion.div
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="inline-block">
-                <motion.div
-                  className="text-cyan-400 text-sm font-mono mb-2 tracking-wider"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  04 / 05
-                </motion.div>
-                <motion.h1
-                  className="text-6xl font-bold text-white mb-4 tracking-tight"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  ABOUT TERRA
-                </motion.h1>
-                <motion.div
-                  className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-blue-600 mx-auto mb-6"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                />
-                <motion.p
-                  className="text-gray-300 text-lg max-w-2xl mx-auto"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  探索泰拉大陆的深层奥秘，了解这个世界的历史、文化与未来
-                </motion.p>
-              </div>
-            </motion.div>
-
-            {/* 卡片网格 */}
-            <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {mediaContent.map((item, index) => (
+            <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+              <div className="relative w-full h-full z-10 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30">
+                <motion.div key="grid" className="relative z-10 h-full p-8" initial={{opacity: 0}}
+                            animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.6}}>{/* 页面标题 */}
                   <motion.div
-                    key={item.id}
-                    className="group cursor-pointer"
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    whileHover={{ y: -10 }}
-                    onClick={() => handleCardClick(index)}
+                    className="text-center mb-4"
+                    initial={{opacity: 0, y: -30}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 0.8}}
                   >
-                    <div className="relative h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 group-hover:border-cyan-400/50 transition-all duration-500">
-                      {/* 背景图片 */}
-                      <div className="absolute inset-0">
-                        <Image
-                          src={item.image}
-                          alt={item.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className={`absolute inset-0 bg-gradient-to-t ${item.color} opacity-80 group-hover:opacity-70 transition-opacity duration-500`} />
-                      </div>
-
-                      {/* 内容 */}
-                      <div className="relative z-10 p-6 h-full flex flex-col justify-between">
-                        <div>
-                          <motion.div
-                            className="text-white/80 text-xs font-mono mb-2 tracking-wider"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8 + index * 0.1 }}
-                          >
-                            {item.category} • {item.year}
-                          </motion.div>
-                          <motion.h3
-                            className="text-white text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors duration-300"
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.9 + index * 0.1 }}
-                          >
-                            {item.title}
-                          </motion.h3>
-                          <motion.p
-                            className={`${item.accentColor} text-sm mb-3 font-medium`}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 1.0 + index * 0.1 }}
-                          >
-                            {item.subtitle}
-                          </motion.p>
-                        </div>
-
-                        <div>
-                          <motion.p
-                            className="text-white/90 text-sm leading-relaxed mb-4"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1.1 + index * 0.1 }}
-                          >
-                            {item.description}
-                          </motion.p>
-
-                          {/* 标签 */}
-                          <motion.div
-                            className="flex flex-wrap gap-2"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.2 + index * 0.1 }}
-                          >
-                            {item.tags.map((tag, tagIndex) => (
-                              <span
-                                key={tagIndex}
-                                className="px-2 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white/80 border border-white/20"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </motion.div>
-                        </div>
-
-                        {/* 悬停时显示的箭头 */}
-                        <motion.div
-                          className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          <ChevronRight className="w-4 h-4 text-white" />
-                        </motion.div>
-                      </div>
+                    <div className="inline-block">
+                      <motion.h1
+                        className="text-6xl font-bold text-white mb-4 tracking-tight"
+                        initial={{opacity: 0, y: 20}}
+                        animate={{opacity: 1, y: 0}}
+                        transition={{delay: 0.3}}
+                      >
+                        ABOUT TERRA
+                      </motion.h1>
+                      <motion.div
+                        className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-blue-600 mx-auto mb-2"
+                        initial={{scaleX: 0}}
+                        animate={{scaleX: 1}}
+                        transition={{delay: 0.5, duration: 0.8}}
+                      />
+                      <motion.p
+                        className="text-gray-300 text-lg max-w-2xl mx-auto"
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        transition={{delay: 0.6}}
+                      >
+                        探索泰拉大陆的深层奥秘，了解这个世界的历史、文化与未来
+                      </motion.p>
                     </div>
                   </motion.div>
-                ))}
+
+                  {/* 卡片网格 */}
+                  <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {mediaContent.map((item, index) => (
+                        <motion.div
+                          key={item.id}
+                          className="group cursor-pointer"
+                          initial={{opacity: 0, y: 50}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{duration: 0.6, delay: index * 0.1}}
+                          whileHover={{y: -10}}
+                          onClick={() => handleCardClick(index)}
+                        >
+                          <div
+                            className="relative h-80 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 group-hover:border-cyan-400/50 transition-all duration-500">
+                            {/* 背景图片 */}
+                            <div className="absolute inset-0">
+                              <Image
+                                src={item.image}
+                                alt={item.title}
+                                fill
+                                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                              />
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-t ${item.color} opacity-80 group-hover:opacity-70 transition-opacity duration-500`}/>
+                            </div>
+
+                            {/* 内容 */}
+                            <div className="relative z-10 p-6 h-full flex flex-col justify-between">
+                              <div>
+                                <motion.div
+                                  className="text-white/80 text-xs font-mono mb-2 tracking-wider"
+                                  initial={{opacity: 0}}
+                                  animate={{opacity: 1}}
+                                  transition={{delay: 0.8 + index * 0.1}}
+                                >
+                                  {item.category} • {item.year}
+                                </motion.div>
+                                <motion.h3
+                                  className="text-white text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors duration-300"
+                                  initial={{opacity: 0, x: -20}}
+                                  animate={{opacity: 1, x: 0}}
+                                  transition={{delay: 0.9 + index * 0.1}}
+                                >
+                                  {item.title}
+                                </motion.h3>
+                                <motion.p
+                                  className={`${item.accentColor} text-sm mb-3 font-medium`}
+                                  initial={{opacity: 0, x: -20}}
+                                  animate={{opacity: 1, x: 0}}
+                                  transition={{delay: 1.0 + index * 0.1}}
+                                >
+                                  {item.subtitle}
+                                </motion.p>
+                              </div>
+
+                              <div>
+                                <motion.p
+                                  className="text-white/90 text-sm leading-relaxed mb-4"
+                                  initial={{opacity: 0}}
+                                  animate={{opacity: 1}}
+                                  transition={{delay: 1.1 + index * 0.1}}
+                                >
+                                  {item.description}
+                                </motion.p>
+
+                                {/* 标签 */}
+                                <motion.div
+                                  className="flex flex-wrap gap-2"
+                                  initial={{opacity: 0, y: 10}}
+                                  animate={{opacity: 1, y: 0}}
+                                  transition={{delay: 1.2 + index * 0.1}}
+                                >
+                                  {item.tags.map((tag, tagIndex) => (
+                                    <span
+                                      key={tagIndex}
+                                      className="px-2 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-white/80 border border-white/20"
+                                    >
+                            {tag}
+                          </span>
+                                  ))}
+                                </motion.div>
+                              </div>
+
+                              {/* 悬停时显示的箭头 */}
+                              <motion.div
+                                className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+                                whileHover={{scale: 1.1}}
+                              >
+                                <ChevronRight className="w-4 h-4 text-white"/>
+                              </motion.div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
-          </motion.div>
         ) : (
           // 详情视图
-          <motion.div
-            key="detail"
-            className="min-h-screen relative bg-black"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <motion.div key="detail" className="h-full w-full relative bg-black" initial={{opacity: 0}}
+                      animate={{opacity: 1}}
+                      exit={{opacity: 0}} transition={{duration: 0.5}}>
             {/* 全屏背景 */}
             <div className="absolute inset-0">
               <Image
@@ -312,152 +309,158 @@ export default function MediaSection() {
               <div className="absolute inset-0 bg-black/40"></div>
             </div>
 
-            {/* 内容区域 */}
-            <div className="relative z-10 min-h-screen flex flex-col justify-center px-8 lg:px-16">
-              <div className="max-w-4xl mx-auto">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={selectedIndex}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.8 }}
-                  >
-                    {/* 分类标签 */}
-                    <motion.div
-                      className="text-white/80 text-sm font-mono mb-4 tracking-wider"
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      {mediaContent[selectedIndex].category} • {mediaContent[selectedIndex].year}
-                    </motion.div>
+            <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+              <div className="relative w-full h-full z-10">
 
-                    {/* 主标题 */}
-                    <motion.h1
-                      className="text-6xl lg:text-8xl font-bold text-white mb-6 tracking-tight"
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      {mediaContent[selectedIndex].title}
-                    </motion.h1>
-
-                    {/* 副标题 */}
-                    <motion.h2
-                      className={`text-3xl lg:text-4xl font-medium mb-8 ${mediaContent[selectedIndex].accentColor}`}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                    >
-                      {mediaContent[selectedIndex].subtitle}
-                    </motion.h2>
-
-                    {/* 装饰线 */}
-                    <motion.div
-                      className={`w-32 h-1 bg-gradient-to-r ${mediaContent[selectedIndex].color} mb-8`}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.5, duration: 0.8 }}
-                    />
-
-                    {/* 描述文本 */}
-                    <motion.p
-                      className="text-white/90 text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl"
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 }}
-                    >
-                      {mediaContent[selectedIndex].fullDescription}
-                    </motion.p>
-
-                    {/* 标签 */}
-                    <motion.div
-                      className="flex flex-wrap gap-3 mb-12"
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      {mediaContent[selectedIndex].tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 border border-white/20 text-sm font-medium"
+                {/* 内容区域 */}
+                <div className="relative z-10 min-h-screen flex flex-col justify-center px-8 lg:px-16">
+                  <div className="max-w-4xl mx-auto">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={selectedIndex}
+                        initial={{opacity: 0, y: 50}}
+                        animate={{opacity: 1, y: 0}}
+                        exit={{opacity: 0, y: -50}}
+                        transition={{duration: 0.8}}
+                      >
+                        {/* 分类标签 */}
+                        <motion.div
+                          className="text-white/80 text-sm font-mono mb-4 tracking-wider"
+                          initial={{opacity: 0, x: -30}}
+                          animate={{opacity: 1, x: 0}}
+                          transition={{delay: 0.2}}
                         >
-                          {tag}
-                        </span>
-                      ))}
-                    </motion.div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
+                          {mediaContent[selectedIndex].category} • {mediaContent[selectedIndex].year}
+                        </motion.div>
 
-            {/* 导航控制 */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-              <motion.div
-                className="flex items-center space-x-6 bg-black/30 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-              >
-                <motion.button
-                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
-                  onClick={handlePrevious}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <ChevronLeft className="w-5 h-5 text-white" />
-                </motion.button>
+                        {/* 主标题 */}
+                        <motion.h1
+                          className="text-6xl lg:text-8xl font-bold text-white mb-6 tracking-tight"
+                          initial={{opacity: 0, y: 30}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{delay: 0.3}}
+                        >
+                          {mediaContent[selectedIndex].title}
+                        </motion.h1>
 
-                <div className="flex space-x-2">
-                  {mediaContent.map((_, index) => (
-                    <button
-                      key={index}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === selectedIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/60'
-                      }`}
-                      onClick={() => setSelectedIndex(index)}
-                    />
-                  ))}
+                        {/* 副标题 */}
+                        <motion.h2
+                          className={`text-3xl lg:text-4xl font-medium mb-8 ${mediaContent[selectedIndex].accentColor}`}
+                          initial={{opacity: 0, y: 30}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{delay: 0.4}}
+                        >
+                          {mediaContent[selectedIndex].subtitle}
+                        </motion.h2>
+
+                        {/* 装饰线 */}
+                        <motion.div
+                          className={`w-32 h-1 bg-gradient-to-r ${mediaContent[selectedIndex].color} mb-8`}
+                          initial={{scaleX: 0}}
+                          animate={{scaleX: 1}}
+                          transition={{delay: 0.5, duration: 0.8}}
+                        />
+
+                        {/* 描述文本 */}
+                        <motion.p
+                          className="text-white/90 text-xl lg:text-2xl leading-relaxed mb-8 max-w-3xl"
+                          initial={{opacity: 0, y: 30}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{delay: 0.6}}
+                        >
+                          {mediaContent[selectedIndex].fullDescription}
+                        </motion.p>
+
+                        {/* 标签 */}
+                        <motion.div
+                          className="flex flex-wrap gap-3 mb-12"
+                          initial={{opacity: 0, y: 30}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{delay: 0.7}}
+                        >
+                          {mediaContent[selectedIndex].tags.map((tag, index) => (
+                            <span
+                              key={index}
+                              className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 border border-white/20 text-sm font-medium"
+                            >
+                      {tag}
+                    </span>
+                          ))}
+                        </motion.div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
                 </div>
 
+                {/* 导航控制 */}
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+                  <motion.div
+                    className="flex items-center space-x-6 bg-black/30 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20"
+                    initial={{opacity: 0, y: 30}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 0.8}}
+                  >
+                    <motion.button
+                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                      onClick={handlePrevious}
+                      whileHover={{scale: 1.1}}
+                      whileTap={{scale: 0.9}}
+                    >
+                      <ChevronLeft className="w-5 h-5 text-white"/>
+                    </motion.button>
+
+                    <div className="flex space-x-2">
+                      {mediaContent.map((_, index) => (
+                        <button
+                          key={index}
+                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            index === selectedIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/60'
+                          }`}
+                          onClick={() => setSelectedIndex(index)}
+                        />
+                      ))}
+                    </div>
+
+                    <motion.button
+                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                      onClick={handleNext}
+                      whileHover={{scale: 1.1}}
+                      whileTap={{scale: 0.9}}
+                    >
+                      <ChevronRight className="w-5 h-5 text-white"/>
+                    </motion.button>
+                  </motion.div>
+                </div>
+
+                {/* 返回按钮 */}
                 <motion.button
-                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
-                  onClick={handleNext}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  className="absolute top-8 right-8 flex items-center space-x-3 bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 hover:border-white/40 px-6 py-3 rounded-full transition-all duration-300 z-20"
+                  onClick={handleBackToGrid}
+                  initial={{opacity: 0, y: -20}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{delay: 0.5}}
+                  whileHover={{scale: 1.05}}
+                  whileTap={{scale: 0.95}}
                 >
-                  <ChevronRight className="w-5 h-5 text-white" />
+                  <ArrowLeft className="w-4 h-4 text-white"/>
+                  <span className="text-white font-medium">返回</span>
                 </motion.button>
-              </motion.div>
+
+                {/* 项目计数器 */}
+                <motion.div
+                  className="absolute top-8 left-8 text-white/80 font-mono text-sm z-20"
+                  initial={{opacity: 0, x: -20}}
+                  animate={{opacity: 1, x: 0}}
+                  transition={{delay: 0.5}}
+                >
+                  {String(selectedIndex + 1).padStart(2, '0')} / {String(mediaContent.length).padStart(2, '0')}
+                </motion.div>
+              </div>
             </div>
-
-            {/* 返回按钮 */}
-            <motion.button
-              className="absolute top-8 right-8 flex items-center space-x-3 bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 hover:border-white/40 px-6 py-3 rounded-full transition-all duration-300 z-20"
-              onClick={handleBackToGrid}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ArrowLeft className="w-4 h-4 text-white" />
-              <span className="text-white font-medium">返回</span>
-            </motion.button>
-
-            {/* 项目计数器 */}
-            <motion.div
-              className="absolute top-8 left-8 text-white/80 font-mono text-sm z-20"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              {String(selectedIndex + 1).padStart(2, '0')} / {String(mediaContent.length).padStart(2, '0')}
-            </motion.div>
           </motion.div>
-        )}
+          )}
       </AnimatePresence>
+
     </section>
   )
 }
