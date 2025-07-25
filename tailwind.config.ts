@@ -87,7 +87,9 @@ const config: Config = {
   			'slide-up': 'slideUp 0.6s ease-out',
   			'slide-down': 'slideDown 0.6s ease-out',
   			glow: 'glow 2s ease-in-out infinite alternate',
-  			float: 'float 3s ease-in-out infinite'
+  			float: 'float 3s ease-in-out infinite',
+  			'grid-flow': 'gridFlow 4s ease-in-out infinite',
+  			'border-glow': 'borderGlow 3s ease-in-out infinite alternate'
   		},
   		keyframes: {
   			fadeIn: {
@@ -133,11 +135,28 @@ const config: Config = {
   				'50%': {
   					transform: 'translateY(-10px)'
   				}
+  			},
+  			gridFlow: {
+  				'0%, 100%': {
+  					opacity: '0.05'
+  				},
+  				'50%': {
+  					opacity: '0.15'
+  				}
+  			},
+  			borderGlow: {
+  				'0%': {
+  					borderColor: 'rgba(0, 153, 255, 0.1)'
+  				},
+  				'100%': {
+  					borderColor: 'rgba(0, 153, 255, 0.3)'
+  				}
   			}
   		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+  			'grid-pattern': 'linear-gradient(rgba(0,153,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,153,255,0.1) 1px, transparent 1px)',
   			'ak-gradient': 'linear-gradient(135deg, #0099ff 0%, #00ccff 100%)'
   		},
   		borderRadius: {

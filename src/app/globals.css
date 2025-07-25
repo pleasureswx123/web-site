@@ -538,6 +538,54 @@ a {
 /* ===== 右侧边栏已完全使用 Tailwind CSS 重构 ===== */
 /* 所有样式已迁移到组件的 className 中，无需额外 CSS */
 
+/* ===== 新增的设计感样式 ===== */
+
+/* 自定义滚动条样式 */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-track-transparent {
+  scrollbar-color: rgba(0, 153, 255, 0.3) transparent;
+}
+
+.scrollbar-thumb-ak-primary\/30::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thumb-ak-primary\/30::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thumb-ak-primary\/30::-webkit-scrollbar-thumb {
+  background: rgba(0, 153, 255, 0.3);
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-ak-primary\/30::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 153, 255, 0.5);
+}
+
+/* 网格背景动画 */
+.bg-grid-pattern {
+  animation: gridFlow 4s ease-in-out infinite;
+}
+
+/* 响应式调整 */
+@media (max-width: 1024px) {
+  .pl-0.pr-64 {
+    padding-left: 0;
+    padding-right: 16rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pl-0.pr-64 {
+    padding-left: 0;
+    padding-right: 12rem;
+  }
+}
+
 
 
 
