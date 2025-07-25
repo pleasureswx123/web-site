@@ -13,6 +13,7 @@ import MoreSection from '@/components/sections/MoreSection'
 import IndexSection from '@/components/sections/IndexSection'
 import Footer from '@/components/layout/Footer'
 import BackgroundMusic from '@/components/ui/BackgroundMusic'
+import MusicInteractionPrompt from '@/components/ui/MusicInteractionPrompt'
 import ScrollIndicator from '@/components/ui/ScrollIndicator'
 import CanvasBackground from '@/components/ui/CanvasBackground'
 
@@ -348,8 +349,13 @@ export default function Home() {
         <Footer />
       </div>
 
-      {/* 背景音乐控制器 */}
-      <BackgroundMusic />
+      <div className="invisible">
+        {/* 背景音乐控制器 */}
+        <BackgroundMusic />
+
+        {/* 音乐交互提示 */}
+        {/*<MusicInteractionPrompt />*/}
+      </div>
     </div>
   )
 }

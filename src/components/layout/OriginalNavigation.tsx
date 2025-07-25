@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Image from 'next/image'
+import { useMusic } from '@/hooks/useMusicControl'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -41,13 +42,13 @@ const socialLinks = [
 ]
 
 export default function OriginalNavigation({ currentSection }: OriginalNavigationProps) {
-  const [isMusicPlaying, setIsMusicPlaying] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { isPlaying: isMusicPlaying, togglePlay } = useMusic()
 
   const handleMusicToggle = () => {
-    setIsMusicPlaying(!isMusicPlaying)
-    toast.success(isMusicPlaying ? '音乐已关闭' : '音乐已开启')
-    // 这里可以添加实际的音乐控制逻辑
+    togglePlay()
+    // 注意：这里的状态是切换前的状态，所以逻辑相反
+    toast.success(!isMusicPlaying ? '音乐已暂停' : '音乐已播放')
   }
 
   const handleSocialClick = (name: string) => {
@@ -189,7 +190,7 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
             {/* Music Toggle Button */}
             <motion.div>
               <div className="cursor-pointer text-white/80 hover:text-ak-primary w-6 h-6" onClick={handleMusicToggle}>
-                {isMusicPlaying ? (<Volume2 />) : (<VolumeX />)}
+                {isMusicPlaying ? (<Volume2 className="text-ak-primary" />) : (<VolumeX />)}
               </div>
             </motion.div>
 

@@ -1,36 +1,54 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useMusicControl } from '@/hooks/useMusicControl'
 
 export default function BackgroundMusic() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [volume, setVolume] = useState(0.3)
   const audioRef = useRef<HTMLAudioElement>(null)
+  const { isPlaying, volume, userInteracted, setAudioRef, setVolume, setUserInteracted, togglePlay } = useMusicControl()
 
+  // 注册音频元素到全局状态
   useEffect(() => {
     if (audioRef.current) {
+      setAudioRef(audioRef.current)
       audioRef.current.volume = volume
     }
-  }, [volume])
 
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play().catch(console.error)
-      }
-      setIsPlaying(!isPlaying)
+    // 清理函数
+    return () => {
+      setAudioRef(null)
     }
-  }
+  }, [setAudioRef, volume])
+
+  // 监听用户首次交互
+  useEffect(() => {
+    if (userInteracted) return // 如果已经交互过，不需要再监听
+
+    const handleFirstInteraction = () => {
+      setUserInteracted(true)
+
+      // 移除事件监听器
+      document.removeEventListener('click', handleFirstInteraction)
+      document.removeEventListener('keydown', handleFirstInteraction)
+      document.removeEventListener('touchstart', handleFirstInteraction)
+    }
+
+    // 添加多种用户交互事件监听
+    document.addEventListener('click', handleFirstInteraction, { passive: true })
+    document.addEventListener('keydown', handleFirstInteraction, { passive: true })
+    document.addEventListener('touchstart', handleFirstInteraction, { passive: true })
+
+    return () => {
+      document.removeEventListener('click', handleFirstInteraction)
+      document.removeEventListener('keydown', handleFirstInteraction)
+      document.removeEventListener('touchstart', handleFirstInteraction)
+    }
+  }, [userInteracted, setUserInteracted])
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value)
     setVolume(newVolume)
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume
-    }
   }
 
   return (
@@ -45,10 +63,17 @@ export default function BackgroundMusic() {
         src="/audio/bgm.mp3"
         loop
         preload="auto"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
+        onPlay={() => useMusicControl.setState({ isPlaying: true })}
+        onPause={() => useMusicControl.setState({ isPlaying: false })}
+        onLoadedData={() => {
+          // 音频加载完成后设置音量，但不自动播放
+          if (audioRef.current) {
+            audioRef.current.volume = volume
+            // 不在这里尝试自动播放，等待用户交互
+          }
+        }}
       />
-      
+
       <div className="flex items-center space-x-3">
         {/* 播放/暂停按钮 */}
         <motion.button
