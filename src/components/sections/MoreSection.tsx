@@ -170,227 +170,206 @@ export default function MoreSection() {
   }
 
   return (
-    <section className="min-h-screen relative overflow-hidden">
-      <AnimatePresence mode="wait">
-        {viewMode === 'list' ? (
-          // 列表视图
-          <motion.div
-            key="list"
-            className="min-h-screen relative"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* 背景 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+    <section className="w-full h-full relative overflow-hidden">
 
-            <div className="relative z-10 min-h-screen flex items-center">
-              <div className="container mx-auto px-6">
-                {/* 标题 */}
-                <motion.div
-                  className="text-center mb-16"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <h2 className="text-5xl font-bold text-white mb-4">
-                    MORE CONTENT
-                  </h2>
-                  <div className="text-gray-400">
-                    探索更多心流元素的精彩内容
-                  </div>
-                </motion.div>
+      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+        <div className="relative w-full h-full z-[20]">
+          <AnimatePresence mode="wait">
+            {viewMode === 'list' ? (
+              // 列表视图
+              <motion.div
+                key="list"
+                className="h-full relative grid grid-cols-4 grid-rows-1"
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+                transition={{duration: 0.5}}
+              >
+                {/* 背景 */}
+                {/*<div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"/>*/}
 
-                {/* 内容卡片网格 */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {moreContent.map((item, index) => (
-                    <motion.button
-                      key={item.id}
-                      className="group relative h-80 rounded-lg overflow-hidden cursor-pointer"
-                      onClick={() => handleItemClick(item)}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {/* 背景图片 */}
-                      <div className="absolute inset-0">
-                        <Image
-                          src={item.image}
-                          alt={item.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        />
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
+                {moreContent.map((item, index) => (
+                  <motion.button
+                    key={item.id}
+                    className="group relative h-[100vh] overflow-hidden cursor-pointer -mt-28"
+                    onClick={() => handleItemClick(item)}
+                    initial={{opacity: 0, y: 30}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 0.6, delay: index * 0.1}}
+                    whileHover={{scale: 1.05}}
+                    whileTap={{scale: 0.95}}
+                  >
+                    {/* 背景图片 */}
+                    <div className="absolute inset-0">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                      <div
+                        className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"/>
+                    </div>
+
+                    {/* 内容 */}
+                    <div className="relative z-10 h-full flex flex-col justify-end p-6 text-left">
+                      <h3
+                        className="text-2xl font-bold text-white mb-2 group-hover:text-ak-secondary transition-colors">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-gray-300 text-sm font-mono tracking-wider mb-4">
+                        {item.titleEn}
+                      </p>
+
+                      <div className="flex items-center text-ak-secondary text-sm">
+                        <span>VIEW MORE</span>
+                        <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"/>
                       </div>
+                    </div>
+                  </motion.button>
+                ))}
+              </motion.div>
+            ) : (
+              // 详情视图
+              <motion.div
+                key="detail"
+                className="h-full relative z-[20]"
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+                transition={{duration: 0.5}}
+              >
+                {selectedContent && (
+                  <>
+                    {/* 全屏背景图 */}
+                    <div className="absolute inset-0">
+                      <Image
+                        src={selectedContent.tabs[activeTab]?.image || selectedContent.backgroundImage || selectedContent.image}
+                        alt={selectedContent.title}
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-black/60"></div>
+                    </div>
 
-                      {/* 内容 */}
-                      <div className="relative z-10 h-full flex flex-col justify-end p-6 text-left">
-                        <div className="mb-4">
-                          <div className="w-8 h-8 bg-white/20 rounded flex items-center justify-center mb-3">
-                            <div className="w-6 h-6 bg-white rounded-sm"></div>
-                          </div>
-                        </div>
-
-                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-ak-secondary transition-colors">
-                          {item.title}
-                        </h3>
-
-                        <p className="text-gray-300 text-sm font-mono tracking-wider mb-4">
-                          {item.titleEn}
-                        </p>
-
-                        <div className="flex items-center text-ak-secondary text-sm">
-                          <span>VIEW MORE</span>
-                          <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        ) : (
-          // 详情视图
-          <motion.div
-            key="detail"
-            className="min-h-screen relative"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {selectedContent && (
-              <>
-                {/* 全屏背景图 */}
-                <div className="absolute inset-0">
-                  <Image
-                    src={selectedContent.tabs[activeTab]?.image || selectedContent.backgroundImage || selectedContent.image}
-                    alt={selectedContent.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-black/60"></div>
-                </div>
-
-                {/* 内容区域 */}
-                <div className="relative z-10 min-h-screen flex">
-                  {/* 左侧主要内容 */}
-                  <div className="flex-1 flex items-center px-12">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={`${selectedContent.id}-${activeTab}`}
-                        className="max-w-2xl"
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 50 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        {/* 主标题 */}
-                        <motion.div
-                          className="mb-8"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.2 }}
-                        >
-                          <h1 className="text-5xl font-bold text-white mb-4 leading-tight">
-                            {selectedContent.titleEn}
-                          </h1>
-                          <h2 className="text-2xl text-ak-secondary mb-6">
-                            {selectedContent.title}
-                          </h2>
-                          <div className="w-20 h-1 bg-ak-secondary shadow-lg shadow-ak-secondary/50" />
-                        </motion.div>
-
-                        {/* Tab内容 */}
-                        <motion.div
-                          className="space-y-6"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.4 }}
-                        >
-                          <h3 className="text-xl font-bold text-white">
-                            {selectedContent.tabs[activeTab]?.title}
-                          </h3>
-                          <p className="text-gray-300 text-lg leading-relaxed">
-                            {selectedContent.tabs[activeTab]?.content}
-                          </p>
-                        </motion.div>
-
-                        {/* 访问网站按钮 */}
-                        <motion.div
-                          className="mt-8 flex space-x-4"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.6 }}
-                        >
-                          <motion.button
-                            className="bg-ak-secondary hover:bg-ak-secondary/80 text-white px-8 py-3 rounded transition-colors duration-300 shadow-lg shadow-ak-secondary/30 hover:shadow-ak-secondary/50"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                    {/* 内容区域 */}
+                    <div className="relative z-10 min-h-screen flex">
+                      {/* 左侧主要内容 */}
+                      <div className="flex-1 flex items-center px-12">
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={`${selectedContent.id}-${activeTab}`}
+                            className="max-w-2xl"
+                            initial={{opacity: 0, x: -50}}
+                            animate={{opacity: 1, x: 0}}
+                            exit={{opacity: 0, x: 50}}
+                            transition={{duration: 0.6}}
                           >
-                            访问官网
-                          </motion.button>
-                        </motion.div>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
+                            {/* 主标题 */}
+                            <motion.div
+                              className="mb-8"
+                              initial={{opacity: 0, y: 20}}
+                              animate={{opacity: 1, y: 0}}
+                              transition={{delay: 0.2}}
+                            >
+                              <h1 className="text-5xl font-bold text-white mb-4 leading-tight">
+                                {selectedContent.titleEn}
+                              </h1>
+                              <h2 className="text-2xl text-ak-secondary mb-6">
+                                {selectedContent.title}
+                              </h2>
+                              <div className="w-20 h-1 bg-ak-secondary shadow-lg shadow-ak-secondary/50"/>
+                            </motion.div>
 
-                  {/* 右侧Tab导航 */}
-                  <div className="w-80 flex flex-col justify-center pr-8">
-                    <motion.div
-                      className="space-y-4"
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                    >
-                      {selectedContent.tabs.map((tab, index) => (
-                        <motion.button
-                          key={tab.id}
-                          className={`w-full text-left p-4 rounded-lg border transition-all duration-300 ${activeTab === index
-                              ? 'bg-ak-secondary/20 border-ak-secondary text-white shadow-lg shadow-ak-secondary/20'
-                              : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white hover:bg-black/40'
-                            }`}
-                          onClick={() => handleTabChange(index)}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
+                            {/* Tab内容 */}
+                            <motion.div
+                              className="space-y-6"
+                              initial={{opacity: 0, y: 20}}
+                              animate={{opacity: 1, y: 0}}
+                              transition={{delay: 0.4}}
+                            >
+                              <h3 className="text-xl font-bold text-white">
+                                {selectedContent.tabs[activeTab]?.title}
+                              </h3>
+                              <p className="text-gray-300 text-lg leading-relaxed">
+                                {selectedContent.tabs[activeTab]?.content}
+                              </p>
+                            </motion.div>
+
+                            {/* 访问网站按钮 */}
+                            <motion.div
+                              className="mt-8 flex space-x-4"
+                              initial={{opacity: 0, y: 20}}
+                              animate={{opacity: 1, y: 0}}
+                              transition={{delay: 0.6}}
+                            >
+                              <motion.button
+                                className="bg-ak-secondary hover:bg-ak-secondary/80 text-white px-8 py-3 rounded transition-colors duration-300 shadow-lg shadow-ak-secondary/30 hover:shadow-ak-secondary/50"
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
+                              >
+                                访问官网
+                              </motion.button>
+                            </motion.div>
+                          </motion.div>
+                        </AnimatePresence>
+                      </div>
+
+                      {/* 右侧Tab导航 */}
+                      <div className="w-80 flex flex-col justify-center pr-8">
+                        <motion.div
+                          className="space-y-4"
+                          initial={{opacity: 0, x: 50}}
+                          animate={{opacity: 1, x: 0}}
+                          transition={{duration: 0.6, delay: 0.3}}
                         >
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{tab.title}</span>
-                            <ChevronRight className="w-4 h-4" />
-                          </div>
-                        </motion.button>
-                      ))}
-                    </motion.div>
-                  </div>
-                </div>
+                          {selectedContent.tabs.map((tab, index) => (
+                            <motion.button
+                              key={tab.id}
+                              className={`w-full text-left p-4 rounded-lg border transition-all duration-300 ${activeTab === index
+                                ? 'bg-ak-secondary/20 border-ak-secondary text-white shadow-lg shadow-ak-secondary/20'
+                                : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white hover:bg-black/40'
+                              }`}
+                              onClick={() => handleTabChange(index)}
+                              initial={{opacity: 0, x: 20}}
+                              animate={{opacity: 1, x: 0}}
+                              transition={{duration: 0.5, delay: 0.5 + index * 0.1}}
+                              whileHover={{scale: 1.02}}
+                              whileTap={{scale: 0.98}}
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium">{tab.title}</span>
+                                <ChevronRight className="w-4 h-4"/>
+                              </div>
+                            </motion.button>
+                          ))}
+                        </motion.div>
+                      </div>
+                    </div>
 
-                {/* 返回按钮 */}
-                <motion.button
-                  className="absolute bottom-8 left-8 flex items-center space-x-2 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-gray-400 px-6 py-3 rounded transition-all duration-300"
-                  onClick={handleBack}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ArrowLeft className="w-4 h-4 text-gray-300" />
-                  <span className="text-gray-300">返回</span>
-                </motion.button>
-              </>
+                    {/* 返回按钮 */}
+                    <motion.button
+                      className="absolute z-20 bottom-8 left-8 flex items-center space-x-2 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-gray-400 px-6 py-3 rounded transition-all duration-300"
+                      onClick={handleBack}
+                      initial={{opacity: 0, y: 20}}
+                      animate={{opacity: 1, y: 0}}
+                      transition={{delay: 0.8}}
+                      whileHover={{scale: 1.05}}
+                      whileTap={{scale: 0.95}}
+                    >
+                      <ArrowLeft className="w-4 h-4 text-gray-300"/>
+                      <span className="text-gray-300">返回</span>
+                    </motion.button>
+                  </>
+                )}
+              </motion.div>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </AnimatePresence>
+        </div>
+      </div>
     </section>
-  )
+)
 }
