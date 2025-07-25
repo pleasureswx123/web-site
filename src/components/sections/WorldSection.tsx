@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { ChevronRight, ChevronLeft, ArrowLeft } from 'lucide-react'
+import { useMousePosition } from '@/hooks/useMousePosition'
 
 const worldData = [
   {
@@ -14,6 +15,7 @@ const worldData = [
     medicalRecord: 'MEDICAL RECORD',
     pageNumber: '01',
     totalPages: '06',
+    hoverImage: '/images/originiums.svg',
   },
   {
     id: 'originium-arts',
@@ -24,6 +26,7 @@ const worldData = [
     medicalRecord: 'MEDICAL RECORD',
     pageNumber: '02',
     totalPages: '06',
+    hoverImage: '/images/originium-arts.svg',
   },
   {
     id: 'reunion',
@@ -34,6 +37,7 @@ const worldData = [
     medicalRecord: 'MEDICAL RECORD',
     pageNumber: '03',
     totalPages: '06',
+    hoverImage: '/images/reunion.svg',
   },
   {
     id: 'infected',
@@ -44,6 +48,7 @@ const worldData = [
     medicalRecord: 'MEDICAL RECORD',
     pageNumber: '04',
     totalPages: '06',
+    hoverImage: '/images/infected.svg',
   },
   {
     id: 'nomadic-city',
@@ -54,6 +59,7 @@ const worldData = [
     medicalRecord: 'MEDICAL RECORD',
     pageNumber: '05',
     totalPages: '06',
+    hoverImage: '/images/nomadic-city.svg',
   },
   {
     id: 'rhodes-island',
@@ -64,6 +70,7 @@ const worldData = [
     medicalRecord: 'MEDICAL RECORD',
     pageNumber: '06',
     totalPages: '06',
+    hoverImage: '/images/rhodes-island.svg',
   },
 ]
 
@@ -71,6 +78,8 @@ export default function WorldSection() {
   const [viewMode, setViewMode] = useState<'list' | 'detail'>('list')
   const [selectedWorld, setSelectedWorld] = useState<typeof worldData[0] | null>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [hoveredItem, setHoveredItem] = useState<typeof worldData[0] | null>(null)
+  const mousePosition = useMousePosition()
 
   const handleItemClick = (item: typeof worldData[0]) => {
     setSelectedWorld(item)
@@ -110,7 +119,7 @@ export default function WorldSection() {
           }}
         />
         {/* 动态粒子 */}
-        {Array.from({ length: 50 }).map((_, i) => (
+        {Array.from({length: 50}).map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-ak-secondary rounded-full"
@@ -131,204 +140,234 @@ export default function WorldSection() {
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        {viewMode === 'list' ? (
-          // 列表视图
-          <motion.div
-            key="list"
-            className="relative z-10 flex h-screen"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* 左侧列表 */}
-            <div className="w-1/2 flex flex-col justify-center px-12 space-y-6">
-              {worldData.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  className="group text-left border-b border-gray-700 hover:border-ak-secondary pb-4 transition-all duration-300 hover:bg-ak-secondary/5 px-4 py-2 rounded-lg"
-                  onClick={() => handleItemClick(item)}
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ x: 10 }}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-2xl font-bold text-white group-hover:text-ak-secondary transition-colors mb-2">
-                        {item.titleCn}
-                      </h3>
-                      <p className="text-gray-400 text-sm font-mono tracking-wider">
-                        {item.title}
-                      </p>
-                    </div>
-                    <motion.div
-                      className="text-gray-600 group-hover:text-ak-secondary transition-colors"
-                      whileHover={{ x: 5 }}
+      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+        <div className="relative w-full h-full">
+          <AnimatePresence mode="wait">
+            {viewMode === 'list' ? (
+              // 列表视图
+              <motion.div key="list" className="relative z-10 flex w-full h-full" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}}>
+                {/* 左侧列表 */}
+                <div className="w-1/3 min-w-32 flex flex-col justify-center px-12 pl-20 space-y-2">
+                  {worldData.map((item, index) => (
+                    <motion.button
+                      key={item.id}
+                      className="group text-left border-b border-gray-700 hover:border-ak-secondary pb-4 transition-all duration-300 hover:bg-ak-secondary/5 px-4 py-2"
+                      onClick={() => handleItemClick(item)}
+                      onMouseEnter={() => setHoveredItem(item)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      initial={{opacity: 0, x: -50}}
+                      animate={{opacity: 1, x: 0}}
+                      transition={{duration: 0.6, delay: index * 0.1}}
+                      whileHover={{x: 10}}
                     >
-                      <ChevronRight className="w-6 h-6" />
-                    </motion.div>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3
+                            className="text-2xl font-bold text-white group-hover:text-ak-secondary transition-colors mb-2">
+                            {item.titleCn}
+                          </h3>
+                          <p className="text-gray-400 text-sm font-mono tracking-wider">
+                            {item.title}
+                          </p>
+                        </div>
+                        <motion.div
+                          className="text-gray-600 group-hover:text-ak-secondary transition-colors"
+                          whileHover={{x: 5}}
+                        >
+                          <ChevronRight className="w-6 h-6"/>
+                        </motion.div>
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
 
-            {/* 右侧装饰 */}
-            <div className="w-1/2 flex items-center justify-center relative">
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                {/* ASCII艺术风格的罗德岛标志 */}
-                <div className="font-mono text-cyan-400 text-xs leading-tight mb-8">
-                  <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                  <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                  <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                  <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                  <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                  <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                  <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                  <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                </div>
-                <div className="text-cyan-400 text-2xl font-bold tracking-wider mb-4">
-                  RHODES ISLAND
-                </div>
-                <div className="text-gray-400 text-sm">
-                  TERRA WORLD
+                {/* 右侧装饰 */}
+                <div className="flex-1 flex items-center justify-center relative">
+                  <motion.div
+                    className="text-center"
+                    initial={{opacity: 0, scale: 0.8}}
+                    animate={{opacity: 1, scale: 1}}
+                    transition={{duration: 0.8, delay: 0.3}}
+                  >
+                    {/* ASCII艺术风格的罗德岛标志 */}
+                    <div className="font-mono text-cyan-400 text-xs leading-tight mb-8">
+                      <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                      <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                      <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                      <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
+                    </div>
+                    <div className="text-cyan-400 text-2xl font-bold tracking-wider mb-4">
+                      RHODES ISLAND
+                    </div>
+                    <div className="text-gray-400 text-sm">
+                      TERRA WORLD
+                    </div>
+                  </motion.div>
                 </div>
               </motion.div>
-            </div>
-          </motion.div>
-        ) : (
-          // 详情视图
-          <motion.div
-            key="detail"
-            className="relative z-10 flex h-screen"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* 左侧导航箭头 */}
-            <motion.button
-              className="absolute left-8 top-1/2 -translate-y-1/2 w-12 h-12 border border-ak-accent hover:bg-ak-accent/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-ak-accent/30"
-              onClick={handlePrevious}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ChevronLeft className="w-6 h-6 text-ak-accent" />
-            </motion.button>
-
-            {/* 右侧导航箭头 */}
-            <motion.button
-              className="absolute right-8 top-1/2 -translate-y-1/2 w-12 h-12 border border-ak-accent hover:bg-ak-accent/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-ak-accent/30"
-              onClick={handleNext}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ChevronRight className="w-6 h-6 text-ak-accent" />
-            </motion.button>
-
-            {/* 中间内容区域 */}
-            <div className="flex-1 flex items-center justify-center px-24">
-              <AnimatePresence mode="wait">
-                {selectedWorld && (
-                  <motion.div
-                    key={selectedWorld.id}
-                    className="text-center max-w-4xl"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -30 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    {/* 医疗记录标题 */}
-                    <motion.div
-                      className="text-ak-secondary text-sm font-mono tracking-wider mb-4"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      {selectedWorld.medicalRecord}
-                    </motion.div>
-
-                    {/* 主标题 */}
-                    <motion.h1
-                      className="text-6xl font-bold text-white mb-4 tracking-wider"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      {selectedWorld.titleCn}
-                    </motion.h1>
-
-                    <motion.h2
-                      className="text-2xl text-ak-secondary font-mono mb-8"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                    >
-                      {selectedWorld.title}
-                    </motion.h2>
-
-                    {/* 描述文本 */}
-                    <motion.p
-                      className="text-gray-300 text-lg leading-relaxed max-w-3xl mx-auto mb-8"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      {selectedWorld.fullDescription}
-                    </motion.p>
-
-                    {/* 页码指示器 */}
-                    <motion.div
-                      className="text-ak-secondary text-sm font-mono"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.6 }}
-                    >
-                      {selectedWorld.pageNumber} / {selectedWorld.totalPages}
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* 底部进度条 */}
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-800">
+            ) : (
+              // 详情视图
               <motion.div
-                className="h-full bg-ak-secondary shadow-lg shadow-ak-secondary/50"
-                initial={{ width: 0 }}
-                animate={{ width: `${((currentIndex + 1) / worldData.length) * 100}%` }}
-                transition={{ duration: 0.5 }}
+                key="detail"
+                className="relative z-10 flex w-full h-full"
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+                transition={{duration: 0.5}}
+              >
+                {/* 左侧导航箭头 */}
+                <motion.button
+                  className="absolute left-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
+                  onClick={handlePrevious}
+                  whileHover={{scale: 1.1}}
+                  whileTap={{scale: 0.9}}
+                >
+                  <ChevronLeft className="w-6 h-6 text-white"/>
+                </motion.button>
+
+                {/* 右侧导航箭头 */}
+                <motion.button
+                  className="absolute right-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
+                  onClick={handleNext}
+                  whileHover={{scale: 1.1}}
+                  whileTap={{scale: 0.9}}
+                >
+                  <ChevronRight className="w-6 h-6 text-white"/>
+                </motion.button>
+
+                {/* 中间内容区域 */}
+                <div className="flex-1 flex items-center justify-center px-24">
+                  <AnimatePresence mode="wait">
+                    {selectedWorld && (
+                      <motion.div
+                        key={selectedWorld.id}
+                        className="text-center max-w-4xl"
+                        initial={{opacity: 0, y: 30}}
+                        animate={{opacity: 1, y: 0}}
+                        exit={{opacity: 0, y: -30}}
+                        transition={{duration: 0.6}}
+                      >
+                        {/* 医疗记录标题 */}
+                        <motion.div
+                          className="text-ak-secondary text-sm font-mono tracking-wider mb-4"
+                          initial={{opacity: 0}}
+                          animate={{opacity: 1}}
+                          transition={{delay: 0.2}}
+                        >
+                          {selectedWorld.medicalRecord}
+                        </motion.div>
+
+                        {/* 主标题 */}
+                        <motion.h1
+                          className="text-6xl font-bold text-white mb-4 tracking-wider"
+                          initial={{opacity: 0, y: 20}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{delay: 0.3}}
+                        >
+                          {selectedWorld.titleCn}
+                        </motion.h1>
+
+                        <motion.h2
+                          className="text-2xl text-ak-secondary font-mono mb-8"
+                          initial={{opacity: 0, y: 20}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{delay: 0.4}}
+                        >
+                          {selectedWorld.title}
+                        </motion.h2>
+
+                        {/* 描述文本 */}
+                        <motion.p
+                          className="text-gray-300 text-lg leading-relaxed max-w-3xl mx-auto mb-8"
+                          initial={{opacity: 0, y: 20}}
+                          animate={{opacity: 1, y: 0}}
+                          transition={{delay: 0.5}}
+                        >
+                          {selectedWorld.fullDescription}
+                        </motion.p>
+
+                        {/* 页码指示器 */}
+                        <motion.div
+                          className="text-ak-secondary text-sm font-mono"
+                          initial={{opacity: 0}}
+                          animate={{opacity: 1}}
+                          transition={{delay: 0.6}}
+                        >
+                          {selectedWorld.pageNumber} / {selectedWorld.totalPages}
+                        </motion.div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* 底部进度条 */}
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gray-800">
+                  <motion.div
+                    className="h-full bg-ak-secondary/50 shadow-lg shadow-ak-secondary/50"
+                    initial={{width: 0}}
+                    animate={{width: `${((currentIndex + 1) / worldData.length) * 100}%`}}
+                    transition={{duration: 0.5}}
+                  />
+                </div>
+
+                {/* 返回按钮 */}
+                <motion.button
+                  className="absolute bottom-8 right-8 flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-400 px-6 py-3 transition-all duration-300"
+                  onClick={handleBack}
+                  whileHover={{scale: 1.05}}
+                  whileTap={{scale: 0.95}}
+                  initial={{opacity: 0, y: 20}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{delay: 0.7}}
+                >
+                  <ArrowLeft className="w-4 h-4 text-gray-400"/>
+                  <span className="text-gray-300">返回</span>
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* 跟随鼠标的图片 */}
+      <AnimatePresence>
+        {hoveredItem && (
+          <motion.div
+            className="fixed pointer-events-none z-[9999]"
+            style={{
+              left: mousePosition.x + 20,
+              top: mousePosition.y - 100,
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="relative w-64 h-40 rounded-lg overflow-hidden shadow-2xl border border-ak-secondary/30">
+              <img
+                src={hoveredItem.hoverImage}
+                alt={hoveredItem.titleCn}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // 如果图片加载失败，显示一个占位符
+                  const target = e.target as HTMLImageElement;
+                  target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjE2MCIgdmlld0JveD0iMCAwIDI1NiAxNjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNTYiIGhlaWdodD0iMTYwIiBmaWxsPSIjMTExODI3Ii8+CjxwYXRoIGQ9Ik0xMjggODBMMTQ0IDk2SDE0NFY5NkgxMTJWOTZMMTI4IDgwWiIgZmlsbD0iIzAwRkZGRiIvPgo8dGV4dCB4PSIxMjgiIHk9IjEyMCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwRkZGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K';
+                }}
               />
-            </div>
-
-            {/* 返回按钮 */}
-            <motion.button
-              className="absolute bottom-8 right-8 flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-400 px-6 py-3 transition-all duration-300"
-              onClick={handleBack}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              <ArrowLeft className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-300">返回</span>
-            </motion.button>
-
-            {/* 右上角世界标识 */}
-            <div className="absolute top-8 right-8 text-right">
-              <div className="text-cyan-400 text-2xl font-bold">03</div>
-              <div className="text-gray-400 text-sm font-mono">WORLD</div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <h4 className="text-white font-bold text-lg">{hoveredItem.titleCn}</h4>
+                <p className="text-ak-secondary text-sm font-mono">{hoveredItem.title}</p>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
     </section>
-  )
+)
 }

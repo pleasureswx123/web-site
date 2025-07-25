@@ -1,0 +1,29 @@
+<svg width="256" height="160" viewBox="0 0 256 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="160" fill="#0a0a0a"/>
+  <defs>
+    <linearGradient id="flame" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff4444;stop-opacity:0.9" />
+      <stop offset="50%" style="stop-color:#ff8800;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#ffaa00;stop-opacity:0.5" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 整合运动标志 -->
+  <polygon points="128,30 150,50 150,80 128,100 106,80 106,50" fill="url(#flame)" stroke="#ff4444" stroke-width="2"/>
+  
+  <!-- 火焰效果 -->
+  <path d="M 110 70 Q 115 60 120 70 Q 125 55 130 70 Q 135 60 140 70 Q 145 55 150 70" 
+        fill="none" stroke="#ff8800" stroke-width="2" opacity="0.8"/>
+  <path d="M 115 85 Q 120 75 125 85 Q 130 70 135 85 Q 140 75 145 85" 
+        fill="none" stroke="#ffaa00" stroke-width="2" opacity="0.6"/>
+  
+  <!-- 破碎效果 -->
+  <polygon points="90,60 100,50 95,70" fill="#ff4444" opacity="0.7"/>
+  <polygon points="166,60 156,50 161,70" fill="#ff4444" opacity="0.7"/>
+  <polygon points="115,110 125,100 120,120" fill="#ff8800" opacity="0.6"/>
+  <polygon points="141,110 131,100 136,120" fill="#ff8800" opacity="0.6"/>
+  
+  <!-- 标题 -->
+  <text x="128" y="140" font-family="monospace" font-size="14" fill="#ff4444" text-anchor="middle" font-weight="bold">REUNION</text>
+  <text x="128" y="155" font-family="monospace" font-size="10" fill="#ffffff" text-anchor="middle" opacity="0.7">整合运动</text>
+</svg>

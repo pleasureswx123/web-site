@@ -1,0 +1,34 @@
+<svg width="256" height="160" viewBox="0 0 256 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="160" fill="#0a0a0a"/>
+  <defs>
+    <linearGradient id="rhodes" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#0080ff;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.4" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 罗德岛标志 -->
+  <circle cx="128" cy="80" r="35" fill="none" stroke="#00ffff" stroke-width="3"/>
+  <polygon points="128,55 140,75 128,95 116,75" fill="url(#rhodes)" stroke="#00ffff" stroke-width="2"/>
+  
+  <!-- 医疗十字 -->
+  <rect x="123" y="65" width="10" height="30" fill="#ffffff" opacity="0.9"/>
+  <rect x="113" y="75" width="30" height="10" fill="#ffffff" opacity="0.9"/>
+  
+  <!-- 防护盾牌 -->
+  <path d="M 100 60 Q 128 45 156 60 L 156 100 Q 128 115 100 100 Z" 
+        fill="none" stroke="#00ffff" stroke-width="2" opacity="0.6"/>
+  
+  <!-- 能量环 -->
+  <circle cx="128" cy="80" r="45" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.4"/>
+  <circle cx="128" cy="80" r="55" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.3"/>
+  
+  <!-- 希望之光 */
+  <path d="M 128 30 L 130 50 L 128 70 L 126 50 Z" fill="#ffffff" opacity="0.8"/>
+  <path d="M 108 80 L 128 82 L 148 80 L 128 78 Z" fill="#ffffff" opacity="0.8"/>
+  
+  <!-- 标题 -->
+  <text x="128" y="140" font-family="monospace" font-size="12" fill="#00ffff" text-anchor="middle" font-weight="bold">RHODES ISLAND</text>
+  <text x="128" y="155" font-family="monospace" font-size="10" fill="#ffffff" text-anchor="middle" opacity="0.7">罗德岛</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg width="256" height="160" viewBox="0 0 256 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="160" fill="#0a0a0a"/>
+  <defs>
+    <radialGradient id="magic" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#4ecdc4;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#45b7d1;stop-opacity:0.3" />
+    </radialGradient>
+  </defs>
+  
+  <!-- 魔法圆阵 -->
+  <circle cx="128" cy="80" r="50" fill="none" stroke="#00ffff" stroke-width="2" opacity="0.8"/>
+  <circle cx="128" cy="80" r="35" fill="none" stroke="#ff6b6b" stroke-width="1" opacity="0.6"/>
+  <circle cx="128" cy="80" r="20" fill="none" stroke="#4ecdc4" stroke-width="1" opacity="0.7"/>
+  
+  <!-- 魔法符文 -->
+  <polygon points="128,50 138,70 118,70" fill="#00ffff" opacity="0.8"/>
+  <polygon points="128,110 118,90 138,90" fill="#ff6b6b" opacity="0.8"/>
+  <polygon points="98,80 108,70 108,90" fill="#4ecdc4" opacity="0.8"/>
+  <polygon points="158,80 148,90 148,70" fill="#45b7d1" opacity="0.8"/>
+  
+  <!-- 能量波纹 -->
+  <circle cx="128" cy="80" r="60" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.3"/>
+  <circle cx="128" cy="80" r="70" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.2"/>
+  
+  <!-- 标题 -->
+  <text x="128" y="140" font-family="monospace" font-size="12" fill="#00ffff" text-anchor="middle" font-weight="bold">ORIGINIUM ARTS</text>
+  <text x="128" y="155" font-family="monospace" font-size="10" fill="#ffffff" text-anchor="middle" opacity="0.7">源石技艺</text>
+</svg>

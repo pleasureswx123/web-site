@@ -71,7 +71,7 @@ export default function ImprovedIndexSection() {
       <div className="absolute top-[60%] right-[40%] w-24 h-24 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse delay-500"></div>
 
       <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50 pointer-events-none">
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full z-[20]">
           {/* 镂空文字效果演示 - 最佳效果 */}
           <div className='opacity-20'>
             <motion.div
