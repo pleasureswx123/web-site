@@ -84,7 +84,7 @@ export default function ImprovedIndexSection() {
 
         <a className="_46f42502 _1287fb1f">
           <div className="_86418c91">
-            <img src="/images/icons/emulator.png" alt="" />
+            <img src="/images/icons/emulator.svg" alt="" />
           </div>
           <div className="_523e0079">
             <div className="_2b80a3ba">模拟器下载</div>

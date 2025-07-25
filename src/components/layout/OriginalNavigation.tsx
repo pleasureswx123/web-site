@@ -2,6 +2,24 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Share2,
+  Volume2,
+  VolumeX,
+  User,
+  Menu,
+  MessageCircle,
+  Phone,
+  Mail
+} from 'lucide-react'
+import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 
 interface OriginalNavigationProps {
   currentSection: string
@@ -16,190 +34,207 @@ const navigationItems = [
   { id: 'more', label: 'MORE', labelCn: '更多内容' },
 ]
 
+const socialLinks = [
+  { name: '官方微博', icon: MessageCircle, color: 'bg-red-500', href: '#' },
+  { name: '官方QQ群', icon: Phone, color: 'bg-blue-500', href: '#' },
+  { name: '官方微信', icon: Mail, color: 'bg-green-500', href: '#' },
+]
+
 export default function OriginalNavigation({ currentSection }: OriginalNavigationProps) {
-  const [showSocialPopup, setShowSocialPopup] = useState(false)
-  const [showUserPopup, setShowUserPopup] = useState(false)
   const [isMusicPlaying, setIsMusicPlaying] = useState(true)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleMusicToggle = () => {
     setIsMusicPlaying(!isMusicPlaying)
+    toast.success(isMusicPlaying ? '音乐已关闭' : '音乐已开启')
     // 这里可以添加实际的音乐控制逻辑
+  }
+
+  const handleSocialClick = (name: string) => {
+    toast.info(`正在跳转到${name}`)
+  }
+
+  const handleUserAction = (action: string) => {
+    toast.info(`${action}功能开发中`)
   }
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-      <div className="flex items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <motion.a
-          href="/#index"
-          className="flex items-center"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="text-2xl font-bold text-white tracking-wider">
-            明日方舟
+        <div className="flex items-center justify-between px-6 py-4">
+          {/* Logo */}
+          <motion.a
+            href="/#index"
+            className="flex items-center ml-8"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Image
+              src="/images/logo.png"
+              alt="心流元素"
+              width={513}
+              height={100}
+              className="h-8 w-auto object-contain"
+              priority
+            />
+          </motion.a>
+
+          {/* Desktop Navigation Menu */}
+          <motion.div
+            className="hidden lg:flex items-center space-x-8"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {navigationItems.map((item) => (
+              <motion.a
+                key={item.id}
+                href={`#${item.id}`}
+                className={cn(
+                  "group flex flex-col transition-all duration-300 rounded-lg",
+                  currentSection === item.id
+                    ? 'text-ak-primary'
+                    : 'text-white/80 hover:text-ak-primary'
+                )}
+              >
+                <span className="text-lg font-medium tracking-wider font-ak-secondary">
+                  {item.label}
+                </span>
+                <span className="text-xs opacity-70 font-ak-primary">
+                  {item.labelCn}
+                </span>
+              </motion.a>
+            ))}
+          </motion.div>
+
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden">
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="bg-black/95 border-ak-primary/20">
+                <SheetHeader>
+                  <SheetTitle className="text-ak-primary font-ak-title">导航菜单</SheetTitle>
+                  <SheetDescription className="text-ak-text-secondary">
+                    选择要访问的页面
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6 space-y-4">
+                  {navigationItems.map((item) => (
+                    <Button
+                      key={item.id}
+                      variant={currentSection === item.id ? "default" : "ghost"}
+                      className={cn(
+                        "w-full justify-start gap-3 h-12",
+                        currentSection === item.id
+                          ? "bg-ak-primary text-black"
+                          : "text-white hover:bg-white/10"
+                      )}
+                      onClick={() => {
+                        window.location.href = `#${item.id}`
+                        setIsMobileMenuOpen(false)
+                      }}
+                    >
+                      <div className="flex flex-col items-start">
+                        <span className="font-ak-secondary">{item.label}</span>
+                        <span className="text-xs opacity-70 font-ak-primary">{item.labelCn}</span>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
-        </motion.a>
 
-        {/* Navigation Menu */}
-        <motion.div
-          className="flex items-center space-x-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          {navigationItems.map((item) => (
-            <motion.a
-              key={item.id}
-              href={`#${item.id}`}
-              className={`group flex flex-col items-center space-y-1 transition-all duration-300 ${currentSection === item.id
-                ? 'text-blue-400'
-                : 'text-white/80 hover:text-white'
-                }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="text-sm font-medium tracking-wider font-oswald">
-                {item.label}
-              </span>
-              <span className="text-xs opacity-70">
-                {item.labelCn}
-              </span>
-            </motion.a>
-          ))}
-        </motion.div>
-
-        {/* Right Icons */}
-        <motion.div
-          className="flex items-center space-x-4"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          {/* Social Icon */}
-          <motion.button
-            onClick={() => setShowSocialPopup(!showSocialPopup)}
-            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <svg className="w-5 h-5 text-white" viewBox="0 0 27 35">
-              <use xlinkHref="#svg_def-icon_social"></use>
-            </svg>
-          </motion.button>
-
-          {/* Sound Icon */}
-          <motion.button
-            onClick={handleMusicToggle}
-            className={`p-2 rounded-lg transition-colors ${isMusicPlaying
-              ? 'bg-blue-500/20 text-blue-400'
-              : 'bg-white/10 text-white hover:bg-white/20'
-              }`}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <svg className="w-5 h-5" viewBox="0 0 30 34">
-              <use xlinkHref="#svg_def-icon_sound"></use>
-            </svg>
-          </motion.button>
-
-          {/* User Icon */}
-          <motion.button
-            onClick={() => setShowUserPopup(!showUserPopup)}
-            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <svg className="w-5 h-5 text-white" viewBox="0 0 28 34">
-              <use xlinkHref="#svg_def-icon_user"></use>
-            </svg>
-          </motion.button>
-        </motion.div>
-      </div>
-
-      {/* Social Media Popup */}
-      {showSocialPopup && (
-        <motion.div
-          className="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setShowSocialPopup(false)}
-        >
+          {/* Right Icons */}
           <motion.div
-            className="bg-gray-900/95 backdrop-blur-md border border-blue-500/30 rounded-xl p-8 max-w-md mx-4"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
+            className="flex items-center space-x-6"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <h3 className="text-blue-400 text-xl font-bold mb-6 text-center font-oswald">社交媒体</h3>
-            <div className="space-y-4">
-              <a
-                href="#"
-                className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-blue-500/10 transition-colors text-white/80 hover:text-white"
-              >
-                <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">微</span>
+            {/* Social Media Popover */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <motion.div>
+                  <Share2 className="cursor-pointer text-white/80 hover:text-ak-primary w-6 h-6" />
+                </motion.div>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 bg-black/95 border-ak-primary/20 backdrop-blur-md">
+                <div className="space-y-3">
+                  <h4 className="text-ak-primary font-ak-secondary font-semibold">社交媒体</h4>
+                  {socialLinks.map((social) => {
+                    const IconComponent = social.icon
+                    return (
+                      <Button
+                        key={social.name}
+                        variant="ghost"
+                        className="w-full justify-start gap-3 text-white hover:bg-ak-primary/10 hover:text-ak-primary"
+                        onClick={() => handleSocialClick(social.name)}
+                      >
+                        <div className={cn("w-8 h-8 rounded-full flex items-center justify-center", social.color)}>
+                          <IconComponent className="w-4 h-4 text-white" />
+                        </div>
+                        <span>{social.name}</span>
+                      </Button>
+                    )
+                  })}
                 </div>
-                <span>官方微博</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-blue-500/10 transition-colors text-white/80 hover:text-white"
-              >
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">Q</span>
-                </div>
-                <span>官方QQ群</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 hover:bg-blue-500/10 transition-colors text-white/80 hover:text-white"
-              >
-                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">微</span>
-                </div>
-                <span>官方微信</span>
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+              </PopoverContent>
+            </Popover>
 
-      {/* User Menu Popup */}
-      {showUserPopup && (
-        <motion.div
-          className="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setShowUserPopup(false)}
-        >
-          <motion.div
-            className="bg-gray-900/95 backdrop-blur-md border border-blue-500/30 rounded-xl p-8 max-w-md mx-4"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-blue-400 text-xl font-bold mb-6 text-center font-oswald">用户中心</h3>
-            <div className="space-y-4">
-              <button className="w-full p-3 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 transition-colors text-blue-400 hover:text-blue-300 border border-blue-500/30">
-                登录
-              </button>
-              <button className="w-full p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white/80 hover:text-white border border-white/20">
-                注册
-              </button>
-              <button className="w-full p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white/80 hover:text-white border border-white/20">
-                个人中心
-              </button>
-            </div>
+            {/* Music Toggle Button */}
+            <motion.div>
+              <div className="cursor-pointer text-white/80 hover:text-ak-primary w-6 h-6" onClick={handleMusicToggle}>
+                {isMusicPlaying ? (<Volume2 />) : (<VolumeX />)}
+              </div>
+            </motion.div>
+
+            {/* User Menu Dialog */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <motion.div>
+                  <User className="cursor-pointer text-white/80 hover:text-ak-primary w-6 h-6" />
+                </motion.div>
+              </DialogTrigger>
+              <DialogContent className="bg-black/95 border-ak-primary/20 backdrop-blur-md">
+                <DialogHeader>
+                  <DialogTitle className="text-ak-primary font-ak-title">用户中心</DialogTitle>
+                  <DialogDescription className="text-ak-text-secondary">
+                    管理您的账户和设置
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex gap-2 items-center">
+                  <Button
+                    className="w-full bg-ak-primary hover:bg-ak-primary/90 text-black font-ak-secondary"
+                    onClick={() => handleUserAction('登录')}
+                  >
+                    登录
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full border-ak-primary/30 text-black hover:bg-ak-primary/10 hover:text-ak-primary"
+                    onClick={() => handleUserAction('注册')}
+                  >
+                    注册
+                  </Button>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-white bg-white/50 hover:bg-white/30 hover:text-ak-primary"
+                    onClick={() => handleUserAction('个人中心')}
+                  >
+                    个人中心
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </motion.div>
-        </motion.div>
-      )}
-    </nav>
+        </div>
+      </nav>
   )
 }

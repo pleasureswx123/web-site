@@ -201,7 +201,7 @@ export default function Home() {
                 }}
               >
                 <div
-                  className={`ak-section-content ak-section-${section} pr-[14.75rem]`}
+                  className={`ak-section-content ak-section-${section}`}
                   style={{
                     left: sectionIndex === currentIndex ? '0px' : 'auto'
                   }}
@@ -273,6 +273,9 @@ export default function Home() {
 
         {/* 右侧边占位内容 - 对应 _ae86e3f9 */}
         <div className="_ae86e3f9" data-style="">
+          {/*在这里实现*/}
+
+
           <motion.div
             className="_a6fb5251"
             style={{ transform: 'translateY(0rem)', opacity: 1 }}

@@ -13,7 +13,7 @@ function ensureDirectoryExists(dirPath) {
 function downloadFile(url, outputPath) {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(outputPath);
-    
+
     https.get(url, (response) => {
       if (response.statusCode === 200) {
         response.pipe(file);
@@ -62,7 +62,7 @@ const assets = [
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/Bender-Regular.6950ba72.woff2',
     path: 'public/fonts/Bender-Regular.woff2'
   },
-  
+
   // 角色立绘
   {
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/kaltsit_e1.a53cfc2e.png',
@@ -92,7 +92,7 @@ const assets = [
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/ptilopsis.0483cb6d.png',
     path: 'public/images/characters/ptilopsis.png'
   },
-  
+
   // 背景图片
   {
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/bg.c03d00a6.jpg',
@@ -110,7 +110,7 @@ const assets = [
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/bg2_m.aa95d813.png',
     path: 'public/images/backgrounds/bg2_m.png'
   },
-  
+
   // 图标和Logo
   {
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/rhodes_island.18d9416c.png',
@@ -124,7 +124,21 @@ const assets = [
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/age_rating.61c75d20.png',
     path: 'public/images/icons/age_rating.png'
   },
-  
+
+  // 下载相关图标
+  {
+    url: 'https://web.hycdn.cn/arknights/official/_next/static/media/emulator.d11d7f15.png',
+    path: 'public/images/icons/emulator.png'
+  },
+  {
+    url: 'https://web.hycdn.cn/arknights/official/_next/static/media/skland_fullcolor.01ce2eb7.png',
+    path: 'public/images/icons/skland_fullcolor.png'
+  },
+  {
+    url: 'https://web.hycdn.cn/arknights/official/_next/static/media/recharge_center.d11d7f15.png',
+    path: 'public/images/icons/recharge_center.png'
+  },
+
   // 媒体相关图标
   {
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/monster_siren_active.8f01230d.png',
@@ -158,7 +172,7 @@ const assets = [
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/logo_video.c1de0303.png',
     path: 'public/images/logos/logo_video.png'
   },
-  
+
   // 更多内容相关图标
   {
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/icon-integrated_strategies.05cfb26b.png',
@@ -176,7 +190,7 @@ const assets = [
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/icon-terra_historicus.fa655671.png',
     path: 'public/images/icons/icon-terra_historicus.png'
   },
-  
+
   // 更多内容背景图
   {
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/integrated_strategies.a27b34a4.jpg',
@@ -194,7 +208,7 @@ const assets = [
     url: 'https://web.hycdn.cn/arknights/official/_next/static/media/terra_historicus.70c95ec8.jpg',
     path: 'public/images/more/terra_historicus.jpg'
   },
-  
+
   // 新闻横幅图片
   {
     url: 'https://web.hycdn.cn/upload/image/20250721/51d8df54f9a8543a2a63b9ea324f8b59.png',
@@ -221,7 +235,7 @@ const assets = [
 // 主下载函数
 async function downloadAssets() {
   console.log('🚀 开始下载明日方舟官网资源文件...\n');
-  
+
   // 创建必要的目录
   const directories = [
     'public/fonts',
@@ -232,13 +246,13 @@ async function downloadAssets() {
     'public/images/more',
     'public/images/banners'
   ];
-  
+
   directories.forEach(dir => ensureDirectoryExists(dir));
-  
+
   // 下载所有资源
   let successCount = 0;
   let failCount = 0;
-  
+
   for (const asset of assets) {
     try {
       await downloadFile(asset.url, asset.path);
@@ -248,7 +262,7 @@ async function downloadAssets() {
       failCount++;
     }
   }
-  
+
   console.log(`\n📊 下载完成统计:`);
   console.log(`✅ 成功: ${successCount} 个文件`);
   console.log(`❌ 失败: ${failCount} 个文件`);
