@@ -71,7 +71,7 @@ export default function IndexSection() {
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <p className="text-ak-text text-lg leading-relaxed">
-                策略塔防手游《明日方舟》，在这里，你将管理罗德岛，
+                策略塔防手游《心流元素》，在这里，你将管理罗德岛，
                 这艘满载着希望的方舟，与感染者一同对抗灾难，治愈创伤。
               </p>
               <p className="text-ak-text-secondary">
@@ -210,15 +210,15 @@ export default function IndexSection() {
 
                 {/* 发光边框 */}
                 <div className="absolute inset-0 border-2 border-ak-primary/30 rounded-2xl" />
-                
+
                 {/* 角落装饰 */}
                 <div className="absolute top-6 left-6 w-10 h-10 border-l-2 border-t-2 border-ak-primary" />
                 <div className="absolute top-6 right-6 w-10 h-10 border-r-2 border-t-2 border-ak-primary" />
                 <div className="absolute bottom-6 left-6 w-10 h-10 border-l-2 border-b-2 border-ak-primary" />
                 <div className="absolute bottom-6 right-6 w-10 h-10 border-r-2 border-b-2 border-ak-primary" />
-                
+
                 {/* 悬浮光效 */}
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 bg-ak-primary/5 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300"
                   whileHover={{ opacity: 0.2 }}
                 />

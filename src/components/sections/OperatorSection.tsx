@@ -15,8 +15,8 @@ const operatorData = [
     voiceCn: '陈雨',
     voiceJp: 'M・A・O',
     description: '精通于治疗和支援的专业人员，性格温和但意志坚定。同时拥有出色的医疗技术和对于战术的深刻理解。她总是能在关键时刻为队友提供最需要的支援，以及最贴心的照料。她深知医者的责任，也深知一个干员的责任。',
-    image: '/images/characters/florence.png',
-    avatar: '/images/characters/florence-avatar.png',
+    image: '/images/characters/texas.png',
+    avatar: '/images/characters/texas.png',
   },
   {
     id: 'kaltsit',
@@ -29,7 +29,7 @@ const operatorData = [
     voiceJp: '日笠阳子',
     description: '罗德岛最高管理者之一，阿米娅的直接辅导者。罗德岛医疗部门的总负责人。作为罗德岛的老成员，凯尔希医生是在阿米娅背后最稳固的援护者。',
     image: '/images/characters/kaltsit.png',
-    avatar: '/images/characters/kaltsit-avatar.png',
+    avatar: '/images/characters/kaltsit.png',
   },
   {
     id: 'amiya',
@@ -42,7 +42,7 @@ const operatorData = [
     voiceJp: '黑泽朋世',
     description: '罗德岛的公开领袖，在内部拥有最高执行权。虽然年纪尚轻，但她拥有着卓越的行动指挥能力。',
     image: '/images/characters/amiya.png',
-    avatar: '/images/characters/amiya-avatar.png',
+    avatar: '/images/characters/amiya.png',
   },
   {
     id: 'chen',
@@ -55,7 +55,7 @@ const operatorData = [
     voiceJp: '石上静香',
     description: '龙门近卫局高级督察，在龙门与罗德岛的合作中，她既是监督者，也是合作伙伴。',
     image: '/images/characters/chen.png',
-    avatar: '/images/characters/chen-avatar.png',
+    avatar: '/images/characters/chen.png',
   },
   {
     id: 'texas',
@@ -68,7 +68,7 @@ const operatorData = [
     voiceJp: '小清水亚美',
     description: '企鹅物流的员工，拥有丰富的作战经验。她总是显得很冷静，但内心深处燃烧着战斗的热情。',
     image: '/images/characters/texas.png',
-    avatar: '/images/characters/texas-avatar.png',
+    avatar: '/images/characters/texas.png',
   },
 ]
 

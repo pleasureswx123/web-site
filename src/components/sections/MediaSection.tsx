@@ -78,7 +78,7 @@ const mediaContent = [
     category: 'MUSIC',
     year: '2024',
     description: '官方音乐厂牌，为泰拉世界创作原创音乐作品。',
-    fullDescription: '《塞壬唱片》是明日方舟官方音乐厂牌，致力于创作高质量的游戏音乐，涵盖电子、古典、摇滚等多种风格。',
+    fullDescription: '《塞壬唱片》是心流元素官方音乐厂牌，致力于创作高质量的游戏音乐，涵盖电子、古典、摇滚等多种风格。',
     image: '/images/characters/texas.png',
     color: 'from-indigo-600 to-purple-600',
     accentColor: 'text-indigo-400',

@@ -17,7 +17,7 @@ const moreContent = [
       {
         id: 'overview',
         title: '玩法概述',
-        content: '集成战略是明日方舟的Roguelike玩法模式，每次进入都会有不同的体验。玩家需要在随机生成的地图中做出选择，收集道具和招募临时干员。',
+        content: '集成战略是心流元素的Roguelike玩法模式，每次进入都会有不同的体验。玩家需要在随机生成的地图中做出选择，收集道具和招募临时干员。',
         image: '/images/more/is-overview.jpg'
       },
       {
@@ -79,7 +79,7 @@ const moreContent = [
     id: 'animation',
     title: '衍生动画',
     titleEn: 'ANIMATION',
-    description: '明日方舟官方动画作品，深入了解泰拉世界的故事和角色。高质量的动画制作带来沉浸式体验。',
+    description: '心流元素官方动画作品，深入了解泰拉世界的故事和角色。高质量的动画制作带来沉浸式体验。',
     image: '/images/more/animation.jpg',
     icon: '/images/icons/icon-animation.png',
     backgroundImage: '/images/backgrounds/anime-bg.jpg',
@@ -87,7 +87,7 @@ const moreContent = [
       {
         id: 'prelude',
         title: '黎明前奏',
-        content: '明日方舟首部动画作品，讲述了罗德岛成立初期的故事，展现了阿米娅等角色的成长历程。',
+        content: '心流元素首部动画作品，讲述了罗德岛成立初期的故事，展现了阿米娅等角色的成长历程。',
         image: '/images/more/anime-prelude.jpg'
       },
       {
@@ -197,7 +197,7 @@ export default function MoreSection() {
                     MORE CONTENT
                   </h2>
                   <div className="text-gray-400">
-                    探索更多明日方舟的精彩内容
+                    探索更多心流元素的精彩内容
                   </div>
                 </motion.div>
 

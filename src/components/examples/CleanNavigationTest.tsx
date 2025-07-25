@@ -26,11 +26,11 @@ export default function CleanNavigationTest() {
     <div className="min-h-screen bg-ak-dark">
       {/* 导航组件 */}
       <OriginalNavigation currentSection={currentSection} />
-      
+
       {/* 主要内容 */}
       <div className="pt-24 px-6 pb-12">
         <div className="max-w-4xl mx-auto space-y-8">
-          
+
           {/* 标题区域 */}
           <div className="text-center space-y-4">
             <Badge variant="outline" className="border-ak-primary text-ak-primary">
@@ -63,7 +63,7 @@ export default function CleanNavigationTest() {
                     {sections.find(s => s.id === currentSection)?.name || currentSection}
                   </Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {sections.map((section) => (
                     <button
@@ -88,13 +88,13 @@ export default function CleanNavigationTest() {
 
           {/* 设计特点 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
+
             {/* 简洁设计 */}
             <Card className="bg-ak-gray border-ak-border">
               <CardHeader>
                 <CardTitle className="text-ak-text font-ak-secondary">简洁设计原则</CardTitle>
                 <CardDescription className="text-ak-text-secondary">
-                  遵循明日方舟的设计美学
+                  遵循心流元素的设计美学
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -183,23 +183,23 @@ export default function CleanNavigationTest() {
             <CardContent>
               <div className="flex flex-wrap gap-2">
                 {[
-                  'shadcn/ui', 'Radix UI', 'Framer Motion', 'Lucide React', 
+                  'shadcn/ui', 'Radix UI', 'Framer Motion', 'Lucide React',
                   'Sonner', 'Tailwind CSS', 'TypeScript', 'Next.js'
                 ].map((tech) => (
-                  <Badge 
-                    key={tech} 
-                    variant="secondary" 
+                  <Badge
+                    key={tech}
+                    variant="secondary"
                     className="bg-ak-primary/10 text-ak-primary border-ak-primary/20"
                   >
                     {tech}
                   </Badge>
                 ))}
               </div>
-              
+
               <div className="mt-4 p-4 rounded-lg bg-ak-light-gray border border-ak-border">
                 <p className="text-sm text-ak-text-secondary">
                   <strong className="text-ak-text">设计理念：</strong>
-                  保持明日方舟原有的简洁美学，同时融入现代化的交互体验。
+                  保持心流元素原有的简洁美学，同时融入现代化的交互体验。
                   移除了不必要的工具提示，让界面更加干净直观。
                 </p>
               </div>

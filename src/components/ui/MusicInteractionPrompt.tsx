@@ -78,7 +78,7 @@ export default function MusicInteractionPrompt() {
             </h3>
             <p className="text-ak-text-secondary text-sm leading-relaxed">
               浏览器需要用户交互才能播放音频。
-              点击下方按钮来启用明日方舟的背景音乐，
+              点击下方按钮来启用心流元素的背景音乐，
               获得更好的沉浸式体验。
             </p>
           </div>

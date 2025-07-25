@@ -20,11 +20,11 @@ export default function LogoTest() {
     <div className="min-h-screen bg-ak-dark">
       {/* 导航组件 - 现在使用图片logo */}
       <OriginalNavigation currentSection={currentSection} />
-      
+
       {/* 主要内容 */}
       <div className="pt-24 px-6 pb-12">
         <div className="max-w-4xl mx-auto space-y-8">
-          
+
           {/* 标题区域 */}
           <div className="text-center space-y-4">
             <Badge variant="outline" className="border-ak-primary text-ak-primary">
@@ -50,7 +50,7 @@ export default function LogoTest() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              
+
               {/* 当前logo展示 */}
               <div className="p-6 rounded-lg bg-ak-light-gray border border-ak-border">
                 <h3 className="text-ak-text font-medium mb-4 flex items-center gap-2">
@@ -60,7 +60,7 @@ export default function LogoTest() {
                 <div className="flex items-center justify-center p-8 bg-black/20 rounded-lg backdrop-blur-md border border-white/10">
                   <Image
                     src="/images/logo.png"
-                    alt="明日方舟"
+                    alt="心流元素"
                     width={513}
                     height={100}
                     className="h-8 w-auto object-contain"
@@ -92,7 +92,7 @@ export default function LogoTest() {
                   </h3>
                   <div className="flex items-center justify-center p-8 bg-black/20 rounded-lg backdrop-blur-md border border-white/10">
                     <div className="text-2xl font-bold text-white tracking-wider font-ak-title">
-                      明日方舟
+                      心流元素
                     </div>
                   </div>
                   <p className="text-sm text-ak-text-secondary mt-3 text-center">
@@ -115,7 +115,7 @@ export default function LogoTest() {
                     <li>• 保持原有动画效果</li>
                   </ul>
                 </div>
-                
+
                 <div className="p-4 rounded-lg bg-ak-light-gray border border-ak-border">
                   <h4 className="font-medium text-ak-text mb-2 flex items-center gap-2">
                     <ImageIcon className="w-4 h-4 text-ak-primary" />
@@ -145,13 +145,13 @@ export default function LogoTest() {
                 <pre className="text-sm text-ak-text-secondary overflow-x-auto">
                   <code>{`// 之前的文字Logo
 <div className="text-2xl font-bold text-white tracking-wider font-ak-title">
-  明日方舟
+  心流元素
 </div>
 
 // 现在的图片Logo
 <Image
   src="/images/logo.png"
-  alt="明日方舟"
+  alt="心流元素"
   width={513}
   height={100}
   className="h-8 w-auto object-contain"
@@ -191,7 +191,7 @@ export default function LogoTest() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="mt-6 p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <div className="flex items-center gap-2 text-green-400 mb-2">
                   <CheckCircle className="w-4 h-4" />
@@ -226,8 +226,8 @@ export default function LogoTest() {
                     key={section.id}
                     onClick={() => setCurrentSection(section.id)}
                     variant={currentSection === section.id ? "default" : "outline"}
-                    className={currentSection === section.id 
-                      ? "bg-ak-primary text-black" 
+                    className={currentSection === section.id
+                      ? "bg-ak-primary text-black"
                       : "border-ak-border text-ak-text-secondary hover:border-ak-primary hover:text-ak-primary"
                     }
                     size="sm"

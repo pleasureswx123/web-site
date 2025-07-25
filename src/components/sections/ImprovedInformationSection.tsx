@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 const carouselBanners = [
   {
     id: 1,
-    title: '明日方舟动画「黎明前奏」',
+    title: '心流元素动画「黎明前奏」',
     image: '/images/banners/news_20250721.png',
     url: 'https://www.bilibili.com/video/BV1dwg5zCEBD',
   },
@@ -18,7 +18,7 @@ const carouselBanners = [
   },
   {
     id: 3,
-    title: '明日方舟动画「黎明前奏」',
+    title: '心流元素动画「黎明前奏」',
     image: '/images/banners/news_20250710.jpg',
     url: 'https://www.bilibili.com/bangumi/media/md26627738',
   },
@@ -42,21 +42,21 @@ const newsData = [
     id: 1,
     type: '公告',
     date: '2025 // 07 / 22',
-    title: '[明日方舟]07月22日16:00闪断更新公告',
+    title: '[心流元素]07月22日16:00闪断更新公告',
     url: '/news/5134',
   },
   {
     id: 2,
     type: '新闻',
     date: '2025 // 07 / 19',
-    title: '《明日方舟》制作组通讯#55期',
+    title: '《心流元素》制作组通讯#55期',
     url: '/news/0722',
   },
   {
     id: 3,
     type: '公告',
     date: '2025 // 07 / 17',
-    title: '[明日方舟]07月17日02:30闪断更新公告',
+    title: '[心流元素]07月17日02:30闪断更新公告',
     url: '/news/7390',
   },
 ]

@@ -10,7 +10,7 @@ export default function AccurateIndexSection() {
       <div className="absolute inset-0">
         <Image
           src="/images/backgrounds/homepage_bg.jpg"
-          alt="明日方舟背景"
+          alt="背景"
           fill
           className="object-cover"
           priority
@@ -28,7 +28,7 @@ export default function AccurateIndexSection() {
         transition={{ duration: 0.8 }}
       >
         <div className="text-white font-bold text-lg tracking-wider">
-          明日方舟
+          心流元素
         </div>
       </motion.div>
 
@@ -120,7 +120,7 @@ export default function AccurateIndexSection() {
             <br />
             方舟
           </motion.h1>
-          
+
           {/* 英文标题 */}
           <motion.div
             className="space-y-2"
@@ -167,7 +167,7 @@ export default function AccurateIndexSection() {
               INFORMATION
               <div className="text-xs">情报</div>
             </motion.button>
-            
+
             <motion.button
               className="w-full bg-green-500 text-white px-6 py-3 rounded font-bold tracking-wider hover:bg-green-400 transition-colors"
               whileHover={{ scale: 1.05 }}
@@ -175,7 +175,7 @@ export default function AccurateIndexSection() {
             >
               下载
             </motion.button>
-            
+
             <motion.button
               className="w-full bg-blue-500 text-white px-6 py-3 rounded font-bold tracking-wider hover:bg-blue-400 transition-colors"
               whileHover={{ scale: 1.05 }}
@@ -183,7 +183,7 @@ export default function AccurateIndexSection() {
             >
               通过TapTap下载
             </motion.button>
-            
+
             <motion.button
               className="w-full bg-yellow-500 text-black px-6 py-3 rounded font-bold tracking-wider hover:bg-yellow-400 transition-colors"
               whileHover={{ scale: 1.05 }}
@@ -191,7 +191,7 @@ export default function AccurateIndexSection() {
             >
               官方社区
             </motion.button>
-            
+
             <motion.button
               className="w-full bg-purple-500 text-white px-6 py-3 rounded font-bold tracking-wider hover:bg-purple-400 transition-colors"
               whileHover={{ scale: 1.05 }}
