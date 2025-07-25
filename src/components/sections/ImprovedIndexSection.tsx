@@ -1,12 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { 
-  Apple, 
-  Smartphone, 
-  Gamepad2, 
-  Monitor, 
-  Users, 
+import {
+  Apple,
+  Smartphone,
+  Gamepad2,
+  Monitor,
+  Users,
   CreditCard,
   QrCode,
   Shield
@@ -101,7 +101,7 @@ export default function ImprovedIndexSection() {
               </motion.div>
             </motion.div>
           </div>
-          
+
           {/* Main content - Logo and title */}
           <motion.div
             className="absolute top-1/2 left-[5%] -translate-y-1/2 z-30 text-white max-w-2xl"
@@ -157,7 +157,7 @@ export default function ImprovedIndexSection() {
             transition={{ duration: 1, delay: 1.5 }}
           >
             <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 rounded-lg text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-blue-500/30 hover:border-blue-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-blue-500/20"
+              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-blue-500/30 hover:border-blue-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-blue-500/20"
               target="_blank"
               href="https://itunes.apple.com/cn/app/id1454663939?mt=8"
               whileHover={{ scale: 1.02 }}
@@ -173,7 +173,7 @@ export default function ImprovedIndexSection() {
             </motion.a>
 
             <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 rounded-lg text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-green-500/30 hover:border-green-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-green-500/20"
+              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-green-500/30 hover:border-green-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-green-500/20"
               target="_blank"
               href="https://ak.hypergryph.com/downloads/android_lastest"
               whileHover={{ scale: 1.02 }}
@@ -189,7 +189,7 @@ export default function ImprovedIndexSection() {
             </motion.a>
 
             <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 rounded-lg text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-yellow-500/30 hover:border-yellow-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-yellow-500/20"
+              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-yellow-500/30 hover:border-yellow-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-yellow-500/20"
               target="_blank"
               href="https://l.taptap.cn/H8VVNhvq?channel=rep-rep_typxbuxvnpi"
               whileHover={{ scale: 1.02 }}
@@ -204,7 +204,7 @@ export default function ImprovedIndexSection() {
             </motion.a>
 
             <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 rounded-lg text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-purple-500/30 hover:border-purple-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-purple-500/20"
+              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-purple-500/30 hover:border-purple-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-purple-500/20"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -217,7 +217,7 @@ export default function ImprovedIndexSection() {
             </motion.a>
 
             <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 rounded-lg text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-cyan-500/30 hover:border-cyan-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-cyan-500/20"
+              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-cyan-500/30 hover:border-cyan-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-cyan-500/20"
               target="_blank"
               href="https://www.skland.com/game/GVERCALL"
               whileHover={{ scale: 1.02 }}
@@ -232,7 +232,7 @@ export default function ImprovedIndexSection() {
             </motion.a>
 
             <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 rounded-lg text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-orange-500/30 hover:border-orange-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-orange-500/20"
+              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-orange-500/30 hover:border-orange-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-orange-500/20"
               target="_blank"
               href="https://user.hypergryph.com/payment/GVERCALL?source_from=ak_official"
               whileHover={{ scale: 1.02 }}
@@ -255,11 +255,11 @@ export default function ImprovedIndexSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 2 }}
           >
-            <div className="flex items-center gap-3 bg-black/40 px-3 py-3 rounded-lg backdrop-blur-md border border-white/10 hover:bg-black/50 transition-colors duration-300">
+            <div className="flex items-center gap-3 bg-black/40 px-3 py-3 backdrop-blur-md border border-white/10 hover:bg-black/50 transition-colors duration-300">
               <div className="flex flex-col text-white text-xs font-medium tracking-wide opacity-90 leading-tight">
                 <span>扫</span><span>码</span><span>下</span><span>载</span>
               </div>
-              <div className="w-16 h-16 rounded-md bg-white p-2 flex items-center justify-center">
+              <div className="w-16 h-16 bg-white p-2 flex items-center justify-center">
                 <QrCode className="w-full h-full text-black" />
               </div>
             </div>
@@ -269,7 +269,7 @@ export default function ImprovedIndexSection() {
               whileHover={{ scale: 1.05, opacity: 1 }}
               className="opacity-80 hover:opacity-100 transition-opacity duration-300"
             >
-              <div className="w-12 h-12 rounded border border-white/10 hover:border-white/30 transition-colors duration-300 bg-white/10 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-12 h-12 border border-white/10 hover:border-white/30 transition-colors duration-300 bg-white/10 backdrop-blur-sm flex items-center justify-center">
                 <Shield className="w-6 h-6 text-white" />
               </div>
             </motion.a>
