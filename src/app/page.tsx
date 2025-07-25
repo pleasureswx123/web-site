@@ -272,78 +272,102 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* 右侧边占位内容 - 对应 _ae86e3f9 */}
-        <div className="_ae86e3f9" data-style="">
-          {/*在这里实现*/}
+        {/* 全新设计的右侧边栏 - 使用 Tailwind CSS */}
+        <div className="fixed top-1/2 right-12 -translate-y-1/2 z-[100] w-[200px] h-[400px] flex flex-col justify-between pointer-events-none">
+          {/* 主要内容区域 */}
+          <div className="flex flex-col items-end text-right relative">
+            {/* 大号数字 - 蓝色，有遮挡效果 */}
+            <motion.div
+              className="relative mb-[-20px] z-[3]"
+              key={`number-${currentSection}`}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <span className="font-ak-title text-[8rem] font-black text-ak-primary leading-[0.8] block relative z-[2] drop-shadow-[0_0_30px_rgba(0,153,255,0.5)] animate-pulse">
+                {currentSection === 'index' && '00'}
+                {currentSection === 'information' && '01'}
+                {currentSection === 'operator' && '02'}
+                {currentSection === 'world' && '03'}
+                {currentSection === 'media' && '04'}
+                {currentSection === 'more' && '05'}
+              </span>
+              <div className="absolute bottom-[-10px] left-0 right-0 h-[40px] bg-gradient-to-t from-ak-dark/90 via-ak-dark/70 to-transparent z-[3] pointer-events-none"></div>
+            </motion.div>
 
+            {/* 分数线 - 特殊字体 */}
+            <motion.div
+              className="mb-2 relative z-[4]"
+              key={`fraction-${currentSection}`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+            >
+              <span className="font-ak-title text-lg font-bold text-white/95 tracking-[0.15em] uppercase relative before:absolute before:left-[-10px] before:top-1/2 before:w-[30px] before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-ak-primary before:to-transparent before:-translate-y-1/2">
+                // {currentSection === 'index' && '00'}
+                {currentSection === 'information' && '01'}
+                {currentSection === 'operator' && '02'}
+                {currentSection === 'world' && '03'}
+                {currentSection === 'media' && '04'}
+                {currentSection === 'more' && '05'} / 05
+              </span>
+            </motion.div>
 
+            {/* 小字标识 */}
+            <motion.div
+              className="mb-8 relative"
+              key={`label-${currentSection}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+            >
+              <span className="font-ak-secondary text-[0.65rem] font-medium text-white/40 tracking-[0.4em] uppercase after:absolute after:right-[-15px] after:top-1/2 after:w-2 after:h-2 after:bg-ak-primary/30 after:rounded-full after:-translate-y-1/2">
+                GVERCALL
+              </span>
+            </motion.div>
+
+            {/* 主标题区域 */}
+            <motion.div
+              className="flex flex-col items-end gap-2"
+              key={`title-${currentSection}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              {/*<div className="font-ak-secondary text-[0.9rem] font-medium text-white/80 tracking-[0.12em] uppercase"></div>*/}
+              <div className="font-ak-title text-[1.4rem] font-bold text-ak-primary tracking-[0.1em] uppercase relative before:absolute before:left-[-20px] before:top-0 before:bottom-0 before:w-[3px] before:bg-gradient-to-b before:from-ak-primary before:to-transparent">
+                {currentSection === 'index' && 'INDEX'}
+                {currentSection === 'information' && 'INFORMATION'}
+                {currentSection === 'operator' && 'OPERATOR'}
+                {currentSection === 'world' && 'WORLD'}
+                {currentSection === 'media' && 'ABOUT TERRA'}
+                {currentSection === 'more' && 'MORE CONTENT'}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 右下角标识 */}
           <motion.div
-            className="_a6fb5251"
-            style={{ transform: 'translateY(0rem)', opacity: 1 }}
-            key={`number-${currentSection}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            className="absolute bottom-[-2rem] right-[-1rem] font-ak-title text-[1.2rem] font-bold text-white/60 tracking-[0.2em] uppercase -rotate-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+            initial={{ opacity: 0, rotate: -5 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            {currentSection === 'index' && '00'}
-            {currentSection === 'information' && '01'}
-            {currentSection === 'operator' && '02'}
-            {currentSection === 'world' && '03'}
-            {currentSection === 'media' && '04'}
-            {currentSection === 'more' && '05'}
+            GVERCALL
           </motion.div>
-          <motion.div
-            className="_0df54c95"
-            style={{ transform: 'translateY(0rem)', opacity: 1 }}
-            key={`fraction-${currentSection}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
-            // {currentSection === 'index' && '00'}
-            {currentSection === 'information' && '01'}
-            {currentSection === 'operator' && '02'}
-            {currentSection === 'world' && '03'}
-            {currentSection === 'media' && '04'}
-            {currentSection === 'more' && '05'} / 05
-          </motion.div>
-          <motion.div
-            className="_a229ec44"
-            style={{ transform: 'translateY(0rem)', opacity: 1 }}
-            key={`title-${currentSection}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-          >
-            ARKNIGHTS
-          </motion.div>
-          <motion.div
-            className="_f46541ee"
-            style={{ transform: 'translateY(0rem)', opacity: 1 }}
-            key={`subtitle-${currentSection}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.3 }}
-          >
-            {currentSection === 'index' && 'INDEX'}
-            {currentSection === 'information' && 'INFORMATION'}
-            {currentSection === 'operator' && 'OPERATOR'}
-            {currentSection === 'world' && 'WORLD'}
-            {currentSection === 'media' && 'ABOUT TERRA'}
-            {currentSection === 'more' && 'MORE CONTENT'}
-          </motion.div>
+
+          {/* 装饰性元素 */}
+          <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none z-[1]">
+            <div className="absolute top-[20%] right-[-10px] w-[2px] h-[60px] bg-gradient-to-b from-transparent via-ak-primary to-transparent opacity-60 animate-pulse"></div>
+            <div className="absolute top-[60%] right-[-25px] w-[1px] h-[40px] bg-gradient-to-b from-ak-primary to-transparent opacity-40 animate-pulse delay-[2s]"></div>
+            <div className="absolute top-[40%] right-[-30px] w-1 h-1 bg-ak-primary rounded-full opacity-70 shadow-[0_0_10px_rgba(0,153,255,0.5)] animate-pulse delay-[1s]"></div>
+          </div>
         </div>
 
         {/* OriginalNavigation组件：顶部导航内容组件 - 对应 _6066ead1 */}
         <div className="_6066ead1">
           <OriginalNavigation currentSection={currentSection} />
         </div>
-
-        {/* 点击导航上icon_social时弹出的内容层 - 对应 _5a5107d2 _7f5ebf8d */}
-        <div className="_5a5107d2 _7f5ebf8d"></div>
-
-        {/* 点击导航上icon_user时弹出的内容层 - 对应 _6975b23b _7f5ebf8d */}
-        <div className="_6975b23b _7f5ebf8d"></div>
 
         {/* Footer */}
         <Footer />

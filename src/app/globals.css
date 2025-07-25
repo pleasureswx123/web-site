@@ -535,6 +535,13 @@ a {
   font-weight: 400;
 }
 
+/* ===== 右侧边栏已完全使用 Tailwind CSS 重构 ===== */
+/* 所有样式已迁移到组件的 className 中，无需额外 CSS */
+
+
+
+
+
 /* 保持向后兼容 */
 .ak-sidebar-number {
   font-size: 4rem;
