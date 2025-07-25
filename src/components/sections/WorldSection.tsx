@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
+import { ChevronRight, ChevronLeft, ArrowLeft } from 'lucide-react'
 
 const worldData = [
   {
@@ -112,7 +113,7 @@ export default function WorldSection() {
         {Array.from({ length: 50 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+            className="absolute w-1 h-1 bg-ak-secondary rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -146,7 +147,7 @@ export default function WorldSection() {
               {worldData.map((item, index) => (
                 <motion.button
                   key={item.id}
-                  className="group text-left border-b border-gray-700 hover:border-cyan-400 pb-4 transition-all duration-300"
+                  className="group text-left border-b border-gray-700 hover:border-ak-secondary pb-4 transition-all duration-300 hover:bg-ak-secondary/5 px-4 py-2 rounded-lg"
                   onClick={() => handleItemClick(item)}
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -155,7 +156,7 @@ export default function WorldSection() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
+                      <h3 className="text-2xl font-bold text-white group-hover:text-ak-secondary transition-colors mb-2">
                         {item.titleCn}
                       </h3>
                       <p className="text-gray-400 text-sm font-mono tracking-wider">
@@ -163,12 +164,10 @@ export default function WorldSection() {
                       </p>
                     </div>
                     <motion.div
-                      className="text-gray-600 group-hover:text-cyan-400 transition-colors"
+                      className="text-gray-600 group-hover:text-ak-secondary transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                      <ChevronRight className="w-6 h-6" />
                     </motion.div>
                   </div>
                 </motion.button>
@@ -215,26 +214,22 @@ export default function WorldSection() {
           >
             {/* 左侧导航箭头 */}
             <motion.button
-              className="absolute left-8 top-1/2 transform -translate-y-1/2 w-12 h-12 border border-red-500 hover:bg-red-500/20 flex items-center justify-center transition-all duration-300 z-20"
+              className="absolute left-8 top-1/2 -translate-y-1/2 w-12 h-12 border border-ak-accent hover:bg-ak-accent/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-ak-accent/30"
               onClick={handlePrevious}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
+              <ChevronLeft className="w-6 h-6 text-ak-accent" />
             </motion.button>
 
             {/* 右侧导航箭头 */}
             <motion.button
-              className="absolute right-8 top-1/2 transform -translate-y-1/2 w-12 h-12 border border-red-500 hover:bg-red-500/20 flex items-center justify-center transition-all duration-300 z-20"
+              className="absolute right-8 top-1/2 -translate-y-1/2 w-12 h-12 border border-ak-accent hover:bg-ak-accent/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-ak-accent/30"
               onClick={handleNext}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+              <ChevronRight className="w-6 h-6 text-ak-accent" />
             </motion.button>
 
             {/* 中间内容区域 */}
@@ -251,7 +246,7 @@ export default function WorldSection() {
                   >
                     {/* 医疗记录标题 */}
                     <motion.div
-                      className="text-cyan-400 text-sm font-mono tracking-wider mb-4"
+                      className="text-ak-secondary text-sm font-mono tracking-wider mb-4"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
@@ -270,7 +265,7 @@ export default function WorldSection() {
                     </motion.h1>
 
                     <motion.h2
-                      className="text-2xl text-gray-400 font-mono mb-8"
+                      className="text-2xl text-ak-secondary font-mono mb-8"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
@@ -290,7 +285,7 @@ export default function WorldSection() {
 
                     {/* 页码指示器 */}
                     <motion.div
-                      className="text-cyan-400 text-sm font-mono"
+                      className="text-ak-secondary text-sm font-mono"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.6 }}
@@ -305,7 +300,7 @@ export default function WorldSection() {
             {/* 底部进度条 */}
             <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-800">
               <motion.div
-                className="h-full bg-cyan-400"
+                className="h-full bg-ak-secondary shadow-lg shadow-ak-secondary/50"
                 initial={{ width: 0 }}
                 animate={{ width: `${((currentIndex + 1) / worldData.length) * 100}%` }}
                 transition={{ duration: 0.5 }}
@@ -322,9 +317,7 @@ export default function WorldSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
             >
-              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
+              <ArrowLeft className="w-4 h-4 text-gray-400" />
               <span className="text-gray-300">返回</span>
             </motion.button>
 

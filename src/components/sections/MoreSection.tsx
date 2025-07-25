@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import Image from 'next/image'
+import { ChevronRight, ArrowLeft } from 'lucide-react'
 
 const moreContent = [
   {
@@ -182,7 +183,7 @@ export default function MoreSection() {
             transition={{ duration: 0.5 }}
           >
             {/* 背景 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
 
             <div className="relative z-10 min-h-screen flex items-center">
               <div className="container mx-auto px-6">
@@ -223,7 +224,7 @@ export default function MoreSection() {
                           className="object-cover group-hover:scale-110 transition-transform duration-500"
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         />
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"></div>
+                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
                       </div>
 
                       {/* 内容 */}
@@ -234,7 +235,7 @@ export default function MoreSection() {
                           </div>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
+                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-ak-secondary transition-colors">
                           {item.title}
                         </h3>
 
@@ -242,11 +243,9 @@ export default function MoreSection() {
                           {item.titleEn}
                         </p>
 
-                        <div className="flex items-center text-cyan-400 text-sm">
+                        <div className="flex items-center text-ak-secondary text-sm">
                           <span>VIEW MORE</span>
-                          <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
+                          <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
                     </motion.button>
@@ -302,10 +301,10 @@ export default function MoreSection() {
                           <h1 className="text-5xl font-bold text-white mb-4 leading-tight">
                             {selectedContent.titleEn}
                           </h1>
-                          <h2 className="text-2xl text-cyan-400 mb-6">
+                          <h2 className="text-2xl text-ak-secondary mb-6">
                             {selectedContent.title}
                           </h2>
-                          <div className="w-20 h-1 bg-cyan-400"></div>
+                          <div className="w-20 h-1 bg-ak-secondary shadow-lg shadow-ak-secondary/50" />
                         </motion.div>
 
                         {/* Tab内容 */}
@@ -331,7 +330,7 @@ export default function MoreSection() {
                           transition={{ delay: 0.6 }}
                         >
                           <motion.button
-                            className="bg-cyan-600 hover:bg-cyan-500 text-white px-8 py-3 rounded transition-colors duration-300"
+                            className="bg-ak-secondary hover:bg-ak-secondary/80 text-white px-8 py-3 rounded transition-colors duration-300 shadow-lg shadow-ak-secondary/30 hover:shadow-ak-secondary/50"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                           >
@@ -354,8 +353,8 @@ export default function MoreSection() {
                         <motion.button
                           key={tab.id}
                           className={`w-full text-left p-4 rounded-lg border transition-all duration-300 ${activeTab === index
-                              ? 'bg-cyan-600/20 border-cyan-400 text-white'
-                              : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white'
+                              ? 'bg-ak-secondary/20 border-ak-secondary text-white shadow-lg shadow-ak-secondary/20'
+                              : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white hover:bg-black/40'
                             }`}
                           onClick={() => handleTabChange(index)}
                           initial={{ opacity: 0, x: 20 }}
@@ -366,9 +365,7 @@ export default function MoreSection() {
                         >
                           <div className="flex items-center justify-between">
                             <span className="font-medium">{tab.title}</span>
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
+                            <ChevronRight className="w-4 h-4" />
                           </div>
                         </motion.button>
                       ))}
@@ -386,9 +383,7 @@ export default function MoreSection() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <ArrowLeft className="w-4 h-4 text-gray-300" />
                   <span className="text-gray-300">返回</span>
                 </motion.button>
               </>

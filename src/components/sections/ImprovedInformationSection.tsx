@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
+import { ChevronRight } from 'lucide-react'
 
 // 轮播横幅数据 - 基于UI图更新
 const carouselBanners = [
@@ -110,35 +113,46 @@ export default function ImprovedInformationSection() {
   }
 
   return (
-    <div className="_446c7f49 _1d83b18b" style={{ left: 'auto' }}>
+    <section className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-800">
       {/* 背景装饰 */}
-      <div className="_d034f64c"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
 
       {/* 主轮播横幅区域 */}
-      <div className="_4c6251ec">
-        <div className="swiper swiper-initialized swiper-horizontal _34ed7167 swiper-backface-hidden">
-          <div className="swiper-wrapper" style={getTransformStyle()}>
+      <div className="relative w-full h-2/3 overflow-hidden">
+        <div className="relative w-full h-full">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={getTransformStyle()}
+          >
             {carouselBanners.map((banner, index) => {
               const isActive = index === currentBanner
-              const isPrev = index === (currentBanner - 1 + carouselBanners.length) % carouselBanners.length
-              const isNext = index === (currentBanner + 1) % carouselBanners.length
-
-              let slideClass = 'swiper-slide'
-              if (isActive) slideClass += ' swiper-slide-active'
-              if (isPrev) slideClass += ' swiper-slide-prev'
-              if (isNext) slideClass += ' swiper-slide-next'
 
               return (
-                <div
+                <motion.div
                   key={banner.id}
-                  className={slideClass}
-                  style={{ width: '1138px' }}
+                  className="flex-shrink-0 cursor-pointer"
+                  style={{ width: '1138px', height: '400px' }}
                   onClick={() => handleBannerClick(index)}
+                  whileHover={{ scale: isActive ? 1.02 : 1 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <a className="_c684c97a" href={banner.url} target="_blank">
-                    <img className="_c493fa1c" src={banner.image} alt={banner.title} />
+                  <a className="block w-full h-full group" href={banner.url} target="_blank">
+                    <div className="relative w-full h-full overflow-hidden rounded-lg shadow-2xl">
+                      <Image
+                        src={banner.image}
+                        alt={banner.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1138px"
+                        priority={isActive}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                      <div className="absolute bottom-6 left-6 text-white">
+                        <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">{banner.title}</h3>
+                      </div>
+                    </div>
                   </a>
-                </div>
+                </motion.div>
               )
             })}
           </div>
@@ -146,65 +160,104 @@ export default function ImprovedInformationSection() {
       </div>
 
       {/* 轮播滚动条 */}
-      <div className="_84945841">
-        <div className="_fcf0101c swiper-scrollbar-horizontal">
-          <div className="swiper-scrollbar-drag" style={getScrollbarStyle()}></div>
+      <div className="absolute bottom-1/3 left-1/2 -translate-x-1/2 w-full max-w-4xl px-8 z-20">
+        <div className="relative w-full h-1 bg-white/20 rounded-full overflow-hidden">
+          <motion.div
+            className="absolute top-0 left-0 h-full bg-ak-primary rounded-full shadow-lg shadow-ak-primary/50"
+            style={getScrollbarStyle()}
+            transition={{ duration: 0.3 }}
+          />
         </div>
       </div>
 
       {/* 装饰背景元素 */}
-      <div className="_2474bf68"></div>
-      <div className="_5debcceb"></div>
+      <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-radial from-ak-primary/10 to-transparent rounded-full animate-pulse" />
+      <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-radial from-blue-500/10 to-transparent rounded-full animate-pulse delay-1000" />
 
       {/* 主要内容区域 - 重新布局 */}
-      <div className="_f00913a8">
-        <div className="_1aa87c3a"></div>
-        <div className="_7e5f4af0"></div>
+      <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/80 to-transparent z-20">
+        <div className="container mx-auto px-8 py-8 h-full">
+          {/* 左侧新闻列表区域 */}
+          <div className="max-w-4xl">
+            {/* 新闻分类筛选器 */}
+            <motion.div
+              className="flex gap-6 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              {filters.map((filter, index) => (
+                <motion.button
+                  key={filter}
+                  className={`group flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 ${activeFilter === filter
+                    ? 'bg-ak-primary/20 border-ak-primary text-ak-primary shadow-lg shadow-ak-primary/20'
+                    : 'bg-white/5 border-white/20 text-white/80 hover:border-white/40 hover:text-white hover:bg-white/10'
+                    }`}
+                  onClick={() => setActiveFilter(filter)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                >
+                  <span className="font-medium">{filter}</span>
+                  <div className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300">
+                    <ChevronRight className="w-full h-full" />
+                  </div>
+                </motion.button>
+              ))}
+            </motion.div>
 
-        {/* 左侧新闻列表区域 */}
-        <div className="_6c630746">
-          {/* 新闻分类筛选器 */}
-          <div className="_8419bfdd">
-            {filters.map((filter) => (
-              <div
-                key={filter}
-                className={`_5adb7306 ${activeFilter === filter ? '_1d83b18b' : ''}`}
-                onClick={() => setActiveFilter(filter)}
-                style={{ cursor: 'pointer' }}
+            {/* 新闻列表 */}
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <AnimatePresence mode="wait">
+                {filteredNews.map((news, index) => (
+                  <motion.a
+                    key={news.id}
+                    className="group flex items-center gap-4 p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-white/5"
+                    target="_blank"
+                    href={news.url}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    <div className="px-3 py-1 bg-ak-primary/20 text-ak-primary text-sm font-medium rounded-full border border-ak-primary/30 group-hover:bg-ak-primary/30 group-hover:border-ak-primary/50 transition-colors duration-300">
+                      {news.type}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-white/60 text-sm font-mono mb-1">{news.date}</div>
+                      <div className="text-white group-hover:text-ak-secondary transition-colors duration-300">{news.title}</div>
+                    </div>
+                  </motion.a>
+                ))}
+              </AnimatePresence>
+
+              <motion.a
+                className="group flex items-center justify-center gap-2 p-4 bg-ak-primary/10 border border-ak-primary/30 rounded-lg hover:bg-ak-primary/20 hover:border-ak-primary/50 transition-all duration-300 text-ak-primary font-medium hover:shadow-lg hover:shadow-ak-primary/20"
+                target="_blank"
+                href="/news"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1 }}
               >
-                <span>{filter}</span>
-                <div className="_1ec422e3">
-                  <svg viewBox="0 0 7 15">
-                    <use xlinkHref="#svg_def-icon_arrow"></use>
-                  </svg>
+                <span>READ MORE</span>
+                <div className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300">
+                  <ChevronRight className="w-full h-full" />
                 </div>
-              </div>
-            ))}
-          </div>
-
-          {/* 新闻列表 */}
-          <div className="_0882dfb6">
-            {filteredNews.map((news) => (
-              <a key={news.id} className="_b6f1b9e5" target="_blank" href={news.url}>
-                <div className="_b34281ac">{news.type}</div>
-                <div className="_4e2f6712">
-                  <div className="_78dcf6c5">{news.date}</div>
-                  <div className="_9c298aed">{news.title}</div>
-                </div>
-              </a>
-            ))}
-
-            <a className="_b9c239f0" target="_blank" href="/news">
-              <span>READ MORE</span>
-              <div className="_1ec422e3">
-                <svg viewBox="0 0 7 15">
-                  <use xlinkHref="#svg_def-icon_arrow"></use>
-                </svg>
-              </div>
-            </a>
+              </motion.a>
+            </motion.div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

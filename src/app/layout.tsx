@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+/* 引入镂空文字效果样式 */
+import '../styles/hollow-text.css';
+
 export const metadata: Metadata = {
   title: 'Gvercall',
   description: '心流元素官方网站',

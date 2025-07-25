@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { ChevronRight, ChevronLeft, ArrowLeft } from 'lucide-react'
 
 // 重新设计的媒体内容数据，更符合UI图的现代化设计
 const mediaContent = [
@@ -214,7 +215,7 @@ export default function MediaSection() {
                           fill
                           className="object-cover group-hover:scale-110 transition-transform duration-700"
                         />
-                        <div className={`absolute inset-0 bg-gradient-to-t ${item.color} opacity-80 group-hover:opacity-70 transition-opacity duration-500`}></div>
+                        <div className={`absolute inset-0 bg-gradient-to-t ${item.color} opacity-80 group-hover:opacity-70 transition-opacity duration-500`} />
                       </div>
 
                       {/* 内容 */}
@@ -276,12 +277,10 @@ export default function MediaSection() {
 
                         {/* 悬停时显示的箭头 */}
                         <motion.div
-                          className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
                           whileHover={{ scale: 1.1 }}
                         >
-                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
+                          <ChevronRight className="w-4 h-4 text-white" />
                         </motion.div>
                       </div>
                     </div>
@@ -407,9 +406,7 @@ export default function MediaSection() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <ChevronLeft className="w-5 h-5 text-white" />
                 </motion.button>
 
                 <div className="flex space-x-2">
@@ -430,9 +427,7 @@ export default function MediaSection() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <ChevronRight className="w-5 h-5 text-white" />
                 </motion.button>
               </motion.div>
             </div>
@@ -447,9 +442,7 @@ export default function MediaSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
+              <ArrowLeft className="w-4 h-4 text-white" />
               <span className="text-white font-medium">返回</span>
             </motion.button>
 

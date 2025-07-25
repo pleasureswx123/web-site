@@ -3,6 +3,14 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import Image from 'next/image'
+import { 
+  CheckCircle, 
+  Volume2, 
+  Info, 
+  Heart, 
+  ChevronLeft, 
+  ChevronRight 
+} from 'lucide-react'
 
 const operatorData = [
   {
@@ -81,13 +89,26 @@ export default function OperatorSection() {
   }
 
   return (
-<section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" style={{backgroundImage: 'url(/images/role.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* 背景图片 */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/role.png"
+          alt="背景"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+
       {/* 背景装饰 */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-black/40"></div>
         {/* 几何装饰元素 */}
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 border border-cyan-500/20 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-32 h-32 border border-blue-500/20 rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 border border-ak-primary/20 rounded-full animate-pulse" />
+        <div className="absolute bottom-1/4 left-1/4 w-32 h-32 border border-ak-secondary/20 rounded-full animate-pulse delay-1000" />
+        {/* 网格背景 */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
       </div>
 
       <div className="relative z-10 flex h-screen">
@@ -101,9 +122,9 @@ export default function OperatorSection() {
           {operatorData.map((operator, index) => (
             <motion.button
               key={operator.id}
-              className={`relative w-16 h-16 rounded-full overflow-hidden border-2 transition-all duration-300 ${selectedOperator.id === operator.id
-                  ? 'border-cyan-400 shadow-lg shadow-cyan-400/50 scale-110'
-                  : 'border-gray-600 hover:border-gray-400'
+              className={`group relative w-16 h-16 rounded-full overflow-hidden border-2 transition-all duration-300 ${selectedOperator.id === operator.id
+                  ? 'border-ak-primary shadow-lg shadow-ak-primary/50 scale-110'
+                  : 'border-ak-border hover:border-ak-text-secondary hover:shadow-md hover:shadow-ak-text-secondary/30'
                 }`}
               onClick={() => handleOperatorSelect(operator)}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -117,10 +138,10 @@ export default function OperatorSection() {
                 alt={operator.nameCn}
                 width={64}
                 height={64}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
               />
               {selectedOperator.id === operator.id && (
-                <div className="absolute inset-0 bg-cyan-400/20 rounded-full"></div>
+                <div className="absolute inset-0 bg-ak-primary/20 rounded-full" />
               )}
             </motion.button>
           ))}
@@ -135,12 +156,10 @@ export default function OperatorSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-6 h-6 bg-cyan-400 rounded flex items-center justify-center">
-              <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
+            <div className="w-6 h-6 bg-ak-secondary rounded flex items-center justify-center shadow-lg shadow-ak-secondary/30">
+              <CheckCircle className="w-4 h-4 text-black" />
             </div>
-            <span className="text-cyan-400 font-medium text-sm tracking-wider">
+            <span className="text-ak-secondary font-medium text-sm tracking-wider">
               {selectedOperator.professionCn}
             </span>
           </motion.div>
@@ -174,18 +193,14 @@ export default function OperatorSection() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="flex items-center space-x-3">
-                <svg className="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217z" clipRule="evenodd" />
-                </svg>
+                <Volume2 className="w-4 h-4 text-ak-secondary" />
                 <span className="text-gray-400 text-sm">中文CV:</span>
-                <span className="text-white">{selectedOperator.voiceCn}</span>
+                <span className="text-white font-medium">{selectedOperator.voiceCn}</span>
               </div>
               <div className="flex items-center space-x-3">
-                <svg className="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217z" clipRule="evenodd" />
-                </svg>
+                <Volume2 className="w-4 h-4 text-ak-secondary" />
                 <span className="text-gray-400 text-sm">日文CV:</span>
-                <span className="text-white">{selectedOperator.voiceJp}</span>
+                <span className="text-white font-medium">{selectedOperator.voiceJp}</span>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -212,25 +227,21 @@ export default function OperatorSection() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <motion.button
-              className="flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-500 rounded-lg px-6 py-3 transition-all duration-300"
+              className="group flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-500 rounded-lg px-6 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/20"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="text-gray-300">查看详情</span>
+              <Info className="w-4 h-4 text-gray-400 group-hover:text-gray-300 transition-colors duration-300" />
+              <span className="text-gray-300 group-hover:text-white transition-colors duration-300">查看详情</span>
             </motion.button>
 
             <motion.button
-              className="flex items-center space-x-2 bg-cyan-600/80 hover:bg-cyan-500 border border-cyan-500 hover:border-cyan-400 rounded-lg px-6 py-3 transition-all duration-300"
+              className="group flex items-center space-x-2 bg-ak-secondary/80 hover:bg-ak-secondary border border-ak-secondary hover:border-ak-secondary/80 rounded-lg px-6 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-ak-secondary/30"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-              <span className="text-white">收藏干员</span>
+              <Heart className="w-4 h-4 text-white group-hover:scale-110 transition-transform duration-300" />
+              <span className="text-white font-medium">收藏干员</span>
             </motion.button>
           </motion.div>
         </div>
@@ -262,7 +273,7 @@ export default function OperatorSection() {
 
           {/* 导航箭头 */}
           <motion.button
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-gray-400 rounded-full flex items-center justify-center transition-all duration-300"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => {
@@ -271,13 +282,11 @@ export default function OperatorSection() {
               handleOperatorSelect(operatorData[prevIndex])
             }}
           >
-            <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <ChevronLeft className="w-6 h-6 text-gray-300 hover:text-ak-primary transition-colors duration-300" />
           </motion.button>
 
           <motion.button
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-gray-400 rounded-full flex items-center justify-center transition-all duration-300"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => {
@@ -286,9 +295,7 @@ export default function OperatorSection() {
               handleOperatorSelect(operatorData[nextIndex])
             }}
           >
-            <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRight className="w-6 h-6 text-gray-300 hover:text-ak-primary transition-colors duration-300" />
           </motion.button>
         </div>
       </div>
