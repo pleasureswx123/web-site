@@ -116,7 +116,7 @@ export default function ImprovedInformationSection() {
     <section
       className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-black/20 to-slate-800">
       {/* 背景装饰 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"/>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
       <div className="absolute -left-5 bottom-[70px] text-[100px] font-bold text-white/20 z-10]">
         GVERCALL NEWS
       </div>
@@ -125,7 +125,7 @@ export default function ImprovedInformationSection() {
         <div className="relative w-full h-full">
           <div className="flex h-full">
             {/* 左侧新闻列表区域 - 根据UI图重构 */}
-            <div className="w-1/5 flex flex-col pointer-events-auto p-5">
+            <div className="w-1/5 min-w-80 flex flex-col pointer-events-auto p-5">
               {/* 新闻分类标签页 - 水平布局 */}
               <motion.div
                 className="flex gap-1 mb-2 bg-black/20 backdrop-blur-sm border-b border-gray-600/100"
@@ -136,11 +136,10 @@ export default function ImprovedInformationSection() {
                 {filters.map((filter, index) => (
                   <motion.button
                     key={filter}
-                    className={`flex-1 px-1 py-1 text-sm font-medium transition-all duration-300 ${
-                      activeFilter === filter
+                    className={`flex-1 px-1 py-1 text-sm font-medium transition-all duration-300 ${activeFilter === filter
                         ? 'bg-cyan-400 text-black shadow-lg'
                         : 'text-white/80 hover:text-white hover:bg-white/10'
-                    }`}
+                      }`}
                     onClick={() => setActiveFilter(filter)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -276,11 +275,10 @@ export default function ImprovedInformationSection() {
                 {carouselBanners.map((_, index) => (
                   <button
                     key={index}
-                    className={`w-2 h-2 transition-all duration-300 ${
-                      index === currentBanner
+                    className={`w-2 h-2 transition-all duration-300 ${index === currentBanner
                         ? 'bg-ak-primary shadow-lg shadow-ak-primary/50'
                         : 'bg-white/30 hover:bg-white/50'
-                    }`}
+                      }`}
                     onClick={() => handleBannerClick(index)}
                   />
                 ))}
@@ -295,5 +293,5 @@ export default function ImprovedInformationSection() {
       <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-radial from-blue-500/10 to-transparent rounded-full animate-pulse delay-1000" />
 
     </section>
-)
+  )
 }
