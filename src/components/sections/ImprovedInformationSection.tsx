@@ -159,38 +159,35 @@ export default function ImprovedInformationSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                <AnimatePresence mode="wait">
-                  {filteredNews.map((news, index) => (
-                    <motion.a
-                      key={news.id}
-                      className="group flex items-start gap-4 py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 block"
-                      target="_blank"
-                      href={news.url}
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 30 }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                      whileHover={{ x: 5 }}
-                    >
-                      {/* 左侧类型标签 */}
-                      <div className={`flex-shrink-0 px-2 py-1 text-sm font-medium rounded font-bold text-cyan-500`}>
-                        {news.type}
-                      </div>
+                {filteredNews.map((news, index) => (
+                  <motion.a
+                    key={news.id}
+                    className="group flex items-start gap-4 py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 block"
+                    target="_blank"
+                    href={news.url}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    {/* 左侧类型标签 */}
+                    <div className={`flex-shrink-0 px-2 py-1 text-sm font-medium rounded font-bold text-cyan-500`}>
+                      {news.type}
+                    </div>
 
-                      {/* 右侧内容区域 */}
-                      <div className="flex-1 min-w-0">
-                        {/* 日期 */}
-                        <div className="text-white/60 text-[9px] font-mono">
-                          {news.date}
-                        </div>
-                        {/* 标题 */}
-                        <div className="text-white text-sm group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
-                          {news.title}
-                        </div>
+                    {/* 右侧内容区域 */}
+                    <div className="flex-1 min-w-0">
+                      {/* 日期 */}
+                      <div className="text-white/60 text-[9px] font-mono">
+                        {news.date}
                       </div>
-                    </motion.a>
-                  ))}
-                </AnimatePresence>
+                      {/* 标题 */}
+                      <div className="text-white text-sm group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
+                        {news.title}
+                      </div>
+                    </div>
+                  </motion.a>
+                ))}
 
                 {/* READ MORE 按钮 */}
                 <motion.div

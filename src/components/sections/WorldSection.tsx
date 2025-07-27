@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { ChevronRight, ChevronLeft, ArrowLeft } from 'lucide-react'
 import { useMousePosition } from '@/hooks/useMousePosition'
+import CSSStarfield from '@/components/effects/CSSStarfield'
 
 const worldData = [
   {
@@ -118,26 +119,14 @@ export default function WorldSection() {
             backgroundSize: '50px 50px'
           }}
         />
-        {/* 动态粒子 */}
-        {Array.from({length: 50}).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-ak-secondary rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              delay: Math.random() * 2,
-              repeat: Infinity,
-            }}
-          />
-        ))}
+         {/*备用的轻量级 CSS 星空效果 */}
+         <CSSStarfield
+          className="opacity-80"
+          starCount={150}
+          animationSpeed={1.2}
+        />
+
+
       </div>
 
       <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">

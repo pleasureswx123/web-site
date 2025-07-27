@@ -212,7 +212,9 @@ export default function MediaSection() {
                                 src={item.image}
                                 alt={item.title}
                                 fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                priority={index === 0}
                               />
                               <div
                                 className={`absolute inset-0 bg-gradient-to-t ${item.color} opacity-80 group-hover:opacity-70 transition-opacity duration-500`}/>
@@ -302,6 +304,7 @@ export default function MediaSection() {
                 src={mediaContent[selectedIndex].image}
                 alt={mediaContent[selectedIndex].title}
                 fill
+                sizes="100vw"
                 className="object-cover"
                 priority
               />
