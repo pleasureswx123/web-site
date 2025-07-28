@@ -15,6 +15,8 @@ interface Particle {
   baseOpacity: number
   hasReachedTarget: boolean
   index: number
+  startDelay: number // 开始聚集的延迟时间
+  delayTimer: number // 延迟计时器
 }
 
 interface WebGLCanvasProps {
@@ -31,6 +33,8 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
   const isInitializedRef = useRef(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const targetPositionsRef = useRef<{ x: number; y: number }[]>([]) // 存储目标位置
 
   // 创建 Logo 图案的目标位置
   const createLogoPositions = () => {
@@ -142,9 +146,57 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     return positions
   }
 
+  // 重置粒子到随机位置，触发重新汇聚动画
+  const resetParticles = () => {
+    const particles = particlesRef.current
+    if (particles.length === 0) return
+
+    particles.forEach(particle => {
+      // 从画布边缘或随机位置开始
+      const startFromEdge = Math.random() < 0.7 // 70% 概率从边缘开始，更酷炫
+      
+      if (startFromEdge) {
+        const edge = Math.floor(Math.random() * 4) // 0:上, 1:右, 2:下, 3:左
+        switch (edge) {
+          case 0: // 从上边进入
+            particle.x = Math.random() * width
+            particle.y = -50
+            break
+          case 1: // 从右边进入
+            particle.x = width + 50
+            particle.y = Math.random() * height
+            break
+          case 2: // 从下边进入
+            particle.x = Math.random() * width
+            particle.y = height + 50
+            break
+          case 3: // 从左边进入
+            particle.x = -50
+            particle.y = Math.random() * height
+            break
+        }
+      } else {
+        // 从画布内随机位置开始
+        particle.x = Math.random() * width
+        particle.y = Math.random() * height
+      }
+
+      // 重置粒子状态
+      particle.vx = 0
+      particle.vy = 0
+      particle.opacity = 0.1
+      particle.hasReachedTarget = false
+      particle.delayTimer = 0 // 重置延迟计时器
+      particle.startDelay = Math.random() * 80 + particle.index * 0.3 // 重新计算延迟
+    })
+
+    console.log('🚀 粒子重新汇聚动画开始！')
+  }
+
   // 创建粒子
   const createParticles = () => {
     const positions = createLogoPositions()
+    targetPositionsRef.current = positions // 保存目标位置
 
     const particles: Particle[] = []
 
@@ -161,7 +213,9 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
         maxOpacity: 0.95,
         baseOpacity: 0.8,
         hasReachedTarget: false,
-        index
+        index,
+        startDelay: Math.random() * 100 + index * 0.5, // 随机延迟 + 基于索引的波浪效果
+        delayTimer: 0
       }
       particles.push(particle)
     })
@@ -209,6 +263,10 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
 
   // 更新粒子
   const updateParticle = (particle: Particle, mouse: { x: number; y: number }) => {
+    // 延迟逻辑 - 让粒子分批次开始聚集
+    particle.delayTimer++
+    const shouldStartMoving = particle.delayTimer > particle.startDelay
+
     // 计算到目标位置的距离
     const dx = particle.targetX - particle.x
     const dy = particle.targetY - particle.y
@@ -231,17 +289,27 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       repelForceY = Math.sin(angle) * repelStrength * 8
     }
 
-    // 向目标位置移动
-    let attractStrength = 0.005 // 缓慢的聚集
+    // 向目标位置移动 - 动态调整聚集速度让动画更酷炫
+    let attractStrength = 0.003 // 基础聚集速度，更慢开始
 
-    if (targetDistance > 400) {
-      attractStrength = 0.01
-    } else if (targetDistance > 200) {
-      attractStrength = 0.007
+    if (targetDistance > 600) {
+      attractStrength = 0.015 // 远距离时快速接近
+    } else if (targetDistance > 300) {
+      attractStrength = 0.01 // 中距离时保持速度
+    } else if (targetDistance > 100) {
+      attractStrength = 0.006 // 接近时减速
+    } else if (targetDistance > 30) {
+      attractStrength = 0.004 // 最后阶段精确定位
     }
 
-    const attractForceX = dx * attractStrength
-    const attractForceY = dy * attractStrength
+    // 只有在延迟时间过后才开始向目标聚集
+    let attractForceX = 0
+    let attractForceY = 0
+    
+    if (shouldStartMoving) {
+      attractForceX = dx * attractStrength
+      attractForceY = dy * attractStrength
+    }
 
     // 合成力
     particle.vx += attractForceX + repelForceX
@@ -268,10 +336,13 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       particle.hasReachedTarget = true
     }
 
-    // 透明度动画
+    // 透明度动画 - 考虑延迟效果
     let targetOpacity
 
-    if (targetDistance < 10) {
+    if (!shouldStartMoving) {
+      // 还没开始移动的粒子保持很低透明度
+      targetOpacity = 0.05
+    } else if (targetDistance < 10) {
       targetOpacity = particle.maxOpacity
       particle.hasReachedTarget = true
     } else if (targetDistance < 30) {
@@ -330,6 +401,41 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
 
     ctx.restore()
   }
+
+  // Intersection Observer 监测可见性
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const isCurrentlyVisible = entry.isIntersecting
+          
+          // 当从不可见变为可见时，触发重新汇聚动画
+          if (isCurrentlyVisible && !isVisible) {
+            console.log('🎯 组件进入可视区域，触发粒子汇聚动画')
+            setTimeout(() => {
+              resetParticles()
+            }, 200) // 轻微延迟让动画更流畅
+          }
+          
+          setIsVisible(isCurrentlyVisible)
+        })
+      },
+      {
+        root: null,
+        rootMargin: '50px', // 提前50px触发
+        threshold: 0.3 // 30%可见时触发
+      }
+    )
+
+    observer.observe(canvas)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [isVisible])
 
   useEffect(() => {
     const canvas = canvasRef.current
