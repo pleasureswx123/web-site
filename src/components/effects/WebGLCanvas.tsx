@@ -5,12 +5,16 @@ import { useEffect, useRef, useState } from 'react'
 interface Particle {
   x: number
   y: number
+  targetX: number
+  targetY: number
   vx: number
   vy: number
-  life: number
-  maxLife: number
   size: number
-  alpha: number
+  opacity: number
+  maxOpacity: number
+  baseOpacity: number
+  hasReachedTarget: boolean
+  index: number
 }
 
 interface WebGLCanvasProps {
@@ -19,111 +23,143 @@ interface WebGLCanvasProps {
   height?: number
 }
 
-export default function WebGLCanvas({ className = '', width = 800, height = 600 }: WebGLCanvasProps) {
+export default function WebGLCanvas({ className = '', width = 1200, height = 800 }: WebGLCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
-  const mouseRef = useRef({ x: 0, y: 0 })
+  const mouseRef = useRef({ x: -1000, y: -1000 })
   const particlesRef = useRef<Particle[]>([])
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
+  const isInitializedRef = useRef(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  // 顶点着色器源码
-  const vertexShaderSource = `
-    precision mediump float;
+  // 创建 GVERCALL 字母的目标位置
+  const createGVERCALLPositions = () => {
+    const text = 'GVERCALL'
+    const letterSpacing = 80 // 紧凑的字母间距
+    const startX = (width - text.length * letterSpacing) / 2
+    const startY = height / 2
+    const positions: { x: number; y: number }[] = []
 
-    attribute vec2 a_position;
-    attribute float a_size;
-    attribute float a_alpha;
-
-    uniform vec2 u_resolution;
-    uniform vec2 u_mouse;
-    uniform mediump float u_time;
-
-    varying float v_alpha;
-    varying vec2 v_position;
-
-    void main() {
-      vec2 position = a_position;
-
-      // 鼠标交互效果 - 更强的吸引和排斥
-      vec2 mouseDistance = position - u_mouse;
-      float distance = length(mouseDistance);
-      float maxDistance = 150.0;
-
-      if (distance < maxDistance) {
-        float influence = (maxDistance - distance) / maxDistance;
-        float pushPull = sin(u_time * 0.003) * 0.5 + 0.5; // 0-1之间变化
-
-        // 吸引效果
-        if (pushPull > 0.5) {
-          position -= normalize(mouseDistance) * influence * 20.0 * (pushPull - 0.5) * 2.0;
-        } else {
-          // 排斥效果
-          position += normalize(mouseDistance) * influence * 30.0 * (0.5 - pushPull) * 2.0;
-        }
-      }
-
-      // 添加轻微的浮动效果
-      position.x += sin(u_time * 0.001 + a_position.y * 0.01) * 2.0;
-      position.y += cos(u_time * 0.0015 + a_position.x * 0.01) * 1.5;
-
-      // 转换到裁剪空间
-      vec2 clipSpace = ((position / u_resolution) * 2.0) - 1.0;
-      gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-      gl_PointSize = a_size + sin(u_time * 0.005) * 1.0;
-      v_alpha = a_alpha;
-      v_position = position;
+    // 定义每个字母的形状点位（更高大、更密集）
+    const letterShapes: { [key: string]: number[][] } = {
+      'G': [
+        // 外圆弧
+        [1,0],[2,0],[3,0],[4,0],
+        [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+        [1,7],[2,7],[3,7],[4,7],
+        [4,6],[4,5],[4,4],[3,4],[2,4],
+        // 密度点
+        [0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
+        [1.5,0.5],[2.5,0.5],[3.5,0.5],
+        [1.5,7.5],[2.5,7.5],[3.5,7.5],
+        [4.5,5.5],[4.5,4.5],[3.5,4.5],[2.5,4.5]
+      ],
+      'V': [
+        [0,0],[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[2,7],
+        [4,0],[4,1],[4,2],[3,3],[3,4],[2,5],[2,6],[2,7],
+        [0.5,0.5],[0.5,1.5],[1.5,3.5],[1.5,4.5],
+        [4.5,0.5],[4.5,1.5],[3.5,3.5],[3.5,4.5],
+        [2.5,5.5],[2.5,6.5],[2.5,7.5]
+      ],
+      'E': [
+        [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+        [1,0],[2,0],[3,0],[4,0],
+        [1,3.5],[2,3.5],[3,3.5],
+        [1,7],[2,7],[3,7],[4,7],
+        [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
+        [1.5,0.5],[2.5,0.5],[3.5,0.5],
+        [1.5,7.5],[2.5,7.5],[3.5,7.5]
+      ],
+      'R': [
+        [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+        [1,0],[2,0],[3,0],
+        [3,1],[3,2],[3,3],
+        [1,3.5],[2,3.5],
+        [1,4],[2,5],[3,6],[4,7],
+        [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
+        [1.5,0.5],[2.5,0.5],
+        [3.5,1.5],[3.5,2.5],
+        [1.5,4.5],[2.5,5.5],[3.5,6.5]
+      ],
+      'C': [
+        [1,0],[2,0],[3,0],[4,0],
+        [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],
+        [1,7],[2,7],[3,7],[4,7],
+        [1.5,0.5],[2.5,0.5],[3.5,0.5],
+        [0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],
+        [1.5,7.5],[2.5,7.5],[3.5,7.5]
+      ],
+      'A': [
+        [2,0],[3,0],
+        [1,1],[2,1],[3,1],[4,1],
+        [0,2],[1,2],[2,2],[3,2],[4,2],[5,2],
+        [0,3],[5,3],
+        [0,4],[1,4],[2,4],[3,4],[4,4],[5,4],
+        [0,5],[5,5],[0,6],[5,6],[0,7],[5,7],
+        [2.5,0.5],[1.5,1.5],[3.5,1.5],
+        [0.5,2.5],[5.5,2.5],[0.5,3.5],[5.5,3.5],
+        [0.5,4.5],[5.5,4.5],[0.5,5.5],[5.5,5.5]
+      ],
+      'L': [
+        [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+        [1,7],[2,7],[3,7],[4,7],
+        [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
+        [1.5,7.5],[2.5,7.5],[3.5,7.5]
+      ]
     }
-  `
 
-  // 片段着色器源码
-  const fragmentShaderSource = `
-    precision mediump float;
+    text.split('').forEach((letter, letterIndex) => {
+      const letterX = startX + letterIndex * letterSpacing
+      const shape = letterShapes[letter] || []
+      const scale = 6 // 适中的缩放
 
-    uniform mediump float u_time;
-    uniform vec2 u_mouse;
-    uniform vec2 u_resolution;
-    varying float v_alpha;
-    varying vec2 v_position;
+      shape.forEach(([dx, dy]) => {
+        const x = letterX + dx * scale
+        const y = startY - 28 + dy * scale
 
-    void main() {
-      vec2 coord = gl_PointCoord - vec2(0.5);
-      float distance = length(coord);
+        // 添加轻微随机偏移
+        const offsetX = (Math.random() - 0.5) * 2
+        const offsetY = (Math.random() - 0.5) * 2
 
-      if (distance > 0.5) {
-        discard;
+        positions.push({
+          x: x + offsetX,
+          y: y + offsetY
+        })
+      })
+    })
+
+    return positions
+  }
+
+  // 创建粒子
+  const createParticles = () => {
+    const positions = createGVERCALLPositions()
+
+    const particles: Particle[] = []
+
+    positions.forEach((pos, index) => {
+      const particle: Particle = {
+        x: Math.random() * width,   // 从整个屏幕随机开始
+        y: Math.random() * height,  // 从整个屏幕随机开始
+        targetX: pos.x + (Math.random() - 0.5) * 3,
+        targetY: pos.y + (Math.random() - 0.5) * 3,
+        vx: 0,
+        vy: 0,
+        size: 2.5, // 适中的粒子大小
+        opacity: 0.1,
+        maxOpacity: 0.95,
+        baseOpacity: 0.8,
+        hasReachedTarget: false,
+        index
       }
+      particles.push(particle)
+    })
 
-      // 基础透明度
-      float alpha = (1.0 - distance * 2.0) * v_alpha;
+    particlesRef.current = particles
+    isInitializedRef.current = true
 
-      // 鼠标距离影响颜色
-      float mouseDistance = length(v_position - u_mouse);
-      float mouseInfluence = 1.0 / (1.0 + mouseDistance * 0.01);
-
-      // 更亮的颜色渐变：明亮的青色到白色到金色
-      vec3 color1 = vec3(0.0, 2.0, 2.0); // 明亮青色
-      vec3 color2 = vec3(1.0, 1.0, 2.0); // 亮蓝白色
-      vec3 color3 = vec3(2.0, 1.5, 0.0); // 金色
-
-      float colorMix = sin(u_time * 0.002 + v_position.x * 0.01) * 0.5 + 0.5;
-      vec3 baseColor = mix(color1, color2, colorMix);
-      vec3 finalColor = mix(baseColor, color3, mouseInfluence * 0.8);
-
-      // 增强闪烁和脉冲效果
-      float flicker = sin(u_time * 0.003) * 0.3 + 1.0; // 更亮的基础值
-      float pulse = sin(u_time * 0.01 + mouseDistance * 0.1) * 0.4 + 1.0; // 更强的脉冲
-
-      // 增强边缘发光效果
-      float glow = 1.0 - distance;
-      glow = pow(glow, 1.5); // 更柔和的发光
-
-      // 增加整体亮度
-      alpha *= flicker * pulse * 1.5; // 增强透明度
-      finalColor *= (flicker * pulse + glow * 1.2); // 增强亮度
-
-      gl_FragColor = vec4(finalColor, alpha);
-    }
-  `
+    console.log(`创建了 ${particles.length} 个粒子，将缓慢聚集成 GVERCALL 字形`)
+  }
 
   // 创建着色器
   const createShader = (gl: WebGLRenderingContext, type: number, source: string) => {
@@ -160,268 +196,194 @@ export default function WebGLCanvas({ className = '', width = 800, height = 600 
     return program
   }
 
-  // 生成 GVERCALL 文字粒子
-  const generateTextParticles = () => {
-    const particles: Particle[] = []
-    const text = 'GVERCALL'
-    const fontSize = 160 // 进一步增大字体大小
-    const letterSpacing = fontSize * 0.7 // 减小字母间距，让字母更紧凑
-    const startX = (width - text.length * letterSpacing) / 2
-    const startY = height / 2
+  // 更新粒子
+  const updateParticle = (particle: Particle, mouse: { x: number; y: number }) => {
+    // 计算到目标位置的距离
+    const dx = particle.targetX - particle.x
+    const dy = particle.targetY - particle.y
+    const targetDistance = Math.sqrt(dx ** 2 + dy ** 2)
 
-    // 为每个字母创建粒子
-    text.split('').forEach((letter, letterIndex) => {
-      const letterX = startX + letterIndex * letterSpacing
+    // 计算到鼠标的距离
+    const mouseDistance = Math.sqrt(
+      (mouse.x - particle.x) ** 2 + (mouse.y - particle.y) ** 2
+    )
 
-      // 更高大、更密集的字母形状定义
-      const letterShapes: { [key: string]: number[][] } = {
-        'G': [
-          // 顶部横线
-          [1,0],[2,0],[3,0],[4,0],[5,0],
-          // 左侧竖线
-          [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],
-          // 底部横线
-          [1,8],[2,8],[3,8],[4,8],[5,8],
-          // 右侧部分竖线和中间横线
-          [5,7],[5,6],[5,5],[4,5],[3,5],[2,5],
-          // 增加密度点
-          [0.5,0.5],[1.5,0.5],[2.5,0.5],[3.5,0.5],[4.5,0.5],
-          [0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],[0.5,7.5],
-          [1.5,8.5],[2.5,8.5],[3.5,8.5],[4.5,8.5],
-          [5.5,6.5],[5.5,5.5],[4.5,5.5],[3.5,5.5],[2.5,5.5]
-        ],
-        'V': [
-          // 左侧斜线
-          [0,0],[0,1],[0,2],[1,3],[1,4],[1,5],[2,6],[2,7],[2,8],
-          // 右侧斜线
-          [4,0],[4,1],[4,2],[3,3],[3,4],[3,5],[2,6],[2,7],[2,8],
-          // 增加密度
-          [0.5,0.5],[0.5,1.5],[0.5,2.5],[1.5,3.5],[1.5,4.5],[1.5,5.5],
-          [4.5,0.5],[4.5,1.5],[4.5,2.5],[3.5,3.5],[3.5,4.5],[3.5,5.5],
-          [2.5,6.5],[2.5,7.5],[2.5,8.5]
-        ],
-        'E': [
-          // 左侧竖线
-          [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],
-          // 顶部横线
-          [1,0],[2,0],[3,0],[4,0],[5,0],
-          // 中间横线
-          [1,4],[2,4],[3,4],[4,4],
-          // 底部横线
-          [1,8],[2,8],[3,8],[4,8],[5,8],
-          // 增加密度
-          [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],[0.5,7.5],
-          [1.5,0.5],[2.5,0.5],[3.5,0.5],[4.5,0.5],
-          [1.5,4.5],[2.5,4.5],[3.5,4.5],
-          [1.5,8.5],[2.5,8.5],[3.5,8.5],[4.5,8.5]
-        ],
-        'R': [
-          // 左侧竖线
-          [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],
-          // 顶部横线
-          [1,0],[2,0],[3,0],[4,0],
-          // 右侧上半部分
-          [4,1],[4,2],[4,3],[4,4],
-          // 中间横线
-          [1,4],[2,4],[3,4],
-          // 右下斜线
-          [1,5],[2,6],[3,7],[4,8],
-          // 增加密度
-          [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],[0.5,7.5],
-          [1.5,0.5],[2.5,0.5],[3.5,0.5],
-          [4.5,1.5],[4.5,2.5],[4.5,3.5],
-          [1.5,4.5],[2.5,4.5],[3.5,4.5],
-          [1.5,5.5],[2.5,6.5],[3.5,7.5],[4.5,8.5]
-        ],
-        'C': [
-          // 顶部横线
-          [1,0],[2,0],[3,0],[4,0],[5,0],
-          // 左侧竖线
-          [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
-          // 底部横线
-          [1,8],[2,8],[3,8],[4,8],[5,8],
-          // 增加密度
-          [1.5,0.5],[2.5,0.5],[3.5,0.5],[4.5,0.5],
-          [0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
-          [1.5,8.5],[2.5,8.5],[3.5,8.5],[4.5,8.5]
-        ],
-        'A': [
-          // 顶部尖角
-          [2,0],[3,0],
-          // 左右斜线
-          [1,1],[2,1],[3,1],[4,1],
-          [0,2],[1,2],[2,2],[3,2],[4,2],[5,2],
-          [0,3],[5,3],
-          // 中间横线
-          [0,4],[1,4],[2,4],[3,4],[4,4],[5,4],
-          [0,5],[5,5],
-          [0,6],[5,6],
-          [0,7],[5,7],
-          [0,8],[5,8],
-          // 增加密度
-          [2.5,0.5],[3.5,0.5],
-          [1.5,1.5],[2.5,1.5],[3.5,1.5],[4.5,1.5],
-          [0.5,2.5],[1.5,2.5],[2.5,2.5],[3.5,2.5],[4.5,2.5],[5.5,2.5],
-          [0.5,3.5],[5.5,3.5],
-          [0.5,4.5],[1.5,4.5],[2.5,4.5],[3.5,4.5],[4.5,4.5],[5.5,4.5],
-          [0.5,5.5],[5.5,5.5],[0.5,6.5],[5.5,6.5],[0.5,7.5],[5.5,7.5]
-        ],
-        'L': [
-          // 左侧竖线
-          [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],
-          // 底部横线
-          [1,8],[2,8],[3,8],[4,8],[5,8],
-          // 增加密度
-          [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],[0.5,7.5],
-          [1.5,8.5],[2.5,8.5],[3.5,8.5],[4.5,8.5]
-        ]
-      }
+    // 鼠标排斥效果
+    const repelRadius = 120
+    let repelForceX = 0
+    let repelForceY = 0
 
-      const shape = letterShapes[letter] || []
-      const scale = 8 // 适中的缩放比例，让字母更紧凑
+    if (mouseDistance < repelRadius && mouseDistance > 0) {
+      const repelStrength = Math.pow((repelRadius - mouseDistance) / repelRadius, 2)
+      const angle = Math.atan2(particle.y - mouse.y, particle.x - mouse.x)
+      repelForceX = Math.cos(angle) * repelStrength * 8
+      repelForceY = Math.sin(angle) * repelStrength * 8
+    }
 
-      shape.forEach(([dx, dy]) => {
-        const x = letterX + dx * scale
-        const y = startY - 36 + dy * scale // 调整垂直位置
+    // 向目标位置移动
+    let attractStrength = 0.005 // 缓慢的聚集
 
-        // 添加一些随机偏移让效果更自然
-        const offsetX = (Math.random() - 0.5) * 2
-        const offsetY = (Math.random() - 0.5) * 2
+    if (targetDistance > 400) {
+      attractStrength = 0.01
+    } else if (targetDistance > 200) {
+      attractStrength = 0.007
+    }
 
-        particles.push({
-          x: x + offsetX,
-          y: y + offsetY,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          life: 1,
-          maxLife: 1,
-          size: Math.random() * 3 + 4, // 保持较大的粒子大小
-          alpha: Math.random() * 0.3 + 0.7 // 增加透明度
-        })
-      })
-    })
+    const attractForceX = dx * attractStrength
+    const attractForceY = dy * attractStrength
 
-    return particles
+    // 合成力
+    particle.vx += attractForceX + repelForceX
+    particle.vy += attractForceY + repelForceY
+
+    // 阻尼
+    particle.vx *= 0.88
+    particle.vy *= 0.88
+
+    // 限制最大速度
+    const maxSpeed = 10
+    const currentSpeed = Math.sqrt(particle.vx ** 2 + particle.vy ** 2)
+    if (currentSpeed > maxSpeed) {
+      particle.vx = (particle.vx / currentSpeed) * maxSpeed
+      particle.vy = (particle.vy / currentSpeed) * maxSpeed
+    }
+
+    // 更新位置
+    particle.x += particle.vx
+    particle.y += particle.vy
+
+    // 检查是否接近目标
+    if (targetDistance < 15) {
+      particle.hasReachedTarget = true
+    }
+
+    // 透明度动画
+    let targetOpacity
+
+    if (targetDistance < 10) {
+      targetOpacity = particle.maxOpacity
+      particle.hasReachedTarget = true
+    } else if (targetDistance < 30) {
+      targetOpacity = particle.baseOpacity * (1 - targetDistance / 60)
+    } else if (targetDistance < 100) {
+      targetOpacity = 0.6
+    } else {
+      targetOpacity = 0.4
+    }
+
+    // 鼠标附近透明度变化
+    if (mouseDistance < repelRadius) {
+      const fadeStrength = 1 - (mouseDistance / repelRadius)
+      targetOpacity *= (1 - fadeStrength * 0.7)
+    }
+
+    // 透明度过渡
+    const opacitySpeed = 0.015
+    if (particle.opacity < targetOpacity) {
+      particle.opacity = Math.min(targetOpacity, particle.opacity + opacitySpeed)
+    } else {
+      particle.opacity = Math.max(targetOpacity, particle.opacity - opacitySpeed)
+    }
+
+    particle.opacity = Math.max(0.1, Math.min(1, particle.opacity))
+  }
+
+  // 绘制粒子
+  const drawParticle = (ctx: CanvasRenderingContext2D, particle: Particle) => {
+    if (particle.opacity <= 0.05) return
+
+    ctx.save()
+
+    const alpha = Math.min(1, particle.opacity)
+
+    // 主体填充 - 明日方舟蓝色
+    ctx.fillStyle = `rgba(0, 162, 255, ${alpha})`
+    ctx.beginPath()
+    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+    ctx.fill()
+
+    // 边框
+    ctx.strokeStyle = `rgba(0, 162, 255, ${Math.min(1, alpha + 0.2)})`
+    ctx.lineWidth = 0.5
+    ctx.beginPath()
+    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+    ctx.stroke()
+
+    // 内部高亮
+    if (alpha > 0.5) {
+      ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, alpha * 0.8)})`
+      ctx.beginPath()
+      ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    ctx.restore()
   }
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const gl = canvas.getContext('webgl')
-    if (!gl) {
-      console.error('WebGL not supported')
+    const ctx = canvas.getContext('2d')
+    if (!ctx) {
+      console.error('Canvas 2D not supported')
       return
     }
+
+    ctxRef.current = ctx
 
     // 设置画布大小
     canvas.width = width
     canvas.height = height
-    gl.viewport(0, 0, width, height)
 
-    // 创建着色器和程序
-    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource)
-    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
-    
-    if (!vertexShader || !fragmentShader) return
-    
-    const program = createProgram(gl, vertexShader, fragmentShader)
-    if (!program) return
+    // 创建粒子
+    createParticles()
 
-    // 获取属性和uniform位置
-    const positionLocation = gl.getAttribLocation(program, 'a_position')
-    const sizeLocation = gl.getAttribLocation(program, 'a_size')
-    const alphaLocation = gl.getAttribLocation(program, 'a_alpha')
-    const resolutionLocation = gl.getUniformLocation(program, 'u_resolution')
-    const mouseLocation = gl.getUniformLocation(program, 'u_mouse')
-    const timeLocation = gl.getUniformLocation(program, 'u_time')
-
-    // 初始化粒子
-    particlesRef.current = generateTextParticles()
-
-    // 创建缓冲区
-    const positionBuffer = gl.createBuffer()
-    const sizeBuffer = gl.createBuffer()
-    const alphaBuffer = gl.createBuffer()
-
-    // 启用混合
-    gl.enable(gl.BLEND)
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
-
-    let startTime = Date.now()
-
-    const render = () => {
-      const currentTime = Date.now()
-      const time = currentTime - startTime
-
-      // 清除画布
-      gl.clearColor(0, 0, 0, 0)
-      gl.clear(gl.COLOR_BUFFER_BIT)
-
-      // 使用程序
-      gl.useProgram(program)
-
-      // 设置uniform
-      gl.uniform2f(resolutionLocation, width, height)
-      gl.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y)
-      gl.uniform1f(timeLocation, time)
-
-      const particles = particlesRef.current
-      if (particles.length === 0) return
-
-      // 准备数据
-      const positions = new Float32Array(particles.length * 2)
-      const sizes = new Float32Array(particles.length)
-      const alphas = new Float32Array(particles.length)
-
-      particles.forEach((particle, i) => {
-        positions[i * 2] = particle.x
-        positions[i * 2 + 1] = particle.y
-        sizes[i] = particle.size
-        alphas[i] = particle.alpha
-      })
-
-      // 设置位置数据
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW)
-      gl.enableVertexAttribArray(positionLocation)
-      gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0)
-
-      // 设置大小数据
-      gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer)
-      gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.DYNAMIC_DRAW)
-      gl.enableVertexAttribArray(sizeLocation)
-      gl.vertexAttribPointer(sizeLocation, 1, gl.FLOAT, false, 0, 0)
-
-      // 设置透明度数据
-      gl.bindBuffer(gl.ARRAY_BUFFER, alphaBuffer)
-      gl.bufferData(gl.ARRAY_BUFFER, alphas, gl.DYNAMIC_DRAW)
-      gl.enableVertexAttribArray(alphaLocation)
-      gl.vertexAttribPointer(alphaLocation, 1, gl.FLOAT, false, 0, 0)
-
-      // 绘制粒子
-      gl.drawArrays(gl.POINTS, 0, particles.length)
-
-      animationRef.current = requestAnimationFrame(render)
-    }
-
-    // 鼠标事件处理
+    // 鼠标事件
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect()
       mouseRef.current.x = e.clientX - rect.left
       mouseRef.current.y = e.clientY - rect.top
     }
 
-    canvas.addEventListener('mousemove', handleMouseMove)
-    
-    setIsLoaded(true)
-    render()
+    const handleMouseLeave = () => {
+      mouseRef.current.x = -1000
+      mouseRef.current.y = -1000
+    }
 
+    canvas.addEventListener('mousemove', handleMouseMove)
+    canvas.addEventListener('mouseleave', handleMouseLeave)
+
+    // 动画循环
+    const animate = () => {
+      if (!ctxRef.current || !isInitializedRef.current) return
+
+      const ctx = ctxRef.current
+      const particles = particlesRef.current
+
+      // 清除画布
+      ctx.clearRect(0, 0, width, height)
+
+      // 更新和绘制粒子
+      particles.forEach(particle => {
+        updateParticle(particle, mouseRef.current)
+        drawParticle(ctx, particle)
+      })
+
+      animationRef.current = requestAnimationFrame(animate)
+    }
+
+    // 开始动画
+    animationRef.current = requestAnimationFrame(animate)
+    setIsLoaded(true)
+
+    // 清理函数
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
       canvas.removeEventListener('mousemove', handleMouseMove)
+      canvas.removeEventListener('mouseleave', handleMouseLeave)
     }
   }, [width, height])
 
