@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { ChevronRight, ChevronLeft, ArrowLeft } from 'lucide-react'
 import { useMousePosition } from '@/hooks/useMousePosition'
 import CSSStarfield from '@/components/effects/CSSStarfield'
+import WebGLCanvas from '@/components/effects/WebGLCanvas'
 
 const worldData = [
   {
@@ -177,30 +178,45 @@ export default function WorldSection() {
 
                 {/* 右侧装饰 */}
                 <div className="flex-1 flex items-center justify-center relative">
-                  <motion.div
-                    className="text-center"
-                    initial={{opacity: 0, scale: 0.8}}
-                    animate={{opacity: 1, scale: 1}}
-                    transition={{duration: 0.8, delay: 0.3}}
-                  >
-                    {/* ASCII艺术风格的罗德岛标志 */}
-                    <div className="font-mono text-cyan-400 text-xs leading-tight mb-8">
-                      <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                      <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                      <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                      <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                      <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>
-                    </div>
-                    <div className="text-cyan-400 text-2xl font-bold tracking-wider mb-4">
-                      RHODES ISLAND
-                    </div>
-                    <div className="text-gray-400 text-sm">
-                      TERRA WORLD
-                    </div>
-                  </motion.div>
+                  {/*<motion.div*/}
+                  {/*  className="text-center"*/}
+                  {/*  initial={{opacity: 0, scale: 0.8}}*/}
+                  {/*  animate={{opacity: 1, scale: 1}}*/}
+                  {/*  transition={{duration: 0.8, delay: 0.3}}*/}
+                  {/*>*/}
+                  {/*  /!* ASCII艺术风格的罗德岛标志 *!/*/}
+                  {/*  <div className="font-mono text-cyan-400 text-xs leading-tight mb-8">*/}
+                  {/*    <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*    <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*    <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*    <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*    <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*    <div>{'  ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*    <div>{'   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*    <div>{'    ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲'}</div>*/}
+                  {/*  </div>*/}
+                  {/*  <div className="text-cyan-400 text-2xl font-bold tracking-wider mb-4">*/}
+                  {/*    RHODES ISLAND*/}
+                  {/*  </div>*/}
+                  {/*  <div className="text-gray-400 text-sm">*/}
+                  {/*    TERRA WORLD*/}
+                  {/*  </div>*/}
+                  {/*</motion.div>*/}
+
+                {/* WebGL Canvas 效果 */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.2, delay: 0.5 }}
+                >
+                  <WebGLCanvas
+                    className="pointer-events-auto"
+                    width={1200}
+                    height={800}
+                  />
+                </motion.div>
+
                 </div>
               </motion.div>
             ) : (
