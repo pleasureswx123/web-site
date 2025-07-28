@@ -125,8 +125,6 @@ export default function WorldSection() {
           starCount={150}
           animationSpeed={1.2}
         />
-
-
       </div>
 
       <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
@@ -326,32 +324,27 @@ export default function WorldSection() {
       <AnimatePresence>
         {hoveredItem && (
           <motion.div
-            className="fixed pointer-events-none z-[9999]"
+            className="fixed pointer-events-none z-[40]"
             style={{
-              left: mousePosition.x + 20,
-              top: mousePosition.y - 100,
+              left: mousePosition.x - 120,
+              top: mousePosition.y - 80,
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="relative w-64 h-40 rounded-lg overflow-hidden shadow-2xl border border-ak-secondary/30">
+            <div className="relative w-64 h-64 overflow-hidden">
               <img
                 src={hoveredItem.hoverImage}
                 alt={hoveredItem.titleCn}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover brightness-50 backdrop-blur-sm"
                 onError={(e) => {
                   // 如果图片加载失败，显示一个占位符
                   const target = e.target as HTMLImageElement;
                   target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjE2MCIgdmlld0JveD0iMCAwIDI1NiAxNjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNTYiIGhlaWdodD0iMTYwIiBmaWxsPSIjMTExODI3Ii8+CjxwYXRoIGQ9Ik0xMjggODBMMTQ0IDk2SDE0NFY5NkgxMTJWOTZMMTI4IDgwWiIgZmlsbD0iIzAwRkZGRiIvPgo8dGV4dCB4PSIxMjgiIHk9IjEyMCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwRkZGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K';
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <h4 className="text-white font-bold text-lg">{hoveredItem.titleCn}</h4>
-                <p className="text-ak-secondary text-sm font-mono">{hoveredItem.title}</p>
-              </div>
             </div>
           </motion.div>
         )}
