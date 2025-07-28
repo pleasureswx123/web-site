@@ -32,108 +32,90 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
   const isInitializedRef = useRef(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  // 创建 GVERCALL 字母的目标位置
-  const createGVERCALLPositions = () => {
-    const text = 'GVERCALL'
-    const letterSpacing = 80 // 紧凑的字母间距
-    const startX = (width - text.length * letterSpacing) / 2
-    const startY = height / 2
+  // 创建 Logo 图案的目标位置
+  const createLogoPositions = () => {
     const positions: { x: number; y: number }[] = []
 
-    // 定义每个字母的形状点位（更高大、更密集）
-    const letterShapes: { [key: string]: number[][] } = {
-      'G': [
-        // 外圆弧
-        [1,0],[2,0],[3,0],[4,0],
-        [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
-        [1,7],[2,7],[3,7],[4,7],
-        [4,6],[4,5],[4,4],[3,4],[2,4],
-        // 密度点
-        [0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
-        [1.5,0.5],[2.5,0.5],[3.5,0.5],
-        [1.5,7.5],[2.5,7.5],[3.5,7.5],
-        [4.5,5.5],[4.5,4.5],[3.5,4.5],[2.5,4.5]
-      ],
-      'V': [
-        [0,0],[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[2,7],
-        [4,0],[4,1],[4,2],[3,3],[3,4],[2,5],[2,6],[2,7],
-        [0.5,0.5],[0.5,1.5],[1.5,3.5],[1.5,4.5],
-        [4.5,0.5],[4.5,1.5],[3.5,3.5],[3.5,4.5],
-        [2.5,5.5],[2.5,6.5],[2.5,7.5]
-      ],
-      'E': [
-        [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
-        [1,0],[2,0],[3,0],[4,0],
-        [1,3.5],[2,3.5],[3,3.5],
-        [1,7],[2,7],[3,7],[4,7],
-        [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
-        [1.5,0.5],[2.5,0.5],[3.5,0.5],
-        [1.5,7.5],[2.5,7.5],[3.5,7.5]
-      ],
-      'R': [
-        [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
-        [1,0],[2,0],[3,0],
-        [3,1],[3,2],[3,3],
-        [1,3.5],[2,3.5],
-        [1,4],[2,5],[3,6],[4,7],
-        [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
-        [1.5,0.5],[2.5,0.5],
-        [3.5,1.5],[3.5,2.5],
-        [1.5,4.5],[2.5,5.5],[3.5,6.5]
-      ],
-      'C': [
-        [1,0],[2,0],[3,0],[4,0],
-        [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],
-        [1,7],[2,7],[3,7],[4,7],
-        [1.5,0.5],[2.5,0.5],[3.5,0.5],
-        [0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],
-        [1.5,7.5],[2.5,7.5],[3.5,7.5]
-      ],
-      'A': [
-        [2,0],[3,0],
-        [1,1],[2,1],[3,1],[4,1],
-        [0,2],[1,2],[2,2],[3,2],[4,2],[5,2],
-        [0,3],[5,3],
-        [0,4],[1,4],[2,4],[3,4],[4,4],[5,4],
-        [0,5],[5,5],[0,6],[5,6],[0,7],[5,7],
-        [2.5,0.5],[1.5,1.5],[3.5,1.5],
-        [0.5,2.5],[5.5,2.5],[0.5,3.5],[5.5,3.5],
-        [0.5,4.5],[5.5,4.5],[0.5,5.5],[5.5,5.5]
-      ],
-      'L': [
-        [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
-        [1,7],[2,7],[3,7],[4,7],
-        [0.5,0.5],[0.5,1.5],[0.5,2.5],[0.5,3.5],[0.5,4.5],[0.5,5.5],[0.5,6.5],
-        [1.5,7.5],[2.5,7.5],[3.5,7.5]
-      ]
+    // Logo 的中心位置
+    const centerX = width / 2
+    const centerY = height / 2
+
+    // 缩放比例，让 logo 适合画布大小
+    const scale = 0.8
+    const logoWidth = 403.511161 * scale
+    const logoHeight = 387 * scale
+
+    // Logo 的起始位置（左上角）
+    const startX = centerX - logoWidth / 2
+    const startY = centerY - logoHeight / 2
+
+    // 基于 SVG 路径创建粒子点位
+    // 主要的 C 形状外轮廓 - 上半部分
+    for (let i = 0; i <= 100; i++) {
+      const t = i / 100
+      const angle = Math.PI * t // 从 0 到 π (上半圆)
+      const radius = logoHeight * 0.25
+      const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
+      const y = startY + logoHeight * 0.5 + radius * Math.sin(angle) * 0.8
+      positions.push({ x, y })
     }
 
-    text.split('').forEach((letter, letterIndex) => {
-      const letterX = startX + letterIndex * letterSpacing
-      const shape = letterShapes[letter] || []
-      const scale = 6 // 适中的缩放
+    // C 形状外轮廓 - 下半部分
+    for (let i = 0; i <= 100; i++) {
+      const t = i / 100
+      const angle = Math.PI + Math.PI * t // 从 π 到 2π (下半圆)
+      const radius = logoHeight * 0.25
+      const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
+      const y = startY + logoHeight * 0.5 + radius * Math.sin(angle) * 0.8
+      positions.push({ x, y })
+    }
 
-      shape.forEach(([dx, dy]) => {
-        const x = letterX + dx * scale
-        const y = startY - 28 + dy * scale
+    // C 形状内轮廓 - 上半部分
+    for (let i = 0; i <= 80; i++) {
+      const t = i / 80
+      const angle = Math.PI * t
+      const radius = logoHeight * 0.15
+      const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
+      const y = startY + logoHeight * 0.5 + radius * Math.sin(angle) * 0.8
+      positions.push({ x, y })
+    }
 
-        // 添加轻微随机偏移
-        const offsetX = (Math.random() - 0.5) * 2
-        const offsetY = (Math.random() - 0.5) * 2
+    // C 形状内轮廓 - 下半部分
+    for (let i = 0; i <= 80; i++) {
+      const t = i / 80
+      const angle = Math.PI + Math.PI * t
+      const radius = logoHeight * 0.15
+      const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
+      const y = startY + logoHeight * 0.5 + radius * Math.sin(angle) * 0.8
+      positions.push({ x, y })
+    }
 
-        positions.push({
-          x: x + offsetX,
-          y: y + offsetY
-        })
-      })
-    })
+    // 水平线条
+    const lineY = startY + logoHeight * 0.5
+    const lineStartX = startX + logoWidth * 0.22
+    const lineEndX = startX + logoWidth * 0.84
+    for (let i = 0; i <= 60; i++) {
+      const t = i / 60
+      const x = lineStartX + (lineEndX - lineStartX) * t
+      const y = lineY + (Math.random() - 0.5) * 4 // 轻微的垂直随机偏移
+      positions.push({ x, y })
+    }
+
+    // 添加一些填充点让图案更密集
+    for (let i = 0; i < 50; i++) {
+      const angle = Math.random() * Math.PI * 2
+      const radius = (Math.random() * 0.1 + 0.15) * logoHeight
+      const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
+      const y = startY + logoHeight * 0.5 + radius * Math.sin(angle) * 0.8
+      positions.push({ x, y })
+    }
 
     return positions
   }
 
   // 创建粒子
   const createParticles = () => {
-    const positions = createGVERCALLPositions()
+    const positions = createLogoPositions()
 
     const particles: Particle[] = []
 
@@ -158,7 +140,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     particlesRef.current = particles
     isInitializedRef.current = true
 
-    console.log(`创建了 ${particles.length} 个粒子，将缓慢聚集成 GVERCALL 字形`)
+    console.log(`创建了 ${particles.length} 个粒子，将缓慢聚集成 Logo 图案`)
   }
 
   // 创建着色器
