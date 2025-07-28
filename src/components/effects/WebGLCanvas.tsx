@@ -40,8 +40,8 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     const centerX = width / 2
     const centerY = height / 2
 
-    // 缩放比例，让 logo 适合画布大小
-    const scale = 0.8
+    // 缩放比例，将原来的0.8改为1.6，实现2倍放大
+    const scale = 1.6
     const logoWidth = 403.511161 * scale
     const logoHeight = 387 * scale
 
@@ -50,9 +50,9 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     const startY = centerY - logoHeight / 2
 
     // 基于 SVG 路径创建粒子点位
-    // 主要的 C 形状外轮廓 - 上半部分
-    for (let i = 0; i <= 100; i++) {
-      const t = i / 100
+    // 主要的 C 形状外轮廓 - 上半部分，增加密度
+    for (let i = 0; i <= 150; i++) { // 从100增加到150
+      const t = i / 150
       const angle = Math.PI * t // 从 0 到 π (上半圆)
       const radius = logoHeight * 0.25
       const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
@@ -60,9 +60,9 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       positions.push({ x, y })
     }
 
-    // C 形状外轮廓 - 下半部分
-    for (let i = 0; i <= 100; i++) {
-      const t = i / 100
+    // C 形状外轮廓 - 下半部分，增加密度
+    for (let i = 0; i <= 150; i++) { // 从100增加到150
+      const t = i / 150
       const angle = Math.PI + Math.PI * t // 从 π 到 2π (下半圆)
       const radius = logoHeight * 0.25
       const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
@@ -70,9 +70,9 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       positions.push({ x, y })
     }
 
-    // C 形状内轮廓 - 上半部分
-    for (let i = 0; i <= 80; i++) {
-      const t = i / 80
+    // C 形状内轮廓 - 上半部分，增加密度
+    for (let i = 0; i <= 120; i++) { // 从80增加到120
+      const t = i / 120
       const angle = Math.PI * t
       const radius = logoHeight * 0.15
       const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
@@ -80,9 +80,9 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       positions.push({ x, y })
     }
 
-    // C 形状内轮廓 - 下半部分
-    for (let i = 0; i <= 80; i++) {
-      const t = i / 80
+    // C 形状内轮廓 - 下半部分，增加密度
+    for (let i = 0; i <= 120; i++) { // 从80增加到120
+      const t = i / 120
       const angle = Math.PI + Math.PI * t
       const radius = logoHeight * 0.15
       const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
@@ -90,24 +90,53 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       positions.push({ x, y })
     }
 
-    // 水平线条
+    // 水平线条参数定义（用于后续的实心填充）
     const lineY = startY + logoHeight * 0.5
     const lineStartX = startX + logoWidth * 0.22
     const lineEndX = startX + logoWidth * 0.84
-    for (let i = 0; i <= 60; i++) {
-      const t = i / 60
-      const x = lineStartX + (lineEndX - lineStartX) * t
-      const y = lineY + (Math.random() - 0.5) * 4 // 轻微的垂直随机偏移
-      positions.push({ x, y })
+
+    // 填充 C 形状内部区域，实现实心效果
+    const innerRadius = logoHeight * 0.15
+    const outerRadius = logoHeight * 0.25
+    
+    // 生成实心填充粒子
+    for (let angle = 0; angle <= Math.PI * 2; angle += 0.05) { // 角度步长
+      for (let r = innerRadius; r <= outerRadius; r += 3) { // 半径步长
+        // 只填充C形状的开口区域（左侧）
+        if (angle <= Math.PI * 0.85 || angle >= Math.PI * 1.15) {
+          const x = startX + logoWidth * 0.52 + r * Math.cos(angle)
+          const y = startY + logoHeight * 0.5 + r * Math.sin(angle) * 0.8
+          
+          // 添加一些随机偏移让填充更自然
+          const offsetX = (Math.random() - 0.5) * 2
+          const offsetY = (Math.random() - 0.5) * 2
+          positions.push({ x: x + offsetX, y: y + offsetY })
+        }
+      }
     }
 
-    // 添加一些填充点让图案更密集
-    for (let i = 0; i < 50; i++) {
+    // 添加水平线条的实心填充
+    const lineThickness = 8 // 线条厚度
+    for (let i = 0; i <= 100; i++) {
+      for (let j = -lineThickness/2; j <= lineThickness/2; j += 1.5) {
+        const t = i / 100
+        const x = lineStartX + (lineEndX - lineStartX) * t
+        const y = lineY + j + (Math.random() - 0.5) * 2
+        positions.push({ x, y })
+      }
+    }
+
+    // 添加更多随机填充点让图案更密集
+    for (let i = 0; i < 150; i++) { // 增加随机填充点
       const angle = Math.random() * Math.PI * 2
       const radius = (Math.random() * 0.1 + 0.15) * logoHeight
       const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
       const y = startY + logoHeight * 0.5 + radius * Math.sin(angle) * 0.8
-      positions.push({ x, y })
+      
+      // 确保点在C形状内部
+      if (angle <= Math.PI * 0.85 || angle >= Math.PI * 1.15) {
+        positions.push({ x, y })
+      }
     }
 
     return positions
@@ -123,11 +152,11 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       const particle: Particle = {
         x: Math.random() * width,   // 从整个屏幕随机开始
         y: Math.random() * height,  // 从整个屏幕随机开始
-        targetX: pos.x + (Math.random() - 0.5) * 3,
-        targetY: pos.y + (Math.random() - 0.5) * 3,
+        targetX: pos.x + (Math.random() - 0.5) * 2, // 减少随机偏移
+        targetY: pos.y + (Math.random() - 0.5) * 2, // 减少随机偏移
         vx: 0,
         vy: 0,
-        size: 2.5, // 适中的粒子大小
+        size: 1.2, // 从2.5减少到1.2，让粒子更细腻
         opacity: 0.1,
         maxOpacity: 0.95,
         baseOpacity: 0.8,
@@ -284,18 +313,18 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
     ctx.fill()
 
-    // 边框
-    ctx.strokeStyle = `rgba(0, 162, 255, ${Math.min(1, alpha + 0.2)})`
-    ctx.lineWidth = 0.5
+    // 边框，适应小粒子
+    ctx.strokeStyle = `rgba(0, 162, 255, ${Math.min(1, alpha + 0.3)})`
+    ctx.lineWidth = 0.3 // 减少边框宽度
     ctx.beginPath()
     ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
     ctx.stroke()
 
-    // 内部高亮
-    if (alpha > 0.5) {
-      ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, alpha * 0.8)})`
+    // 内部高亮，适应小粒子
+    if (alpha > 0.4) { // 降低高亮阈值
+      ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, alpha * 0.6)})`
       ctx.beginPath()
-      ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2)
+      ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2) // 调整高亮大小
       ctx.fill()
     }
 
