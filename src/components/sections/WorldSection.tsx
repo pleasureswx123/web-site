@@ -138,7 +138,7 @@ export default function WorldSection() {
                   {worldData.map((item, index) => (
                     <motion.button
                       key={item.id}
-                      className="group text-left border-b border-gray-700 hover:border-ak-secondary pb-4 transition-all duration-300 hover:bg-ak-secondary/5 px-4 py-2"
+                      className="group text-left border-b border-gray-700 hover:border-ak-secondary pb-4 transition-all duration-300 hover:bg-ak-secondary/5 px-4 py-2 relative overflow-hidden"
                       onClick={() => handleItemClick(item)}
                       onMouseEnter={() => setHoveredItem(item)}
                       onMouseLeave={() => setHoveredItem(null)}
@@ -147,13 +147,20 @@ export default function WorldSection() {
                       transition={{duration: 0.6, delay: index * 0.1}}
                       whileHover={{x: 10}}
                     >
-                      <div className="flex items-center justify-between">
+                      {/* 背景残影文字 */}
+                      <div className="absolute inset-0 flex items-center justify-end pr-4 pointer-events-none">
+                        <span className="text-6xl font-bold text-white/5 group-hover:text-white/10 transition-all duration-300 select-none whitespace-nowrap">
+                          {item.title}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between relative z-10">
                         <div>
                           <h3
                             className="text-2xl font-bold text-white group-hover:text-ak-secondary transition-colors mb-2">
                             {item.titleCn}
                           </h3>
-                          <p className="text-gray-400 text-sm font-mono tracking-wider">
+                          <p className="text-gray-400 text-xs font-mono tracking-wider">
                             {item.title}
                           </p>
                         </div>
@@ -338,7 +345,7 @@ export default function WorldSection() {
               <img
                 src={hoveredItem.hoverImage}
                 alt={hoveredItem.titleCn}
-                className="w-full h-full object-cover brightness-50 backdrop-blur-sm"
+                className="w-full h-full object-cover brightness-50 backdrop-blur-sm opacity-85"
                 onError={(e) => {
                   // 如果图片加载失败，显示一个占位符
                   const target = e.target as HTMLImageElement;
