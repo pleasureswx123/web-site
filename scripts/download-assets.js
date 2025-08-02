@@ -234,7 +234,7 @@ const assets = [
 
 // 主下载函数
 async function downloadAssets() {
-  console.log('🚀 开始下载明日方舟官网资源文件...\n');
+  console.log('🚀 开始下载心流元素官网资源文件...\n');
 
   // 创建必要的目录
   const directories = [

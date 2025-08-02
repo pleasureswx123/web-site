@@ -102,7 +102,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     // 填充 C 形状内部区域，实现实心效果
     const innerRadius = logoHeight * 0.15
     const outerRadius = logoHeight * 0.25
-    
+
     // 生成实心填充粒子
     for (let angle = 0; angle <= Math.PI * 2; angle += 0.05) { // 角度步长
       for (let r = innerRadius; r <= outerRadius; r += 3) { // 半径步长
@@ -110,7 +110,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
         if (angle <= Math.PI * 0.85 || angle >= Math.PI * 1.15) {
           const x = startX + logoWidth * 0.52 + r * Math.cos(angle)
           const y = startY + logoHeight * 0.5 + r * Math.sin(angle) * 0.8
-          
+
           // 添加一些随机偏移让填充更自然
           const offsetX = (Math.random() - 0.5) * 2
           const offsetY = (Math.random() - 0.5) * 2
@@ -136,7 +136,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       const radius = (Math.random() * 0.1 + 0.15) * logoHeight
       const x = startX + logoWidth * 0.52 + radius * Math.cos(angle)
       const y = startY + logoHeight * 0.5 + radius * Math.sin(angle) * 0.8
-      
+
       // 确保点在C形状内部
       if (angle <= Math.PI * 0.85 || angle >= Math.PI * 1.15) {
         positions.push({ x, y })
@@ -154,7 +154,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     particles.forEach(particle => {
       // 从画布边缘或随机位置开始
       const startFromEdge = Math.random() < 0.7 // 70% 概率从边缘开始，更酷炫
-      
+
       if (startFromEdge) {
         const edge = Math.floor(Math.random() * 4) // 0:上, 1:右, 2:下, 3:左
         switch (edge) {
@@ -230,16 +230,16 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
   const createShader = (gl: WebGLRenderingContext, type: number, source: string) => {
     const shader = gl.createShader(type)
     if (!shader) return null
-    
+
     gl.shaderSource(shader, source)
     gl.compileShader(shader)
-    
+
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
       console.error('Shader compilation error:', gl.getShaderInfoLog(shader))
       gl.deleteShader(shader)
       return null
     }
-    
+
     return shader
   }
 
@@ -247,17 +247,17 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
   const createProgram = (gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader) => {
     const program = gl.createProgram()
     if (!program) return null
-    
+
     gl.attachShader(program, vertexShader)
     gl.attachShader(program, fragmentShader)
     gl.linkProgram(program)
-    
+
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       console.error('Program linking error:', gl.getProgramInfoLog(program))
       gl.deleteProgram(program)
       return null
     }
-    
+
     return program
   }
 
@@ -305,7 +305,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
     // 只有在延迟时间过后才开始向目标聚集
     let attractForceX = 0
     let attractForceY = 0
-    
+
     if (shouldStartMoving) {
       attractForceX = dx * attractStrength
       attractForceY = dy * attractStrength
@@ -378,7 +378,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
 
     const alpha = Math.min(1, particle.opacity)
 
-    // 主体填充 - 明日方舟蓝色
+    // 主体填充 - 心流元素蓝色
     ctx.fillStyle = `rgba(0, 162, 255, ${alpha})`
     ctx.beginPath()
     ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
@@ -411,7 +411,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
       (entries) => {
         entries.forEach((entry) => {
           const isCurrentlyVisible = entry.isIntersecting
-          
+
           // 当从不可见变为可见时，触发重新汇聚动画
           if (isCurrentlyVisible && !isVisible) {
             console.log('🎯 组件进入可视区域，触发粒子汇聚动画')
@@ -419,7 +419,7 @@ export default function WebGLCanvas({ className = '', width = 1200, height = 800
               resetParticles()
             }, 200) // 轻微延迟让动画更流畅
           }
-          
+
           setIsVisible(isCurrentlyVisible)
         })
       },

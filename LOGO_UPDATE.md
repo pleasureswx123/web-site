@@ -14,7 +14,7 @@
 #### 之前 (文字Logo)
 ```tsx
 <div className="text-2xl font-bold text-white tracking-wider font-ak-title">
-  明日方舟
+  心流元素
 </div>
 ```
 
@@ -22,7 +22,7 @@
 ```tsx
 <Image
   src="/images/logo.png"
-  alt="明日方舟"
+  alt="心流元素"
   width={513}
   height={100}
   className="h-8 w-auto object-contain"
@@ -51,7 +51,7 @@
 ✅ **响应式设计**: 在不同屏幕尺寸下正常显示
 
 ✅ **可访问性**: 
-- 提供 alt 文本 "明日方舟"
+- 提供 alt 文本 "心流元素"
 - 保持链接功能 (href="/#index")
 
 ### 性能优化

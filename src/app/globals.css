@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom fonts from Arknights official website */
+/* Custom fonts from vercall official website */
 @font-face {
   font-family: 'SourceHanSansSC';
   src: url('/fonts/SourceHanSansSC-Regular.woff2') format('woff2');
@@ -1257,7 +1257,7 @@ a {
   }
 }
 
-/* Original Arknights website CSS classes */
+/* Original vercall website CSS classes */
 ._7c7241c0 {
   position: relative;
   width: 100%;
