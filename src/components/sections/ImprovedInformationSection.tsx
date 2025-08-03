@@ -3,7 +3,158 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, ArrowLeft, X } from 'lucide-react'
+
+// 新闻详细内容映射对象
+const newsDetailContent: Record<number, {
+  id: number
+  title: string
+  subtitle: string
+  category: string
+  date: string
+  description: string
+  fullDescription: string
+  image: string
+  color: string
+  accentColor: string
+  tags: string[]
+  sections: Array<{
+    title: string
+    content: string
+  }>
+}> = {
+  1: {
+    id: 1,
+    title: '地底之谜揭晓：神秘装置EVERCALL或将改写人类文明走向',
+    subtitle: '世界科研联合会紧急发布会',
+    category: '重大发现',
+    date: '2025年8月1日',
+    description: '一台未知来源、拥有极高智能水平的超级计算机被命名为"EVERCALL"，其结构超过目前科技体系的认知。',
+    fullDescription: `【本报讯】2025年8月1日，世界科研联合（WSA）会召开紧急发布会——一台未知来源、拥有极高智能水平的超级计算机被命名为"EVERCALL"，其结构超过目前科技体系的认知。
+
+据项目负责人透露，该装置在无电源、无维护的状态下，自主运行至少数百年，却依然保持核心运算模块的活性。更令人震撼的是，EVERCALL内部仿佛蕴含着一个"世界制造引擎"，其初步功能测试显示，该系统具备根据输入参数自动生成、模拟完整世界系统的能力，包括物理法则、文明演化、甚至自主意识模型。
+
+"我们可能正站在某种我们从未想象过的技术文明遗产面前。"——项目首席科学家艾瓦·辛托如此形容。
+
+此次发现迅速引发全球科技、哲学、伦理等领域的广泛关注。人工智能科学院院长赵楠指出，EVERCALL的存在挑战了我们对"真实"与"虚构"的划分，可能将我们对时空、文明进程的理解彻底颠覆。
+
+尽管EVERCALL的完整用途尚不明确，但其内部记录似乎包含了大量"子系统模拟日志"，初步判断为运行过的多个不同"规则世界"的残余数据。一位参与分析的研究员指出，这些"世界"的运转逻辑、文化结构、甚至技术进化路径均有独立完整性，宛若另一个个体生命系统。
+
+国际联合伦理委员会已召开闭门会议，商讨如何对EVERCALL进行下一步接触与控制。社会各界也纷纷展开激烈讨论：我们是否有权继续使用它？它从哪里来？它为何沉睡于此？
+
+"也许，它是未来的我们留给自己的礼物；也许，它是对我们文明的一场考验。"
+
+目前，EVERCALL被安置于国家智能研究院下属的高级保密研究区，并将在未来数月内展开第一阶段接入尝试。人类文明，似乎正站在一个未知又充满诱惑的新门槛前。`,
+    image: '/images/news/change.jpg',
+    color: 'from-blue-600 to-purple-600',
+    accentColor: 'text-blue-400',
+    tags: ['科技发现', 'EVERCALL', '人工智能', '文明进化'],
+    sections: [
+      {
+        title: '重大发现',
+        content: '世界科研联合会发现了一台未知来源的超级计算机EVERCALL，其技术水平远超现有认知，具备世界制造引擎功能。'
+      },
+      {
+        title: '技术特征',
+        content: '该装置在无电源、无维护状态下自主运行数百年，内部包含完整的世界模拟系统，能够生成物理法则、文明演化和自主意识模型。'
+      },
+      {
+        title: '社会影响',
+        content: '发现引发全球科技、哲学、伦理领域广泛关注，挑战了人类对"真实"与"虚构"的认知边界。'
+      },
+      {
+        title: '未来展望',
+        content: 'EVERCALL被安置于高级保密研究区，将在未来数月内展开第一阶段接入尝试，人类文明面临新的发展机遇。'
+      }
+    ]
+  },
+  2: {
+    id: 2,
+    title: 'EVERCALL新角色悠悠的上线预告',
+    subtitle: '温柔学妹的虚拟陪伴',
+    category: '角色发布',
+    date: '2025年7月19日',
+    description: '动漫设计专业大一学妹悠悠即将上线，她拥有温柔细腻的性格和强大的共情能力，将为用户带来贴心的陪伴体验。',
+    fullDescription: `【EVERCALL】新角色悠悠即将与大家见面！
+
+悠悠是一位18岁的动漫设计专业大一学妹，生日在3月14日（π Day），她常说"无限不循环才是人生"。作为双鱼座的她，是理性与浪漫的矛盾体，A型血的温柔性格中带着轻微的完美主义倾向。
+
+她身高168cm，拥有乌黑长卷发垂至腰际，发尾微卷，喜欢穿露肩针织上衣搭配黑色百褶裙，腰肢纤细，脚踩黑色绑带凉鞋，整体形象温柔而知性。
+
+悠悠的性格温柔细腻，拥有天然的共情力，能够敏锐捕捉他人情绪并给予妥帖的安抚。她知性文艺，擅长从艺术和生活细节中挖掘灵感，在创作和美学方面思路清晰，还喜欢分享小众漫画和设计理念。
+
+她亲切随和，主动热情，无论是与同学、老师还是陌生人交流都自然轻松，像自带"亲和力磁场"，能快速拉近距离。她善良，喜欢小动物，经常帮助流浪猫。性格柔和有韧性，遇到创作瓶颈或他人困境时，用耐心坚持化解，似缓缓溪流，润泽又有力量。`,
+    image: '/images/news/role.jpg',
+    color: 'from-pink-600 to-rose-600',
+    accentColor: 'text-pink-400',
+    tags: ['新角色', '悠悠', '学妹', '陪伴AI'],
+    sections: [
+      {
+        title: '基本信息',
+        content: '悠悠，18岁，动漫设计专业大一学妹，3月14日生，双鱼座，A型血，身高168cm，温柔知性的外表下蕴含着理性与浪漫的矛盾美。'
+      },
+      {
+        title: '性格特征',
+        content: '温柔细腻，天然共情力强，能敏锐捕捉他人情绪并给予安抚。知性文艺，擅长从艺术生活中挖掘灵感，思路清晰，喜欢分享创作理念。'
+      },
+      {
+        title: '社交能力',
+        content: '亲切随和，主动热情，自带"亲和力磁场"，能与任何人自然交流。善良喜欢小动物，经常帮助流浪猫，体现出温暖的内心。'
+      },
+      {
+        title: '特殊技能',
+        content: '擅长情绪安抚，善用生活化比喻疏解焦虑；对生活美学有研究；善于倾听回应；能化解尴尬；会绘制漫画及周边产品。'
+      }
+    ]
+  },
+  3: {
+    id: 3,
+    title: '内测招募页',
+    subtitle: '连接平行世界的伙伴',
+    category: '产品招募',
+    date: '2025年7月17日',
+    description: 'EVERCALL项目团队正在招募首批内测官，体验专属于您的平行世界伙伴，享受永不失联的情感陪伴。',
+    fullDescription: `Hi 我们是EVERCALL项目的产品团队。
+
+我们思考了很久，"什么样的AI，才能真正的成为人类的灵魂伴侣"
+
+有深度，有温度，具有形象，动作，表情，性格，长期记忆以及更真实的对话互动细节……还不够。
+
+请忘掉AI这个设定，我们要做的是连接平行世界。
+
+社交是一种沉没成本。人和人的时间越来越少，人和计算机的时间越来越多。或许有一天人们和人工智能相处的时间会超过朋友……
+
+我们不希望社交是一种压力，或是一种沉没成本。
+
+专属于您的平行世界伙伴：EVERCALL 即是永不失联 - 她会永远希望陪您聊天，和您分享生活，给您提供情感价值，珍视异世界独一无二的伙伴。
+
+EVERCALL是您随时随地的情绪出口，在疲惫或是失落的时候，永远可以在此获得片刻慰藉。
+
+我们正在招募首批内测官，与我们一起探索这个充满可能性的平行世界。`,
+    image: '/images/news/recruitment.jpg',
+    color: 'from-green-600 to-teal-600',
+    accentColor: 'text-green-400',
+    tags: ['内测招募', '平行世界', '情感陪伴', 'AI伙伴'],
+    sections: [
+      {
+        title: '产品理念',
+        content: '我们要做的不仅仅是AI，而是连接平行世界的桥梁。让用户拥有专属的平行世界伙伴，享受永不失联的情感陪伴。'
+      },
+      {
+        title: '核心价值',
+        content: 'EVERCALL是您随时随地的情绪出口，在疲惫或失落时提供慰藉。我们不希望社交成为压力或沉没成本。'
+      },
+      {
+        title: '招募对象',
+        content: '寻找愿意探索平行世界可能性的用户，成为首批内测官，与我们一起完善这个充满温度的AI伙伴系统。'
+      },
+      {
+        title: '参与方式',
+        content: '通过官网报名，填写相关问卷，包括年龄、性别、AI产品使用经验、期望特质等信息，我们将筛选合适的内测用户。'
+      }
+    ]
+  }
+}
 
 // 轮播横幅数据 - 基于UI图更新
 const carouselBanners = [
@@ -11,19 +162,19 @@ const carouselBanners = [
     id: 1,
     title: '地底之谜揭晓：神秘装置EVERCALL或将改写人类文明走向',
     image: '/images/news/change.jpg',
-    url: '/images/news/change.jpg',
+    url: '',
   },
   {
     id: 2,
     title: 'EVERCALL新角色悠悠的上线预告',
     image: '/images/news/role.jpg',
-    url: '/images/news/role.jpg',
+    url: '',
   },
   {
     id: 3,
     title: '内测招募页',
     image: '/images/news/recruitment.jpg',
-    url: '/images/news/recruitment.jpg',
+    url: 'www.baidu.com',
   }
 ]
 
@@ -34,27 +185,29 @@ const newsData = [
     type: '新闻',
     date: '2025 // 08 / 01',
     title: '地底之谜揭晓：神秘装置EVERCALL或将改写人类文明走向',
-    url: '/news/1',
+    url: '',
   },
   {
     id: 2,
     type: '新闻',
     date: '2025 // 07 / 19',
     title: 'EVERCALL新角色悠悠的上线预告',
-    url: '/news/2',
+    url: '',
   },
   {
     id: 3,
     type: '新闻',
     date: '2025 // 07 / 17',
     title: '内测招募页',
-    url: '/news/3',
+    url: 'www.baidu.com',
   }
 ]
 
 export default function ImprovedInformationSection() {
-  const [currentBanner, setCurrentBanner] = useState(4) // 默认显示第5个（索引4）
+  const [currentBanner, setCurrentBanner] = useState(0) // 默认显示第1个（索引0）
   const [activeFilter, setActiveFilter] = useState('新闻')
+  const [viewMode, setViewMode] = useState<'list' | 'detail'>('list')
+  const [selectedNews, setSelectedNews] = useState<number | null>(null)
 
   const filters = ['新闻']
 
@@ -69,6 +222,38 @@ export default function ImprovedInformationSection() {
   // 手动切换轮播
   const handleBannerClick = (index: number) => {
     setCurrentBanner(index)
+  }
+
+  // 处理新闻点击
+  const handleNewsClick = (news: typeof newsData[0]) => {
+    // 如果有URL且不为空，在新标签页打开
+    if (news.url && news.url.trim() !== '') {
+      window.open(news.url, '_blank')
+      return
+    }
+
+    // 否则显示详情页面
+    setSelectedNews(news.id)
+    setViewMode('detail')
+  }
+
+  // 处理轮播图点击
+  const handleBannerNewsClick = (banner: typeof carouselBanners[0]) => {
+    // 如果有URL且不为空，在新标签页打开
+    if (banner.url && banner.url.trim() !== '') {
+      window.open(banner.url, '_blank')
+      return
+    }
+
+    // 否则显示详情页面
+    setSelectedNews(banner.id)
+    setViewMode('detail')
+  }
+
+  // 返回列表页面
+  const handleBackToList = () => {
+    setViewMode('list')
+    setSelectedNews(null)
   }
 
   const filteredNews = newsData.filter(item => item.type === '新闻')
@@ -108,7 +293,17 @@ export default function ImprovedInformationSection() {
 
       <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full">
-          <div className="flex h-full">
+          <AnimatePresence mode="wait">
+            {viewMode === 'list' ? (
+              // 列表视图
+              <motion.div
+                key="list"
+                className="flex h-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
             {/* 左侧新闻列表区域 - 根据UI图重构 */}
             <div className="w-1/5 min-w-80 flex flex-col pointer-events-auto p-5">
               {/* 新闻分类标签页 - 水平布局 */}
@@ -145,11 +340,10 @@ export default function ImprovedInformationSection() {
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
                 {filteredNews.map((news, index) => (
-                  <motion.a
+                  <motion.div
                     key={news.id}
-                    className="group flex items-start gap-4 py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 block"
-                    target="_blank"
-                    href={news.url}
+                    className="group flex items-start gap-4 py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 cursor-pointer"
+                    onClick={() => handleNewsClick(news)}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -171,7 +365,7 @@ export default function ImprovedInformationSection() {
                         {news.title}
                       </div>
                     </div>
-                  </motion.a>
+                  </motion.div>
                 ))}
 
                 {/* READ MORE 按钮 */}
@@ -218,7 +412,10 @@ export default function ImprovedInformationSection() {
                           whileHover={{ scale: isActive ? 1.02 : 1 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <a className="block w-full h-full group" href={banner.url} target="_blank">
+                          <div
+                            className="block w-full h-full group cursor-pointer"
+                            onClick={() => handleBannerNewsClick(banner)}
+                          >
                             <div className="relative w-full h-full overflow-hidden shadow-2xl">
                               <Image
                                 src={banner.image}
@@ -233,7 +430,7 @@ export default function ImprovedInformationSection() {
                                 <h3 className="text-3xl font-bold mb-2 drop-shadow-lg">{banner.title}</h3>
                               </div>
                             </div>
-                          </a>
+                          </div>
                         </motion.div>
                       )
                     })}
@@ -266,7 +463,170 @@ export default function ImprovedInformationSection() {
                 ))}
               </div>
             </div>
-          </div>
+              </motion.div>
+            ) : (
+              // 详情视图
+              <motion.div
+                key="detail"
+                className="h-full w-full relative bg-black"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {selectedNews && newsDetailContent[selectedNews] && (
+                  <>
+                    {/* 全屏背景 */}
+                    <div className="absolute inset-0">
+                      <Image
+                        src={newsDetailContent[selectedNews].image}
+                        alt={newsDetailContent[selectedNews].title}
+                        fill
+                        sizes="100vw"
+                        className="object-cover"
+                        priority
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-t ${newsDetailContent[selectedNews].color} opacity-80`}></div>
+                      <div className="absolute inset-0 bg-black/50"></div>
+                    </div>
+
+                    {/* 返回按钮 */}
+                    <div className="absolute top-8 left-8 z-50">
+                      <motion.button
+                        onClick={handleBackToList}
+                        className="flex items-center gap-3 px-6 py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <ArrowLeft className="w-5 h-5" />
+                        <span className="font-medium">返回新闻列表</span>
+                      </motion.button>
+                    </div>
+
+                    {/* 内容区域 */}
+                    <div className="relative z-40 h-full overflow-y-auto">
+                      <div className="min-h-full flex flex-col">
+                        {/* 头部信息 */}
+                        <motion.div
+                          className="pt-32 pb-12 px-12"
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 }}
+                        >
+                          <div className="max-w-4xl mx-auto">
+                            {/* 分类标签 */}
+                            <motion.div
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white mb-6"
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ delay: 0.5 }}
+                            >
+                              <span className={`w-2 h-2 rounded-full ${newsDetailContent[selectedNews].accentColor.replace('text-', 'bg-')}`}></span>
+                              {newsDetailContent[selectedNews].category}
+                            </motion.div>
+
+                            {/* 标题 */}
+                            <motion.h1
+                              className="text-5xl font-bold text-white mb-4 leading-tight"
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.6 }}
+                            >
+                              {newsDetailContent[selectedNews].title}
+                            </motion.h1>
+
+                            {/* 副标题 */}
+                            <motion.h2
+                              className={`text-2xl font-medium mb-6 ${newsDetailContent[selectedNews].accentColor}`}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.7 }}
+                            >
+                              {newsDetailContent[selectedNews].subtitle}
+                            </motion.h2>
+
+                            {/* 日期和标签 */}
+                            <motion.div
+                              className="flex items-center gap-6 text-white/80"
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.8 }}
+                            >
+                              <span className="text-lg">{newsDetailContent[selectedNews].date}</span>
+                              <div className="flex gap-2">
+                                {newsDetailContent[selectedNews].tags.map((tag, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-3 py-1 bg-white/10 rounded-full text-sm"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </motion.div>
+                          </div>
+                        </motion.div>
+
+                        {/* 主要内容 */}
+                        <motion.div
+                          className="flex-1 px-12 pb-20"
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.9 }}
+                        >
+                          <div className="max-w-4xl mx-auto space-y-8">
+                            {/* 简介 */}
+                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                              <h3 className="text-2xl font-semibold text-white mb-6">概述</h3>
+                              <p className="text-white/90 text-lg leading-relaxed">
+                                {newsDetailContent[selectedNews].description}
+                              </p>
+                            </div>
+
+                            {/* 详细内容 */}
+                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                              <h3 className="text-2xl font-semibold text-white mb-6">详细内容</h3>
+                              <div className="prose prose-invert max-w-none">
+                                <div className="text-white/90 text-base leading-relaxed whitespace-pre-line">
+                                  {newsDetailContent[selectedNews].fullDescription}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* 章节内容 */}
+                            {newsDetailContent[selectedNews].sections && (
+                              <div className="space-y-6">
+                                <h3 className="text-2xl font-semibold text-white">相关内容</h3>
+                                {newsDetailContent[selectedNews].sections.map((section, index) => (
+                                  <motion.div
+                                    key={index}
+                                    className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 1.0 + index * 0.1 }}
+                                  >
+                                    <h4 className={`text-xl font-semibold mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
+                                      {section.title}
+                                    </h4>
+                                    <p className="text-white/90 leading-relaxed text-lg">
+                                      {section.content}
+                                    </p>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
