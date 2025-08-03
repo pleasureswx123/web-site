@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import Image from 'next/image'
-import { ChevronRight, ArrowLeft } from 'lucide-react'
+import { ChevronRight, ArrowLeft, ChevronUp, ChevronDown } from 'lucide-react'
 
 const moreContent = [
   {
@@ -134,6 +134,18 @@ export default function MoreSection() {
     setActiveTab(index)
   }
 
+  const handlePrevTab = () => {
+    if (selectedContent) {
+      setActiveTab((prev) => prev > 0 ? prev - 1 : selectedContent.tabs.length - 1)
+    }
+  }
+
+  const handleNextTab = () => {
+    if (selectedContent) {
+      setActiveTab((prev) => prev < selectedContent.tabs.length - 1 ? prev + 1 : 0)
+    }
+  }
+
   return (
     <section className="w-full h-full relative overflow-hidden">
 
@@ -180,7 +192,7 @@ export default function MoreSection() {
                     {/* 内容 */}
                     <div className="relative z-10 h-full flex flex-col justify-end p-6 text-left">
                       <h3
-                        className="text-2xl font-bold text-white mb-2 group-hover:text-ak-secondary transition-colors">
+                        className="text-2xl font-bold text-white/80 mb-2 group-hover:text-ak-secondary transition-colors">
                         {item.title}
                       </h3>
 
@@ -209,12 +221,12 @@ export default function MoreSection() {
                 {selectedContent && (
                   <>
                     {/* 全屏背景图 */}
-                    <div className="absolute inset-0">
+                    <div className="fixed inset-0">
                       <Image
                         src={selectedContent.tabs[activeTab]?.image || selectedContent.backgroundImage || selectedContent.image}
                         alt={selectedContent.title}
                         fill
-                        className="object-cover"
+                        className="object-cover opacity-70"
                         priority
                       />
                       <div className="absolute inset-0 bg-black/60"></div>
@@ -240,7 +252,7 @@ export default function MoreSection() {
                               animate={{opacity: 1, y: 0}}
                               transition={{delay: 0.2}}
                             >
-                              <h1 className="text-5xl font-bold text-white mb-4 leading-tight">
+                              <h1 className="text-5xl font-bold text-white/80 mb-4 leading-tight">
                                 {selectedContent.titleEn}
                               </h1>
                               <h2 className="text-2xl text-ak-secondary mb-6">
@@ -256,7 +268,7 @@ export default function MoreSection() {
                               animate={{opacity: 1, y: 0}}
                               transition={{delay: 0.4}}
                             >
-                              <h3 className="text-2xl font-bold text-white mb-4">
+                              <h3 className="text-2xl font-bold text-white/80 mb-4">
                                 {selectedContent.tabs[activeTab]?.title}
                               </h3>
                               <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-6">
@@ -266,27 +278,32 @@ export default function MoreSection() {
                               </div>
                             </motion.div>
 
-                            <motion.div
+                            {/* 上下切换按钮 */}
+                            {/*<motion.div
                               className="flex space-x-4"
                               initial={{opacity: 0, y: 20}}
                               animate={{opacity: 1, y: 0}}
                               transition={{delay: 0.6}}
                             >
                               <motion.button
-                                className="bg-ak-secondary hover:bg-ak-secondary/80 text-white px-8 py-3 rounded-lg transition-colors duration-300 shadow-lg shadow-ak-secondary/30 hover:shadow-ak-secondary/50 font-medium"
+                                onClick={handlePrevTab}
+                                className="bg-ak-secondary hover:bg-ak-secondary/80 text-white/80 px-8 py-3 rounded-lg transition-colors duration-300 shadow-lg shadow-ak-secondary/30 hover:shadow-ak-secondary/50 font-medium flex items-center space-x-2"
                                 whileHover={{scale: 1.05}}
                                 whileTap={{scale: 0.95}}
                               >
-                                访问官网
+                                <ChevronUp className="w-4 h-4" />
+                                <span>上</span>
                               </motion.button>
                               <motion.button
-                                className="bg-transparent hover:bg-white/10 text-white border border-gray-400 hover:border-white px-8 py-3 rounded-lg transition-all duration-300 font-medium"
+                                onClick={handleNextTab}
+                                className="bg-transparent hover:bg-white/10 text-white/80 border border-gray-400 hover:border-white px-8 py-3 rounded-lg transition-all duration-300 font-medium flex items-center space-x-2"
                                 whileHover={{scale: 1.05}}
                                 whileTap={{scale: 0.95}}
                               >
-                                了解更多
+                                <ChevronDown className="w-4 h-4" />
+                                <span>下</span>
                               </motion.button>
-                            </motion.div>
+                            </motion.div>*/}
                           </motion.div>
                         </AnimatePresence>
                       </div>
@@ -300,15 +317,15 @@ export default function MoreSection() {
                           transition={{duration: 0.6, delay: 0.3}}
                         >
                           <div className="mb-6">
-                            <h4 className="text-white text-lg font-bold mb-2">内容导航</h4>
+                            <h4 className="text-white/80 text-lg font-bold mb-2">内容导航</h4>
                             <div className="w-12 h-0.5 bg-ak-secondary"></div>
                           </div>
                           {selectedContent.tabs.map((tab, index) => (
                             <motion.button
                               key={tab.id}
                               className={`w-full text-left p-4 rounded-lg border transition-all duration-300 backdrop-blur-sm ${activeTab === index
-                                ? 'bg-ak-secondary/20 border-ak-secondary text-white shadow-lg shadow-ak-secondary/20'
-                                : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white hover:bg-black/40'
+                                ? 'bg-ak-secondary/20 border-ak-secondary text-white/80 shadow-lg shadow-ak-secondary/20'
+                                : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white/80 hover:bg-black/40'
                               }`}
                               onClick={() => handleTabChange(index)}
                               initial={{opacity: 0, x: 20}}

@@ -305,7 +305,7 @@ export default function MediaSection() {
 
                               <div>
                                 <motion.p
-                                  className="text-white/90 text-sm leading-relaxed mb-4"
+                                  className="text-white/80 text-sm leading-relaxed mb-4"
                                   initial={{opacity: 0}}
                                   animate={{opacity: 1}}
                                   transition={{delay: 1.1 + index * 0.1}}
@@ -362,8 +362,8 @@ export default function MediaSection() {
                 className="object-cover"
                 priority
               />
-              <div className={`absolute inset-0 bg-gradient-to-t ${mediaContent[selectedIndex].color} opacity-90`}></div>
-              <div className="absolute inset-0 bg-black/50"></div>
+              <div className={`absolute inset-0 bg-gradient-to-t ${mediaContent[selectedIndex].color} opacity-30`}></div>
+              <div className="absolute inset-0 bg-black/75"></div>
             </div>
 
             {/* 可滚动内容区域 */}
@@ -432,7 +432,7 @@ export default function MediaSection() {
                             {mediaContent[selectedIndex].tags.map((tag, index) => (
                               <span
                                 key={index}
-                                className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 border border-white/20 text-sm font-medium"
+                                className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/80 border border-white/20 text-sm font-medium"
                               >
                                 {tag}
                               </span>
@@ -450,7 +450,7 @@ export default function MediaSection() {
                           {/* 简介 */}
                           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
                             <h3 className="text-xl font-semibold text-white mb-4">概述</h3>
-                            <p className="text-white/90 text-lg leading-relaxed">
+                            <p className="text-white/80 text-lg leading-relaxed">
                               {mediaContent[selectedIndex].description}
                             </p>
                           </div>
@@ -459,7 +459,7 @@ export default function MediaSection() {
                           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
                             <h3 className="text-xl font-semibold text-white mb-6">详细内容</h3>
                             <div className="prose prose-invert max-w-none">
-                              <div className="text-white/90 text-base leading-relaxed whitespace-pre-line">
+                              <div className="text-white/80 text-base leading-relaxed whitespace-pre-line">
                                 {mediaContent[selectedIndex].fullDescription}
                               </div>
                             </div>
@@ -480,7 +480,7 @@ export default function MediaSection() {
                                   <h4 className={`text-lg font-semibold mb-4 ${mediaContent[selectedIndex].accentColor}`}>
                                     {section.title}
                                   </h4>
-                                  <p className="text-white/90 leading-relaxed">
+                                  <p className="text-white/80 leading-relaxed">
                                     {section.content}
                                   </p>
                                 </motion.div>
