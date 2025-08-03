@@ -163,34 +163,6 @@ export default function ImprovedIndexSection() {
             </motion.a>
 
             <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-yellow-500/30 hover:border-yellow-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-yellow-500/20"
-              target="_blank"
-              href="https://l.taptap.cn/H8VVNhvq?channel=rep-rep_typxbuxvnpi"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-                <Gamepad2 className="w-full h-full" />
-              </div>
-              <div className="flex flex-col gap-1 flex-1">
-                <div className="font-medium leading-tight text-sm">通过TapTap下载</div>
-              </div>
-            </motion.a>
-
-            <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-purple-500/30 hover:border-purple-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-purple-500/20"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-                <Monitor className="w-full h-full" />
-              </div>
-              <div className="flex flex-col gap-1 flex-1">
-                <div className="font-medium leading-tight">模拟器下载</div>
-              </div>
-            </motion.a>
-
-            <motion.a
               className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-cyan-500/30 hover:border-cyan-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-cyan-500/20"
               target="_blank"
               href="https://www.skland.com/game/Evercall"
@@ -202,21 +174,6 @@ export default function ImprovedIndexSection() {
               </div>
               <div className="flex flex-col gap-1 flex-1">
                 <div className="font-medium leading-tight">官方社区</div>
-              </div>
-            </motion.a>
-
-            <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-orange-500/30 hover:border-orange-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-orange-500/20"
-              target="_blank"
-              href="https://user.hypergryph.com/payment/Evercall?source_from=ak_official"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-                <CreditCard className="w-full h-full" />
-              </div>
-              <div className="flex flex-col gap-1 flex-1">
-                <div className="font-medium leading-tight text-sm">官方充值中心</div>
               </div>
             </motion.a>
           </motion.div>
