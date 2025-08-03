@@ -24,7 +24,7 @@ const carouselBanners = [
     title: '内测招募页',
     image: '/images/news/recruitment.jpg',
     url: '/images/news/recruitment.jpg',
-  },
+  }
 ]
 
 // 新闻数据 - 根据UI图更新
@@ -85,12 +85,11 @@ export default function ImprovedInformationSection() {
     }
   }
 
-  // 计算滚动条位置 - 适配两列布局
+  // 计算滚动条位置 - 根据轮播图数量动态调整
   const getScrollbarStyle = () => {
     const totalWidth = 100 // 滚动条总宽度百分比
-    const dragWidth = 20 // 拖拽条宽度百分比
-    const maxPosition = totalWidth - dragWidth
-    const position = (currentBanner / (carouselBanners.length - 1)) * maxPosition
+    const dragWidth = totalWidth / carouselBanners.length // 根据轮播图数量动态计算拖拽条宽度
+    const position = currentBanner * dragWidth // 当前位置基于轮播图索引
     return {
       transform: `translate3d(${Math.round(position)}%, 0px, 0px)`,
       width: `${dragWidth}%`,
@@ -103,7 +102,7 @@ export default function ImprovedInformationSection() {
       className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-black/20 to-slate-800">
       {/* 背景装饰 */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
-      <div className="absolute -left-5 bottom-[70px] text-[100px] font-bold text-white/20 z-10]">
+      <div className="absolute left-5 bottom-[10px] text-[100px] font-bold text-white/20 z-10]">
         EVERCALL NEWS
       </div>
 

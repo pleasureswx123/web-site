@@ -9,7 +9,7 @@ interface NavigationProps {
 
 const navigationItems = [
   { id: 'index', label: 'INDEX', labelCn: '首页' },
-  { id: 'information', label: 'INFORMATION', labelCn: '情报' },
+  { id: 'information', label: 'INFORMATION', labelCn: '新闻' },
   { id: 'operator', label: 'OPERATOR', labelCn: '干员' },
   { id: 'world', label: 'WORLD', labelCn: '设定' },
   { id: 'media', label: 'MEDIA', labelCn: '泰拉万象' },

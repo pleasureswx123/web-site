@@ -9,75 +9,29 @@ import {
   Info,
   Heart,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Calendar,
+  Star
 } from 'lucide-react'
 
 const operatorData = [
   {
-    id: 'florence',
-    name: 'FLORENCE',
-    nameCn: '芙洛伦丝',
-    rarity: 6,
+    id: 'yoyo',
+    name: 'Yoyo',
+    nameCn: '悠悠',
+    rarity: 5,
     profession: 'Support',
     professionCn: '支援',
-    voiceCn: '陈雨',
-    voiceJp: 'M・A・O',
-    description: '精通于治疗和支援的专业人员，性格温和但意志坚定。同时拥有出色的医疗技术和对于战术的深刻理解。她总是能在关键时刻为队友提供最需要的支援，以及最贴心的照料。她深知医者的责任，也深知一个干员的责任。',
-    image: '/images/characters/texas.png',
-    avatar: '/images/characters/texas.png',
-  },
-  {
-    id: 'kaltsit',
-    name: 'KAL\'TSIT',
-    nameCn: '凯尔希',
-    rarity: 6,
-    profession: 'Medic',
-    professionCn: '医疗',
-    voiceCn: '陈雨',
-    voiceJp: '日笠阳子',
-    description: '罗德岛最高管理者之一，阿米娅的直接辅导者。罗德岛医疗部门的总负责人。作为罗德岛的老成员，凯尔希医生是在阿米娅背后最稳固的援护者。',
-    image: '/images/characters/kaltsit.png',
-    avatar: '/images/characters/kaltsit.png',
-  },
-  {
-    id: 'amiya',
-    name: 'AMIYA',
-    nameCn: '阿米娅',
-    rarity: 5,
-    profession: 'Caster',
-    professionCn: '术师',
-    voiceCn: '陈雨',
-    voiceJp: '黑泽朋世',
-    description: '罗德岛的公开领袖，在内部拥有最高执行权。虽然年纪尚轻，但她拥有着卓越的行动指挥能力。',
-    image: '/images/characters/amiya.png',
-    avatar: '/images/characters/amiya.png',
-  },
-  {
-    id: 'chen',
-    name: 'CHEN',
-    nameCn: '陈',
-    rarity: 6,
-    profession: 'Guard',
-    professionCn: '近卫',
-    voiceCn: '陈雨',
-    voiceJp: '石上静香',
-    description: '龙门近卫局高级督察，在龙门与罗德岛的合作中，她既是监督者，也是合作伙伴。',
-    image: '/images/characters/chen.png',
-    avatar: '/images/characters/chen.png',
-  },
-  {
-    id: 'texas',
-    name: 'TEXAS',
-    nameCn: '德克萨斯',
-    rarity: 5,
-    profession: 'Vanguard',
-    professionCn: '先锋',
-    voiceCn: '陈雨',
-    voiceJp: '小清水亚美',
-    description: '企鹅物流的员工，拥有丰富的作战经验。她总是显得很冷静，但内心深处燃烧着战斗的热情。',
-    image: '/images/characters/texas.png',
-    avatar: '/images/characters/texas.png',
-  },
+    voiceCn: '王晓雯',
+    // voiceJp: '大橋彩香',
+    birthday: '3月14日',
+    birthdayNote: 'π Day，她常说"无限不循环才是人生"',
+    constellation: '双鱼座',
+    constellationNote: '理性与浪漫的矛盾体',
+    description: '动漫设计专业大一学生，性格温柔细腻却藏着韧性。她善于捕捉人们情绪中细微的波动，也能将生活里的美学感悟转化为具体的创作。 她总习惯用樱花牌铅笔作画，能把他人的焦虑画成会绽放的云朵，用漫画分镜化解尴尬的瞬间；遇到创作瓶颈时，也会凭着耐心慢慢摸索突破。她的速写本就像一个治愈人心的秘密基地，每一笔画里，都藏着 “让裂痕生长出星光” 的温暖力量。',
+    image: '/images/roles/yoyo.jpg',
+    avatar: '/images/roles/yoyo.jpg',
+  }
 ]
 
 export default function OperatorSection() {
@@ -173,7 +127,7 @@ export default function OperatorSection() {
               </AnimatePresence>
 
               {/* 声优信息 */}
-              <AnimatePresence mode="wait">
+              {/*<AnimatePresence mode="wait">
                 <motion.div
                   key={selectedOperator.id}
                   className="space-y-3 mb-8"
@@ -193,6 +147,46 @@ export default function OperatorSection() {
                     <span className="text-white font-medium">{selectedOperator.voiceJp}</span>
                   </div>
                 </motion.div>
+              </AnimatePresence>*/}
+
+              {/* 生日与星座信息 */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedOperator.id}
+                  className="space-y-3 mb-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                >
+                  {/* 生日信息 */}
+                  <div className="flex items-start space-x-3">
+                    <Calendar className="w-4 h-4 text-ak-secondary mt-0.5" />
+                    <div className="flex flex-col">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-gray-400 text-sm">生日:</span>
+                        <span className="text-white font-medium">{selectedOperator.birthday}</span>
+                      </div>
+                      <span className="text-gray-500 text-xs mt-1 leading-relaxed">
+                        {selectedOperator.birthdayNote}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 星座信息 */}
+                  <div className="flex items-start space-x-3">
+                    <Star className="w-4 h-4 text-ak-secondary mt-0.5" />
+                    <div className="flex flex-col">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-gray-400 text-sm">星座:</span>
+                        <span className="text-white font-medium">{selectedOperator.constellation}</span>
+                      </div>
+                      <span className="text-gray-500 text-xs mt-1 leading-relaxed">
+                        {selectedOperator.constellationNote}
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
               </AnimatePresence>
 
               {/* 角色描述 */}
@@ -210,7 +204,7 @@ export default function OperatorSection() {
               </AnimatePresence>
 
               {/* 操作按钮 */}
-              <motion.div
+              {/*<motion.div
                 className="flex space-x-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -233,7 +227,7 @@ export default function OperatorSection() {
                   <Heart className="w-4 h-4 text-white group-hover:scale-110 transition-transform duration-300" />
                   <span className="text-white font-medium">收藏干员</span>
                 </motion.button>
-              </motion.div>
+              </motion.div>*/}
             </div>
 
             {/* 右侧：角色立绘 */}
@@ -261,32 +255,36 @@ export default function OperatorSection() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* 导航箭头 */}
-              <motion.button
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  const currentIndex = operatorData.findIndex(op => op.id === selectedOperator.id)
-                  const prevIndex = currentIndex > 0 ? currentIndex - 1 : operatorData.length - 1
-                  handleOperatorSelect(operatorData[prevIndex])
-                }}
-              >
-                <ChevronLeft className="w-6 h-6 text-gray-300 hover:text-ak-primary transition-colors duration-300" />
-              </motion.button>
+              {/* 导航箭头 - 只在有多个干员时显示 */}
+              {operatorData.length > 1 && (
+                <>
+                  <motion.button
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => {
+                      const currentIndex = operatorData.findIndex(op => op.id === selectedOperator.id)
+                      const prevIndex = currentIndex > 0 ? currentIndex - 1 : operatorData.length - 1
+                      handleOperatorSelect(operatorData[prevIndex])
+                    }}
+                  >
+                    <ChevronLeft className="w-6 h-6 text-gray-300 hover:text-ak-primary transition-colors duration-300" />
+                  </motion.button>
 
-              <motion.button
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  const currentIndex = operatorData.findIndex(op => op.id === selectedOperator.id)
-                  const nextIndex = currentIndex < operatorData.length - 1 ? currentIndex + 1 : 0
-                  handleOperatorSelect(operatorData[nextIndex])
-                }}
-              >
-                <ChevronRight className="w-6 h-6 text-gray-300 hover:text-ak-primary transition-colors duration-300" />
-              </motion.button>
+                  <motion.button
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => {
+                      const currentIndex = operatorData.findIndex(op => op.id === selectedOperator.id)
+                      const nextIndex = currentIndex < operatorData.length - 1 ? currentIndex + 1 : 0
+                      handleOperatorSelect(operatorData[nextIndex])
+                    }}
+                  >
+                    <ChevronRight className="w-6 h-6 text-gray-300 hover:text-ak-primary transition-colors duration-300" />
+                  </motion.button>
+                </>
+              )}
             </div>
           </div>
         </div>

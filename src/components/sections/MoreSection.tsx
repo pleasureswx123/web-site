@@ -7,13 +7,13 @@ import { ChevronRight, ArrowLeft } from 'lucide-react'
 
 const moreContent = [
   {
-    id: 'integrated-strategies',
-    title: '集成战略',
-    titleEn: 'INTEGRATED STRATEGIES',
+    id: 'evercall-rules',
+    title: 'Evercall_玩法说明',
+    titleEn: 'EVERCALL RULES',
     description: 'Roguelike玩法模式，每次挑战都有不同的体验。在这个模式中，你需要运用策略和运气来克服各种挑战。',
-    image: '/images/more/integrated_strategies.jpg',
-    icon: '/images/icons/icon-integrated_strategies.png',
-    backgroundImage: '/images/backgrounds/is-bg.jpg',
+    image: '/images/more/bg2.webp',
+    icon: '/images/more/bg2.webp',
+    backgroundImage: '/images/more/bg2.webp',
     tabs: [
       {
         id: 'overview',
@@ -42,13 +42,13 @@ const moreContent = [
     ]
   },
   {
-    id: 'reclamation-algorithm',
-    title: '生息演算',
-    titleEn: 'RECLAMATION ALGORITHM',
+    id: 'privacy-policy',
+    title: '隐私政策和服务条款',
+    titleEn: 'PRIVACY POLICY & TERMS',
     description: '全新的战略模拟玩法，体验不同的战术策略。在这个模式中建设基地，管理资源，制定长期发展策略。',
-    image: '/images/more/reclamation_algorithm.jpg',
-    icon: '/images/icons/icon-reclamation_algorithm.png',
-    backgroundImage: '/images/backgrounds/ra-bg.jpg',
+    image: '/images/more/bg.png',
+    icon: '/images/more/bg.png',
+    backgroundImage: '/images/more/bg.png',
     tabs: [
       {
         id: 'gameplay',
@@ -77,9 +77,9 @@ const moreContent = [
     ]
   },
   {
-    id: 'animation',
-    title: '衍生动画',
-    titleEn: 'ANIMATION',
+    id: 'animation-demo',
+    title: '动画演示',
+    titleEn: 'ANIMATION DEMO',
     description: '心流元素官方动画作品，深入了解泰拉世界的故事和角色。高质量的动画制作带来沉浸式体验。',
     image: '/images/more/animation.jpg',
     icon: '/images/icons/icon-animation.png',
@@ -110,42 +110,7 @@ const moreContent = [
         image: '/images/more/anime-future.jpg'
       }
     ]
-  },
-  {
-    id: 'terra-historicus',
-    title: '泰拉记事社',
-    titleEn: 'TERRA HISTORICUS',
-    description: '官方世界观资料站，探索泰拉大陆的历史与文化。详细的设定资料和背景故事等你发现。',
-    image: '/images/more/terra_historicus.jpg',
-    icon: '/images/icons/icon-terra_historicus.png',
-    backgroundImage: '/images/backgrounds/terra-bg.jpg',
-    tabs: [
-      {
-        id: 'nations',
-        title: '国家势力',
-        content: '详细介绍泰拉大陆各个国家和势力的历史、文化、政治制度等信息。',
-        image: '/images/more/terra-nations.jpg'
-      },
-      {
-        id: 'history',
-        title: '历史事件',
-        content: '记录泰拉世界重要的历史事件，包括战争、灾难、政治变革等重大事件。',
-        image: '/images/more/terra-history.jpg'
-      },
-      {
-        id: 'culture',
-        title: '文化风俗',
-        content: '探索各地区独特的文化传统、节日庆典、艺术形式等丰富的文化内容。',
-        image: '/images/more/terra-culture.jpg'
-      },
-      {
-        id: 'technology',
-        title: '科技发展',
-        content: '了解泰拉世界的科技水平、源石技术、医疗技术等科技发展情况。',
-        image: '/images/more/terra-tech.jpg'
-      }
-    ]
-  },
+  }
 ]
 
 export default function MoreSection() {
@@ -179,7 +144,7 @@ export default function MoreSection() {
               // 列表视图
               <motion.div
                 key="list"
-                className="h-full relative grid grid-cols-4 grid-rows-1"
+                className="h-full relative grid grid-cols-3 grid-rows-1"
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}

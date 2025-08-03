@@ -28,8 +28,8 @@ interface OriginalNavigationProps {
 
 const navigationItems = [
   { id: 'index', label: 'INDEX', labelCn: '首页' },
-  { id: 'information', label: 'INFORMATION', labelCn: '情报' },
-  { id: 'operator', label: 'OPERATOR', labelCn: '干员' },
+  { id: 'information', label: 'EVENTS', labelCn: '新闻' },
+  { id: 'operator', label: 'CHARACTERS', labelCn: '角色' },
   { id: 'world', label: 'WORLD', labelCn: '设定' },
   { id: 'media', label: 'MEDIA', labelCn: '泰拉万象' },
   { id: 'more', label: 'MORE', labelCn: '更多内容' },
