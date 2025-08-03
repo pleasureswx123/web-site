@@ -73,6 +73,8 @@ export default function WorldSection() {
     setSelectedWorld(item)
     setCurrentIndex(worldData.findIndex(w => w.id === item.id))
     setViewMode('detail')
+    // 清除悬停状态，避免在详情视图中继续显示悬停效果
+    setHoveredItem(null)
   }
 
   const handleBack = () => {
