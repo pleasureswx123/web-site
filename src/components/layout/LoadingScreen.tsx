@@ -140,8 +140,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <span className="relative">
-              RHODES ISLAND
-              <span className="absolute inset-0 text-cyan-400/40 blur-sm">RHODES ISLAND</span>
+              连接平行世界
+              <span className="absolute inset-0 text-cyan-400/40 blur-sm">连接平行世界</span>
             </span>
           </motion.div>
         </motion.div>
@@ -244,10 +244,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   <span>CONNECTION</span>
                   <span className="text-cyan-400">SECURE</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>PROTOCOL</span>
-                  <span className="text-blue-400">HTTPS/2.0</span>
-                </div>
               </div>
 
               {/* 底部品牌信息 */}
@@ -255,10 +251,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 <div className="text-xs text-gray-400 font-mono tracking-wider">
                   <span className="text-white/80">EVERCALL</span>
                   <span className="mx-3 text-gray-600">|</span>
-                  <span>RHODES ISLAND PHARMACEUTICAL</span>
-                </div>
-                <div className="text-xs text-gray-600 mt-1">
-                  ak.hypergryph.com
+                  <span>www.xinliuyuansu.com</span>
                 </div>
               </div>
             </motion.div>

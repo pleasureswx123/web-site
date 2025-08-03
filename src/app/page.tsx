@@ -199,12 +199,12 @@ export default function Home() {
       {/* 全新设计的右侧边栏 - 使用 Tailwind CSS */}
       <div className="absolute w-52 top-20 right-0 bottom-10 z-20">
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 blur-sm"
-             style={{backgroundImage: "url('/images/characters/chen.png')"}}>
+             style={{backgroundImage: "url('/images/roles/yoyo.jpg')"}}>
           {/* 添加渐变遮罩以增强视觉效果 */}
           <div
             className="absolute inset-0 bg-gradient-to-l from-slate-900/30 via-transparent to-slate-900/50 backdrop-blur-sm"/>
           {/* 添加额外的模糊层 */}
-          <div className="absolute inset-0 backdrop-blur-md bg-slate-900/10"/>
+          <div className="absolute inset-0 backdrop-blur-sm bg-slate-900/10"/>
         </div>
 
         <div className="flex flex-col items-end text-right absolute right-6 top-1/2 -translate-y-1/2">
