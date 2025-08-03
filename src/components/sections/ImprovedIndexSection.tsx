@@ -86,10 +86,10 @@ export default function ImprovedIndexSection() {
             <div className="mb-8 space-y-6">
               <motion.h1
                 className="font-ak-title text-5xl lg:text-7xl xl:text-8xl font-bold tracking-wider leading-tight"
-                style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
+                style={{textShadow: '2px 2px 8px rgba(0,0,0,0.8)'}}
+                initial={{opacity: 0, y: 30}}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: 0.8, delay: 0.7}}
               >
                 EVERCALL
               </motion.h1>
@@ -97,113 +97,79 @@ export default function ImprovedIndexSection() {
               <div className="space-y-3">
                 <motion.div
                   className="font-ak-title text-3xl lg:text-4xl xl:text-5xl font-medium tracking-wide text-ak-secondary"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.9 }}
+                  initial={{opacity: 0, y: 20}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{duration: 0.8, delay: 0.9}}
                 >
                   连接平行世界
                 </motion.div>
                 <motion.div className="font-mono text-sm lg:text-base tracking-wider text-white/70 uppercase"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 1.1 }}
+                            initial={{opacity: 0, y: 20}}
+                            animate={{opacity: 1, y: 0}}
+                            transition={{duration: 0.8, delay: 1.1}}
                 >
                   http://www.xinliuyuansu.com/
                 </motion.div>
               </div>
+              {/* Download links - Horizontal */}
+              <div className="flex flex-row gap-3">
+                <motion.a
+                  className="group flex items-center gap-2 px-3 py-2 bg-black/60 border border-white/15 text-white text-xs backdrop-blur-md transition-all duration-300 hover:bg-blue-500/30 hover:border-blue-500/60 hover:translate-x-1 hover:shadow-lg hover:shadow-blue-500/20"
+                  target="_blank"
+                  href="https://itunes.apple.com/cn/app/id1454663939?mt=8"
+                  whileHover={{scale: 1.02}}
+                  whileTap={{scale: 0.98}}
+                >
+                  <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center">
+                    <Apple className="w-full h-full"/>
+                  </div>
+                  <div className="flex flex-col gap-0">
+                    <div className="font-medium leading-tight text-xs">App Store</div>
+                  </div>
+                </motion.a>
+
+                <motion.a
+                  className="group flex items-center gap-2 px-3 py-2 bg-black/60 border border-white/15 text-white text-xs backdrop-blur-md transition-all duration-300 hover:bg-green-500/30 hover:border-green-500/60 hover:translate-x-1 hover:shadow-lg hover:shadow-green-500/20"
+                  target="_blank"
+                  href="https://ak.hypergryph.com/downloads/android_lastest"
+                  whileHover={{scale: 1.02}}
+                  whileTap={{scale: 0.98}}
+                >
+                  <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center">
+                    <Smartphone className="w-full h-full"/>
+                  </div>
+                  <div className="flex flex-col gap-0">
+                    <div className="font-medium leading-tight text-xs">Android</div>
+                  </div>
+                </motion.a>
+
+                <motion.a
+                  className="group flex items-center gap-2 px-3 py-2 bg-black/60 border border-white/15 text-white text-xs backdrop-blur-md transition-all duration-300 hover:bg-cyan-500/30 hover:border-cyan-500/60 hover:translate-x-1 hover:shadow-lg hover:shadow-cyan-500/20"
+                  target="_blank"
+                  href="https://www.skland.com/game/Evercall"
+                  whileHover={{scale: 1.02}}
+                  whileTap={{scale: 0.98}}
+                >
+                  <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center">
+                    <Users className="w-full h-full"/>
+                  </div>
+                  <div className="flex flex-col gap-0">
+                    <div className="font-medium leading-tight text-xs">官方社区</div>
+                  </div>
+                </motion.a>
+              </div>
+
+              <motion.div
+                className="w-40 h-5 opacity-60 text-[9px] font-mono"
+                initial={{opacity: 0}}
+                animate={{opacity: 0.6}}
+                transition={{duration: 0.8, delay: 1.3}}
+              >
+                @2024-2025 <br/>Evercall Co. Ltd.All
+              </motion.div>
             </div>
 
-            <motion.div
-              className="w-40 h-5 opacity-60 text-[9px] font-mono"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              transition={{ duration: 0.8, delay: 1.3 }}
-            >
-              @2024-2025 <br />Evercall Co. Ltd.All
-            </motion.div>
-          </motion.div>
 
-          {/* Download links */}
-          <motion.div
-            className="absolute right-2 bottom-28 flex flex-col gap-3 z-30 w-56"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 1.5 }}
-          >
-            <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-blue-500/30 hover:border-blue-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-blue-500/20"
-              target="_blank"
-              href="https://itunes.apple.com/cn/app/id1454663939?mt=8"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-                <Apple className="w-full h-full" />
-              </div>
-              <div className="flex flex-col gap-1 flex-1">
-                <div className="font-medium leading-tight">App Store</div>
-                <div className="text-xs opacity-80 leading-tight">下载</div>
-              </div>
-            </motion.a>
-
-            <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-green-500/30 hover:border-green-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-green-500/20"
-              target="_blank"
-              href="https://ak.hypergryph.com/downloads/android_lastest"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-                <Smartphone className="w-full h-full" />
-              </div>
-              <div className="flex flex-col gap-1 flex-1">
-                <div className="font-medium leading-tight">Android</div>
-                <div className="text-xs opacity-80 leading-tight">下载</div>
-              </div>
-            </motion.a>
-
-            <motion.a
-              className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-cyan-500/30 hover:border-cyan-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-cyan-500/20"
-              target="_blank"
-              href="https://www.skland.com/game/Evercall"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-                <Users className="w-full h-full" />
-              </div>
-              <div className="flex flex-col gap-1 flex-1">
-                <div className="font-medium leading-tight">官方社区</div>
-              </div>
-            </motion.a>
-          </motion.div>
-
-
-          {/* QR Code and age rating */}
-          <motion.div
-            className="absolute bottom-2 right-12 flex items-end gap-4 z-30"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 2 }}
-          >
-            <div className="flex items-center gap-3 bg-black/40 px-3 py-3 backdrop-blur-md border border-white/10 hover:bg-black/50 transition-colors duration-300">
-              <div className="flex flex-col text-white text-xs font-medium tracking-wide opacity-90 leading-tight">
-                <span>扫</span><span>码</span><span>下</span><span>载</span>
-              </div>
-              <div className="w-16 h-16 bg-white p-2 flex items-center justify-center">
-                <QrCode className="w-full h-full text-black" />
-              </div>
-            </div>
-            <motion.a
-              href="https://ak.hypergryph.com/news/2021059770.html"
-              target="_blank"
-              whileHover={{ scale: 1.05, opacity: 1 }}
-              className="opacity-80 hover:opacity-100 transition-opacity duration-300"
-            >
-              <div className="w-12 h-12 border border-white/10 hover:border-white/30 transition-colors duration-300 bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-            </motion.a>
           </motion.div>
         </div>
       </div>
