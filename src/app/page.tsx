@@ -23,7 +23,7 @@ export default function Home() {
   const [direction, setDirection] = useState(0) // -1 for left, 1 for right
 
   // 页面顺序定义
-  const sections = ['index', 'information', 'operator', 'world', 'media', 'more']
+  const sections = ['index', 'events', 'characters', 'preset', 'world', 'more']
 
   // 页面切换函数
   const navigateToSection = useCallback((newSection: string) => {
@@ -117,13 +117,13 @@ export default function Home() {
     switch (targetSection) {
       case 'index':
         return <ImprovedIndexSection />
-      case 'information':
+      case 'events':
         return <ImprovedInformationSection />
-      case 'operator':
+      case 'characters':
         return <OperatorSection />
-      case 'world':
+      case 'preset':
         return <WorldSection />
-      case 'media':
+      case 'world':
         return <MediaSection />
       case 'more':
         return <MoreSection />
@@ -219,10 +219,10 @@ export default function Home() {
               <span
                 className="font-ak-title text-[8rem] font-black text-ak-primary leading-[0.8] block relative z-[2] drop-shadow-[0_0_30px_rgba(0,153,255,0.5)] animate-pulse">
                 {currentSection === 'index' && '00'}
-                {currentSection === 'information' && '01'}
-                {currentSection === 'operator' && '02'}
-                {currentSection === 'world' && '03'}
-                {currentSection === 'media' && '04'}
+                {currentSection === 'events' && '01'}
+                {currentSection === 'characters' && '02'}
+                {currentSection === 'preset' && '03'}
+                {currentSection === 'world' && '04'}
                 {currentSection === 'more' && '05'}
               </span>
             <div
@@ -240,10 +240,10 @@ export default function Home() {
               <span
                 className="font-ak-title text-lg font-bold text-white/95 tracking-[0.15em] uppercase relative before:absolute before:left-[-10px] before:top-1/2 before:w-[30px] before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-ak-primary before:to-transparent before:-translate-y-1/2">
                 // {currentSection === 'index' && '00'}
-                {currentSection === 'information' && '01'}
-                {currentSection === 'operator' && '02'}
-                {currentSection === 'world' && '03'}
-                {currentSection === 'media' && '04'}
+                {currentSection === 'events' && '01'}
+                {currentSection === 'characters' && '02'}
+                {currentSection === 'preset' && '03'}
+                {currentSection === 'world' && '04'}
                 {currentSection === 'more' && '05'} / 05
               </span>
           </motion.div>
@@ -273,10 +273,10 @@ export default function Home() {
             <div
               className="font-ak-title text-[1.2rem] font-bold text-ak-primary tracking-[0.1em] uppercase relative before:absolute before:left-[-20px] before:top-0 before:bottom-0 before:w-[3px] before:bg-gradient-to-b before:from-ak-primary before:to-transparent">
               {currentSection === 'index' && 'INDEX'}
-              {currentSection === 'information' && 'INFORMATION'}
-              {currentSection === 'operator' && 'OPERATOR'}
+              {currentSection === 'events' && 'EVENTS'}
+              {currentSection === 'characters' && 'CHARACTERS'}
+              {currentSection === 'preset' && 'PRESET'}
               {currentSection === 'world' && 'WORLD'}
-              {currentSection === 'media' && 'ABOUT TERRA'}
               {currentSection === 'more' && 'MORE CONTENT'}
             </div>
           </motion.div>

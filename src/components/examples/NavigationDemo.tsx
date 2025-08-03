@@ -27,7 +27,7 @@ export default function NavigationDemo() {
 
   // 模拟页面滚动时的section切换
   useEffect(() => {
-    const sections = ['index', 'information', 'operator', 'world', 'media', 'more']
+    const sections = ['index', 'events', 'characters', 'preset', 'world', 'more']
     let currentIndex = 0
 
     const interval = setInterval(() => {

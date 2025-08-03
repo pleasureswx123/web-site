@@ -15,10 +15,10 @@ export default function CleanNavigationTest() {
 
   const sections = [
     { id: 'index', name: '首页', color: 'bg-blue-500' },
-    { id: 'information', name: '情报', color: 'bg-green-500' },
-    { id: 'operator', name: '干员', color: 'bg-purple-500' },
-    { id: 'world', name: '设定', color: 'bg-orange-500' },
-    { id: 'media', name: '泰拉万象', color: 'bg-red-500' },
+    { id: 'events', name: '新闻', color: 'bg-green-500' },
+    { id: 'characters', name: '角色', color: 'bg-purple-500' },
+    { id: 'preset', name: '设定', color: 'bg-orange-500' },
+    { id: 'world', name: '世界', color: 'bg-red-500' },
     { id: 'more', name: '更多内容', color: 'bg-gray-500' }
   ]
 

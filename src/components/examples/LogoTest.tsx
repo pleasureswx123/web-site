@@ -216,10 +216,10 @@ export default function LogoTest() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {[
                   { id: 'index', name: '首页' },
-                  { id: 'information', name: '情报' },
-                  { id: 'operator', name: '干员' },
-                  { id: 'world', name: '设定' },
-                  { id: 'media', name: '泰拉万象' },
+                  { id: 'events', name: '新闻' },
+                  { id: 'characters', name: '角色' },
+                  { id: 'preset', name: '设定' },
+                  { id: 'world', name: '世界' },
                   { id: 'more', name: '更多内容' }
                 ].map((section) => (
                   <Button
