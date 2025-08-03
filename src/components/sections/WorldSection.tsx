@@ -212,8 +212,6 @@ export default function WorldSection() {
                 >
                   <WebGLCanvas
                     className="pointer-events-auto"
-                    width={1200}
-                    height={800}
                   />
                 </motion.div>
 

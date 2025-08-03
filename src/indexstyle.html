@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evercall - TTS Terminal</title>
+
+    <!-- 加载Live2D Cubism Core SDK -->
+    <script src="/static/live2dcubismcore.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 粒子效果Canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999; /* 提高z-index确保在最上层 */
+            pointer-events: none;
+            background: transparent;
+        }
+
+        /* 背景动画网格 */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 162, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 162, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* 主容器 */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            min-height: 100vh;
+        }
+
+        /* 左侧主面板 */
+        .main-panel {
+            background: linear-gradient(145deg, rgba(16, 16, 16, 0.95), rgba(32, 32, 32, 0.95));
+            border: 2px solid #00a2ff;
+            border-radius: 0;
+            position: relative;
+            padding: 2rem;
+            box-shadow:
+                0 0 30px rgba(0, 162, 255, 0.3),
+                inset 0 0 50px rgba(0, 162, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Live2D模型容器样式 */
+        .live2d-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: rgba(16, 16, 16, 0.95);
+            border: 2px solid #00a2ff;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 162, 255, 0.3);
+        }
+
+        #live2d-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        .live2d-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .live2d-btn {
+            padding: 4px 8px;
+            background: rgba(0, 162, 255, 0.2);
+            border: 1px solid rgba(0, 162, 255, 0.3);
+            border-radius: 5px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .live2d-btn:hover {
+            background: rgba(0, 162, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* 装饰性边角 */
+        .main-panel::before,
+        .main-panel::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #ff6600;
+        }
+
+        .main-panel::before {
+            top: -3px;
+            left: -3px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .main-panel::after {
+            bottom: -3px;
+            right: -3px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* 标题 */
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00a2ff;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
+            position: relative;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff6600, transparent);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ff6600;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* 状态指示器 */
+        .status {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #333;
+            border-radius: 0;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .status::before {
+            content: '■';
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .status.disconnected {
+            border-left: 4px solid #ff4757;
+            color: #ff4757;
+        }
+
+        .status.disconnected::before {
+            color: #ff4757;
+            animation: pulse 2s infinite;
+        }
+
+        .status.connected {
+            border-left: 4px solid #2ed573;
+            color: #2ed573;
+        }
+
+        .status.connected::before {
+            color: #2ed573;
+        }
+
+        .status.processing {
+            border-left: 4px solid #ff6600;
+            color: #ff6600;
+        }
+
+        .status.processing::before {
+            color: #ff6600;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 输入区域 */
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 1rem;
+            color: #00a2ff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .input-label::before {
+            content: '▶';
+            margin-right: 8px;
+            color: #ff6600;
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 120px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #333;
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'Rajdhani', sans-serif;
+            padding: 1rem;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #00a2ff;
+            box-shadow:
+                0 0 20px rgba(0, 162, 255, 0.3),
+                inset 0 0 20px rgba(0, 162, 255, 0.1);
+        }
+
+        /* 按钮 */
+        .action-btn {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(45deg, #ff6600, #ff8533);
+            border: none;
+            color: white;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(45deg, #ff8533, #ffaa66);
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .action-btn:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 进度信息 */
+        .progress-panel {
+            background: rgba(0, 162, 255, 0.1);
+            border: 1px solid #00a2ff;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .progress-panel::before {
+            content: 'PROGRESS';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #0a0a0a;
+            padding: 0 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: #00a2ff;
+            font-weight: 700;
+        }
+
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .progress-label {
+            color: #ccc;
+        }
+
+        .progress-value {
+            color: #00a2ff;
+            font-weight: 700;
+        }
+
+        /* 音频控制 */
+        .audio-section {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 1rem 0;
+            background: #000;
+        }
+
+        /* 右侧信息面板 */
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Live2D 角色面板 */
+        .live2d-panel {
+            background: linear-gradient(145deg, rgba(16, 16, 16, 0.95), rgba(32, 32, 32, 0.95));
+            border: 2px solid #00ff88;
+            padding: 1.5rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .live2d-panel::before {
+            content: 'DIGITAL ASSISTANT';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #0a0a0a;
+            padding: 0 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: #00ff88;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .live2d-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .live2d-canvas {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, rgba(0, 162, 255, 0.05) 100%);
+        }
+
+        .live2d-status {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00ff88;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .live2d-controls {
+            position: absolute;
+            top: 25px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .live2d-btn {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: 'Orbitron', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .live2d-btn:hover {
+            background: rgba(0, 255, 136, 0.4);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Live2D特效 */
+        @keyframes live2dGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.6); }
+        }
+
+        .live2d-panel.active {
+            animation: live2dGlow 2s infinite;
+        }
+
+        /* 音频缓存面板 */
+        .cache-panel {
+            background: linear-gradient(145deg, rgba(16, 16, 16, 0.95), rgba(32, 32, 32, 0.95));
+            border: 2px solid #ff6600;
+            padding: 1.5rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .cache-panel::before {
+            content: 'AUDIO CACHE';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #0a0a0a;
+            padding: 0 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: #ff6600;
+            font-weight: 700;
+        }
+
+        .cache-title {
+            color: #ff6600;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cache-list {
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00a2ff #333;
+        }
+
+        .cache-item {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            margin-bottom: 0.5rem;
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cache-item:hover {
+            border-color: #00a2ff;
+            box-shadow: 0 0 15px rgba(0, 162, 255, 0.3);
+        }
+
+        .cache-item.playing {
+            border-color: #ff6600;
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.3);
+        }
+
+        .cache-text {
+            color: #ccc;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cache-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .cache-key {
+            background: #00a2ff;
+            color: #000;
+            padding: 2px 8px;
+            font-weight: 700;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        .cache-meta {
+            color: #666;
+        }
+
+        .delete-btn {
+            background: #ff4757;
+            border: none;
+            color: white;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #ff3838;
+            box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+        }
+
+        /* 日志面板 */
+        .log-panel {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #333;
+            height: 250px;
+            overflow-y: auto;
+            padding: 1rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .log-panel::before {
+            content: 'SYSTEM LOG';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #0a0a0a;
+            padding: 0 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: #00a2ff;
+            font-weight: 700;
+        }
+
+        .log-entry {
+            margin-bottom: 0.3rem;
+            padding: 0.2rem 0;
+        }
+
+        .log-entry.error {
+            color: #ff4757;
+        }
+
+        .log-entry.success {
+            color: #2ed573;
+        }
+
+        .log-entry.info {
+            color: #00a2ff;
+        }
+
+        .log-timestamp {
+            color: #666;
+            margin-right: 0.5rem;
+        }
+
+        /* 快捷键提示 */
+        .hotkey-info {
+            background: rgba(255, 102, 0, 0.1);
+            border: 1px solid #ff6600;
+            padding: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .hotkey-info::before {
+            content: 'HOTKEYS';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #0a0a0a;
+            padding: 0 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            color: #ff6600;
+            font-weight: 700;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .main-panel,
+            .cache-panel,
+            .live2d-panel {
+                padding: 1rem;
+            }
+
+            .live2d-panel {
+                height: 250px;
+            }
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00a2ff;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff6600;
+        }
+
+        /* 加载动画 */
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 162, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 162, 255, 0.6); }
+        }
+
+        .processing .main-panel {
+            animation: glow 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="grid-background"></div>
+
+    <!-- Live2D模型容器 -->
+    <div class="live2d-container">
+        <canvas id="live2d-canvas"></canvas>
+        <div class="live2d-controls">
+            <button class="live2d-btn" onclick="changeExpression('ku')">哭</button>
+            <button class="live2d-btn" onclick="changeExpression('lianhong')">脸红</button>
+            <button class="live2d-btn" onclick="changeExpression('shoubiao')">手表</button>
+            <button class="live2d-btn" onclick="changeExpression('quanquan')">圈圈</button>
+            <button class="live2d-btn" onclick="changeExpression('dayouxi')">打游戏</button>
+            <button class="live2d-btn" onclick="changeExpression('changge')">唱歌</button>
+            <button class="live2d-btn" onclick="changeExpression('bangbangtang')">棒棒糖</button>
+            <button class="live2d-btn" onclick="changeExpression('heiyi')">黑衣</button>
+            <button class="live2d-btn" onclick="changeExpression('shengqi')">生气</button>
+            <button class="live2d-btn" onclick="changeExpression('heilian')">黑脸</button>
+            <button class="live2d-btn" onclick="changeExpression('xingxing')">星星</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-panel">
+            <h1 class="title">Evercall</h1>
+            <div class="subtitle">TTS Terminal System</div>
+
+            <div id="status" class="status disconnected">
+                System Offline
+            </div>
+
+            <div class="input-section">
+                <label class="input-label" for="textInput">Text Input Protocol</label>
+                <textarea
+                    id="textInput"
+                    class="text-input"
+                    placeholder="请输入要转换为语音的文本..."
+                    maxlength="5000"
+                                 >你好，这是Evercall语音合成系统。我可以将这段文本转换为自然流畅的中文语音。</textarea>
+            </div>
+
+            <button id="synthesizeBtn" class="action-btn">
+                Initialize Synthesis
+            </button>
+
+            <div id="progressInfo" class="progress-panel" style="display: none;">
+                <div class="progress-item">
+                    <span class="progress-label">Status:</span>
+                    <span class="progress-value" id="synthStatus">Standby</span>
+                </div>
+                <div class="progress-item">
+                    <span class="progress-label">Audio Chunks:</span>
+                    <span class="progress-value" id="chunkCount">0</span>
+                </div>
+                <div class="progress-item">
+                    <span class="progress-label">Data Size:</span>
+                    <span class="progress-value" id="audioSize">0 bytes</span>
+                </div>
+            </div>
+
+            <div class="audio-section">
+                <audio id="audioPlayer" class="audio-player" controls style="display: none;">
+                    您的浏览器不支持音频播放。
+                </audio>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <!-- Live2D 角色显示面板 -->
+            <div id="live2dPanel" class="live2d-panel">
+                <div class="live2d-controls">
+                    <button class="live2d-btn" onclick="loadLive2DModel()">LOAD</button>
+                    <button class="live2d-btn" onclick="resetLive2DModel()">RESET</button>
+                    <button class="live2d-btn" onclick="toggleExpression()">EXPR</button>
+                </div>
+                <div id="live2dContainer" class="live2d-container">
+                    <div class="live2d-canvas" id="live2dCanvas">
+                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #00ff88; font-family: 'Orbitron', monospace; text-align: center;">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 10px;">🎭</div>
+                                <div>LANHEI MODEL</div>
+                                <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Click LOAD to initialize</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="live2dStatus" class="live2d-status">
+                    Standby - Waiting for initialization
+                </div>
+            </div>
+
+            <div id="audioCache" class="cache-panel" style="display: none;">
+                <h3 class="cache-title">Audio Archive</h3>
+                <div id="cacheList" class="cache-list"></div>
+                <div class="hotkey-info">
+                    <small>Press 1-9, 0 for quick playback</small>
+                </div>
+            </div>
+
+            <div class="log-panel">
+                <div id="logs">
+                    <div class="log-entry info">
+                        <span class="log-timestamp">[INIT]</span>
+                        System initialization in progress...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.2.4/dist/pixi.min.js"></script>
+    <script>
+        // Live2D相关变量
+        let live2dApp = null;
+        let live2dModel = null;
+        let currentExpression = 0;
+        let isLive2DLoaded = false;
+
+        // 表情列表
+        const expressions = [
+            'bangbangtang.exp3.json',
+            'changge.exp3.json',
+            'dayouxi.exp3.json',
+            'heilian.exp3.json',
+            'heiyi.exp3.json',
+            'ku.exp3.json',
+            'lianhong.exp3.json',
+            'quanquan.exp3.json',
+            'shengqi.exp3.json',
+            'shoubiao.exp3.json',
+            'xingxing.exp3.json'
+        ];
+
+        // Live2D日志函数
+        function live2dLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.innerHTML = `
+                <span class="log-timestamp">[${timestamp}]</span>
+                [LIVE2D] ${message}
+            `;
+
+            document.getElementById('logs').appendChild(logEntry);
+            document.getElementById('logs').scrollTop = document.getElementById('logs').scrollHeight;
+            console.log(`[LIVE2D-${type.toUpperCase()}] ${message}`);
+        }
+
+        // 更新Live2D状态
+        function updateLive2DStatus(message, isActive = false) {
+            const statusEl = document.getElementById('live2dStatus');
+            const panelEl = document.getElementById('live2dPanel');
+
+            statusEl.textContent = message;
+
+            if (isActive) {
+                panelEl.classList.add('active');
+            } else {
+                panelEl.classList.remove('active');
+            }
+        }
+
+        // 加载Live2D模型
+        async function loadLive2DModel() {
+            try {
+                updateLive2DStatus('Initializing Live2D system...', true);
+                live2dLog('开始加载Live2D模型', 'info');
+
+                // 检查PIXI是否加载
+                if (typeof PIXI === 'undefined') {
+                    throw new Error('PIXI.js未加载');
+                }
+
+                // 动态加载pixi-live2d-display
+                if (typeof PIXI.live2d === 'undefined') {
+                    live2dLog('正在加载pixi-live2d-display库...', 'info');
+
+                    try {
+                        // 使用CDN加载pixi-live2d-display
+                        await loadScript('https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.5.0/dist/index.min.js');
+
+                        if (typeof PIXI.live2d !== 'undefined') {
+                            live2dLog('✅ pixi-live2d-display加载成功', 'success');
+                        } else {
+                            throw new Error('Live2D库加载失败');
+                        }
+                    } catch (error) {
+                        live2dLog('⚠️ 使用备用Live2D方案', 'info');
+                        createFallbackLive2D();
+                        return;
+                    }
+                }
+
+                // 创建PIXI应用
+                const container = document.getElementById('live2dCanvas');
+                container.innerHTML = '';
+
+                live2dApp = new PIXI.Application({
+                    width: container.offsetWidth,
+                    height: container.offsetHeight,
+                    backgroundAlpha: 0,
+                    antialias: true,
+                    resolution: window.devicePixelRatio || 1,
+                    autoDensity: true
+                });
+
+                container.appendChild(live2dApp.view);
+                live2dLog('PIXI应用创建成功', 'success');
+
+                // 加载Live2D模型
+                try {
+                    updateLive2DStatus('Loading LANHEI model...', true);
+
+                    const modelPath = '/static/lanhei/lanhei.model3.json';
+                    live2dModel = await PIXI.live2d.Live2DModel.from(modelPath);
+
+                    // 设置模型属性
+                    live2dModel.scale.set(0.3);
+                    live2dModel.position.set(container.offsetWidth / 2, container.offsetHeight - 50);
+                    live2dModel.anchor.set(0.5, 0.9);
+
+                    // 添加到舞台
+                    live2dApp.stage.addChild(live2dModel);
+
+                    // 播放待机动画
+                    if (live2dModel.internalModel.motionManager) {
+                        try {
+                            await live2dModel.motion('/static/lanhei/Scene1.motion3.json');
+                            live2dLog('待机动画加载成功', 'success');
+                        } catch (error) {
+                            live2dLog('待机动画加载失败，继续使用模型', 'info');
+                        }
+                    }
+
+                    isLive2DLoaded = true;
+                    updateLive2DStatus('LANHEI model ready - Click EXPR for expressions', false);
+                    live2dLog('✅ Live2D模型加载完成！', 'success');
+
+                } catch (modelError) {
+                    live2dLog(`模型加载失败: ${modelError.message}`, 'error');
+                    updateLive2DStatus('Model load failed - Using fallback display', false);
+                    createFallbackLive2D();
+                }
+
+            } catch (error) {
+                live2dLog(`初始化失败: ${error.message}`, 'error');
+                updateLive2DStatus('Initialization failed', false);
+                createFallbackLive2D();
+            }
+        }
+
+        // 创建备用显示
+        function createFallbackLive2D() {
+            const container = document.getElementById('live2dCanvas');
+            container.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #00ff88; font-family: 'Orbitron', monospace; text-align: center; flex-direction: column;">
+                    <div style="font-size: 3rem; margin-bottom: 15px; animation: pulse 2s infinite;">🤖</div>
+                    <div style="font-size: 1.2rem; margin-bottom: 5px;">LANHEI</div>
+                    <div style="font-size: 0.9rem; opacity: 0.8;">Digital Assistant</div>
+                    <div style="font-size: 0.7rem; opacity: 0.6; margin-top: 10px;">[Fallback Mode]</div>
+                </div>
+            `;
+            updateLive2DStatus('Fallback mode active', false);
+            live2dLog('使用备用显示模式', 'info');
+        }
+
+        // 重置Live2D模型
+        function resetLive2DModel() {
+            if (live2dApp) {
+                live2dApp.destroy(true);
+                live2dApp = null;
+                live2dModel = null;
+                isLive2DLoaded = false;
+            }
+
+            const container = document.getElementById('live2dCanvas');
+            container.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #00ff88; font-family: 'Orbitron', monospace; text-align: center;">
+                    <div>
+                        <div style="font-size: 2rem; margin-bottom: 10px;">🎭</div>
+                        <div>LANHEI MODEL</div>
+                        <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Click LOAD to initialize</div>
+                    </div>
+                </div>
+            `;
+
+            updateLive2DStatus('Model reset - Ready for reload', false);
+            live2dLog('Live2D模型已重置', 'info');
+        }
+
+        // 切换表情
+        function toggleExpression() {
+            if (!isLive2DLoaded || !live2dModel) {
+                live2dLog('请先加载Live2D模型', 'error');
+                return;
+            }
+
+            try {
+                const expressionFile = expressions[currentExpression];
+
+                // 尝试加载表情
+                if (live2dModel.internalModel.expressionManager) {
+                    live2dModel.expression(`/static/lanhei/${expressionFile}`);
+                    live2dLog(`切换表情: ${expressionFile}`, 'success');
+                } else {
+                    live2dLog('表情系统不可用', 'warning');
+                }
+
+                currentExpression = (currentExpression + 1) % expressions.length;
+                updateLive2DStatus(`Expression: ${expressionFile.replace('.exp3.json', '')}`, true);
+
+                // 2秒后恢复状态显示
+                setTimeout(() => {
+                    updateLive2DStatus('LANHEI model ready - Click EXPR for expressions', false);
+                }, 2000);
+
+            } catch (error) {
+                live2dLog(`表情切换失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 动态加载脚本
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        // 粒子系统类
+        class ParticleSystem {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.mouse = { x: -1000, y: -1000 }; // 初始鼠标位置远离屏幕
+                this.targetPositions = [];
+                this.isInitialized = false;
+
+                this.init();
+                this.bindEvents();
+                this.animate();
+            }
+
+            init() {
+                this.resizeCanvas();
+                this.createLetterE();
+                window.addEventListener('resize', () => {
+                    this.resizeCanvas();
+                    this.createLetterE(); // 重新创建字母E的位置
+                });
+            }
+
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            createLetterE() {
+                // 定义艺术体圆形E的形状点位 - 放在右下角与audio对齐，整体左移更多
+                const audioPanelX = 50; // 左侧音频面板位置
+                const centerX = this.canvas.width - 280; // E字的中心X位置，再左移80px
+                const centerY = this.canvas.height - 150; // 距离底部150px
+                const radius = 120; // 进一步增大圆形E的半径
+
+                this.targetPositions = [];
+
+                // 艺术体圆形E的结构：有开口的圆环 + 中间水平线
+                const spacing = 9; // 极大间距，让粒子非常稀疏
+                const strokeWidth = 3; // 最少笔画宽度
+
+                // 1. 创建有开口的圆形外环（右侧开口）
+                const outerRadius = radius;
+                const innerRadius = radius - strokeWidth * spacing;
+
+                // 绘制有开口的圆环，上下都略微延长
+                // 从45度绘制到315度，上下都稍微延长
+                for (let angle = Math.PI * 0.25; angle <= Math.PI * 1.75; angle += 0.08) {
+
+                    // 外圆弧的多层粒子
+                    for (let r = innerRadius; r <= outerRadius; r += spacing) {
+                        const x = centerX + Math.cos(angle) * r;
+                        const y = centerY + Math.sin(angle) * r;
+                        this.targetPositions.push({ x, y });
+                    }
+                }
+
+                // 2. 创建中间的水平线（从左边界到右侧开口）
+                const lineY = centerY;
+                const lineStartX = centerX - outerRadius + spacing;
+                const lineEndX = centerX + innerRadius - spacing; // 只延伸到内圆，不封闭开口
+
+                for (let x = lineStartX; x <= lineEndX; x += spacing) {
+                    for (let t = -1; t <= 1; t++) {
+                        this.targetPositions.push({
+                            x: x,
+                            y: lineY + t * spacing * 0.6 // 进一步减少垂直间距，让线条更细
+                        });
+                    }
+                }
+
+                // 创建粒子 - 从整个屏幕随机位置开始，实现缓慢聚集效果
+                this.particles = [];
+                this.targetPositions.forEach((pos, index) => {
+                    const particle = new Particle(
+                        Math.random() * this.canvas.width,   // 从整个屏幕宽度随机开始
+                        Math.random() * this.canvas.height,  // 从整个屏幕高度随机开始
+                        pos.x,
+                        pos.y,
+                        index
+                    );
+                    this.particles.push(particle);
+                });
+
+                this.isInitialized = true;
+                console.log(`创建了 ${this.particles.length} 个极小极稀疏的纯白色粒子，将超级缓慢聚集成右侧单开口、上下略微延长的圆形艺术体E字形状在进一步左移的位置与audio对齐 (${centerX}, ${centerY})`);
+            }
+
+            bindEvents() {
+                document.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
+
+                // 鼠标离开页面时重置位置
+                document.addEventListener('mouseleave', () => {
+                    this.mouse.x = -1000;
+                    this.mouse.y = -1000;
+                });
+            }
+
+            animate() {
+                // 清除画布
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                if (this.isInitialized && this.particles.length > 0) {
+                    // 绘制粒子
+                    this.particles.forEach(particle => {
+                        particle.update(this.mouse);
+                        particle.draw(this.ctx);
+                    });
+
+                    // 绘制连接线增强效果
+                    this.drawConnections();
+                }
+
+                requestAnimationFrame(() => this.animate());
+            }
+
+            drawConnections() {
+                // 移除连接线效果，让E字更简洁艺术
+                return;
+            }
+        }
+
+        // 粒子类
+        class Particle {
+            constructor(x, y, targetX, targetY, index) {
+                this.x = x;
+                this.y = y;
+                this.targetX = targetX + (Math.random() - 0.5) * 3; // 适当的随机偏移让艺术体更自然
+                this.targetY = targetY + (Math.random() - 0.5) * 3;
+                this.vx = 0;
+                this.vy = 0;
+                this.index = index;
+                this.size = 1.8; // 极小的粒子
+                this.opacity = 0.08; // 稍高的初始透明度，更清晰
+                this.maxOpacity = 0.95;
+                this.baseOpacity = 0.9;
+
+                // 纯白色粒子
+                this.color = { r: 255, g: 255, b: 255 };
+
+                // 移除脉动效果
+                this.hasReachedTarget = false; // 用于跟踪是否到达目标
+            }
+
+            update(mouse) {
+                // 计算到目标位置的距离
+                const dx = this.targetX - this.x;
+                const dy = this.targetY - this.y;
+                const targetDistance = Math.sqrt(dx ** 2 + dy ** 2);
+
+                // 计算到鼠标的距离
+                const mouseDistance = Math.sqrt(
+                    (mouse.x - this.x) ** 2 + (mouse.y - this.y) ** 2
+                );
+
+                // 鼠标排斥效果 - 增大范围和强度
+                const repelRadius = 100;
+                let repelForceX = 0;
+                let repelForceY = 0;
+
+                if (mouseDistance < repelRadius && mouseDistance > 0) {
+                    const repelStrength = Math.pow((repelRadius - mouseDistance) / repelRadius, 2);
+                    const angle = Math.atan2(this.y - mouse.y, this.x - mouse.x);
+                    repelForceX = Math.cos(angle) * repelStrength * 7; // 进一步增强散开力度，比还原更快
+                    repelForceY = Math.sin(angle) * repelStrength * 7;
+                }
+
+                // 缓慢的向目标位置移动 - 超级缓慢的还原
+                let attractStrength = 0.003; // 超级极小的引力，让聚集超级缓慢
+
+                // 距离越远，引力稍微增强
+                if (targetDistance > 450) {
+                    attractStrength = 0.008;
+                } else if (targetDistance > 250) {
+                    attractStrength = 0.005;
+                }
+
+                const attractForceX = dx * attractStrength;
+                const attractForceY = dy * attractStrength;
+
+                // 合成力
+                this.vx += attractForceX + repelForceX;
+                this.vy += attractForceY + repelForceY;
+
+                // 增加阻尼让运动更缓慢平稳
+                this.vx *= 0.9;
+                this.vy *= 0.9;
+
+                // 限制最大速度 - 允许散开时非常快的速度
+                const maxSpeed = 8;
+                const currentSpeed = Math.sqrt(this.vx ** 2 + this.vy ** 2);
+                if (currentSpeed > maxSpeed) {
+                    this.vx = (this.vx / currentSpeed) * maxSpeed;
+                    this.vy = (this.vy / currentSpeed) * maxSpeed;
+                }
+
+                // 更新位置
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // 检查是否接近目标位置
+                if (targetDistance < 15) {
+                    this.hasReachedTarget = true;
+                }
+
+                // 简化的透明度动画 - 缓慢增加透明度
+                let targetOpacity;
+
+                if (targetDistance < 10) {
+                    // 非常接近目标时达到最大透明度
+                    targetOpacity = this.maxOpacity;
+                    this.hasReachedTarget = true;
+                } else if (targetDistance < 30) {
+                    // 接近目标时逐渐变亮
+                    targetOpacity = this.baseOpacity * (1 - targetDistance / 60);
+                } else if (targetDistance < 100) {
+                    // 中等距离时保持中等透明度
+                    targetOpacity = 0.5;
+                } else {
+                    // 远离目标时保持较低透明度
+                    targetOpacity = 0.3;
+                }
+
+                // 鼠标附近透明度变化 - 更强的透明度变化
+                if (mouseDistance < repelRadius) {
+                    const fadeStrength = 1 - (mouseDistance / repelRadius);
+                    targetOpacity *= (1 - fadeStrength * 0.8); // 增强透明度变化效果
+                }
+
+                // 适中的透明度过渡
+                const opacitySpeed = 0.012; // 适度提高透明度变化速度，增强清晰度
+                if (this.opacity < targetOpacity) {
+                    this.opacity = Math.min(targetOpacity, this.opacity + opacitySpeed);
+                } else {
+                    this.opacity = Math.max(targetOpacity, this.opacity - opacitySpeed);
+                }
+
+                // 确保透明度范围
+                this.opacity = Math.max(0.1, Math.min(1, this.opacity));
+            }
+
+            draw(ctx) {
+                if (this.opacity <= 0.05) return;
+
+                ctx.save();
+
+                // 绘制高清晰度的白色圆点
+                const alpha = Math.min(1, this.opacity);
+
+                // 主体填充
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 高清晰度边框（适配极小粒子）
+                ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(1, alpha + 0.2)})`;
+                ctx.lineWidth = 0.4;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // 内部高亮点增强清晰度
+                if (alpha > 0.4) {
+                    ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, alpha * 1.2)})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        class EvercallTTS {
+            constructor() {
+                this.ws = null;
+                this.isConnected = false;
+                this.isProcessing = false;
+                this.audioChunks = [];
+                this.chunkCount = 0;
+                this.totalSize = 0;
+                this.audioCache = [];
+                this.currentPlayingIndex = -1;
+
+                this.statusEl = document.getElementById('status');
+                this.textInput = document.getElementById('textInput');
+                this.synthesizeBtn = document.getElementById('synthesizeBtn');
+                this.progressInfo = document.getElementById('progressInfo');
+                this.synthStatus = document.getElementById('synthStatus');
+                this.chunkCountEl = document.getElementById('chunkCount');
+                this.audioSizeEl = document.getElementById('audioSize');
+                this.audioPlayer = document.getElementById('audioPlayer');
+                this.logsEl = document.getElementById('logs');
+                this.audioCacheEl = document.getElementById('audioCache');
+                this.cacheListEl = document.getElementById('cacheList');
+
+                this.init();
+            }
+
+            init() {
+                this.connect();
+                this.bindEvents();
+                this.bindKeyboardEvents();
+            }
+
+            connect() {
+                try {
+                    const wsUrl = "{{ websocket_url }}";
+                    this.log(`Establishing connection: ${wsUrl}`, 'info');
+
+                    this.ws = new WebSocket(wsUrl);
+
+                    this.ws.onopen = () => {
+                        this.isConnected = true;
+                        this.updateStatus('connected', 'System Online');
+                        this.log('WebSocket connection established', 'success');
+                        this.synthesizeBtn.disabled = false;
+                    };
+
+                    this.ws.onmessage = (event) => {
+                        this.handleMessage(JSON.parse(event.data));
+                    };
+
+                    this.ws.onclose = () => {
+                        this.isConnected = false;
+                        this.updateStatus('disconnected', 'Connection Lost');
+                        this.log('WebSocket connection terminated', 'error');
+                        this.synthesizeBtn.disabled = true;
+
+                        setTimeout(() => this.connect(), 3000);
+                    };
+
+                    this.ws.onerror = (error) => {
+                        this.log(`Connection error: ${error}`, 'error');
+                    };
+
+                } catch (error) {
+                    this.log(`Failed to establish connection: ${error}`, 'error');
+                }
+            }
+
+            bindEvents() {
+                this.synthesizeBtn.addEventListener('click', () => {
+                    if (this.isConnected && !this.isProcessing) {
+                        this.startSynthesis();
+                    }
+                });
+
+                this.textInput.addEventListener('input', (e) => {
+                    const remaining = 5000 - e.target.value.length;
+                    if (remaining < 0) {
+                        e.target.value = e.target.value.substring(0, 5000);
+                    }
+                });
+            }
+
+            bindKeyboardEvents() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') {
+                        return;
+                    }
+
+                    const key = e.key;
+                    let index = -1;
+
+                    if (key >= '1' && key <= '9') {
+                        index = parseInt(key) - 1;
+                    }
+                    else if (key === '0') {
+                        index = 9;
+                    }
+
+                    if (index >= 0 && index < this.audioCache.length) {
+                        e.preventDefault();
+                        this.playFromCache(index);
+                    }
+                });
+            }
+
+            startSynthesis() {
+                const text = this.textInput.value.trim();
+                if (!text) {
+                    this.log('No input text detected', 'error');
+                    return;
+                }
+
+                this.isProcessing = true;
+                this.audioChunks = [];
+                this.chunkCount = 0;
+                this.totalSize = 0;
+
+                this.updateStatus('processing', 'Processing Request');
+                this.synthesizeBtn.disabled = true;
+                this.progressInfo.style.display = 'block';
+                this.synthStatus.textContent = 'Initializing...';
+                this.audioPlayer.style.display = 'none';
+
+                document.body.classList.add('processing');
+
+                this.ws.send(JSON.stringify({
+                    type: 'tts_request',
+                    text: text
+                }));
+
+                this.log(`Synthesis initiated: ${text.substring(0, 50)}...`, 'info');
+            }
+
+            handleMessage(data) {
+                switch (data.type) {
+                    case 'welcome':
+                        this.log(data.message, 'success');
+                        break;
+
+                    case 'tts_start':
+                        this.log(data.message, 'info');
+                        this.synthStatus.textContent = 'Generating Audio...';
+                        break;
+
+                    case 'audio_chunk':
+                        this.chunkCount++;
+                        this.totalSize += data.chunk_size;
+
+                        const audioData = this.hexToUint8Array(data.audio_data);
+                        this.audioChunks.push(audioData);
+
+                        this.chunkCountEl.textContent = this.chunkCount;
+                        this.audioSizeEl.textContent = this.formatBytes(this.totalSize);
+                        this.synthStatus.textContent = `Receiving data... (${this.chunkCount} chunks)`;
+
+                        this.log(`Audio chunk #${data.chunk_id}: ${this.formatBytes(data.chunk_size)}`, 'success');
+                        break;
+
+                    case 'tts_complete':
+                        this.isProcessing = false;
+                        this.synthesizeBtn.disabled = false;
+                        this.updateStatus('connected', 'Synthesis Complete');
+                        this.synthStatus.textContent = 'Audio Ready';
+
+                        document.body.classList.remove('processing');
+
+                        this.log(data.message, 'success');
+                        this.log(`Total audio size: ${this.formatBytes(data.total_size)}`, 'info');
+
+                        this.createAndPlayAudio(data.total_audio, this.textInput.value.trim());
+                        break;
+
+                    case 'error':
+                        this.isProcessing = false;
+                        this.synthesizeBtn.disabled = false;
+                        this.updateStatus('disconnected', 'Error Occurred');
+                        this.synthStatus.textContent = 'Process Failed';
+
+                        document.body.classList.remove('processing');
+
+                        this.log(`Error: ${data.message}`, 'error');
+                        break;
+
+                    case 'pong':
+                        break;
+
+                    default:
+                        this.log(`Unknown message type: ${data.type}`, 'error');
+                }
+            }
+
+            createAndPlayAudio(hexAudioData, text = '') {
+                try {
+                    const audioData = this.hexToUint8Array(hexAudioData);
+                    const audioBlob = new Blob([audioData], { type: 'audio/mp3' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+
+                    this.addToCache(text, audioUrl, audioData.length);
+
+                    this.audioPlayer.src = audioUrl;
+                    this.audioPlayer.style.display = 'block';
+
+                    this.audioPlayer.play().then(() => {
+                        this.log('Audio playback initiated', 'success');
+                        this.currentPlayingIndex = this.audioCache.length - 1;
+                        this.updateCacheDisplay();
+                    }).catch((error) => {
+                        this.log(`Playback failed: ${error}`, 'error');
+                    });
+
+                    this.audioPlayer.addEventListener('ended', () => {
+                        this.log('Audio playback completed', 'info');
+                        this.currentPlayingIndex = -1;
+                        this.updateCacheDisplay();
+                    }, { once: true });
+
+                } catch (error) {
+                    this.log(`Audio creation failed: ${error}`, 'error');
+                }
+            }
+
+            addToCache(text, audioUrl, size) {
+                const cacheItem = {
+                    text: text,
+                    url: audioUrl,
+                    size: size,
+                    timestamp: new Date().toLocaleTimeString()
+                };
+
+                this.audioCache.unshift(cacheItem);
+
+                if (this.audioCache.length > 10) {
+                    const oldItem = this.audioCache.pop();
+                    URL.revokeObjectURL(oldItem.url);
+                }
+
+                this.updateCacheDisplay();
+                this.log(`Audio cached: ${this.audioCache.length}/10 entries`, 'info');
+            }
+
+            updateCacheDisplay() {
+                if (this.audioCache.length === 0) {
+                    this.audioCacheEl.style.display = 'none';
+                    return;
+                }
+
+                this.audioCacheEl.style.display = 'block';
+                this.cacheListEl.innerHTML = '';
+
+                this.audioCache.forEach((item, index) => {
+                    const cacheItem = document.createElement('div');
+                    cacheItem.className = 'cache-item';
+                    if (index === this.currentPlayingIndex) {
+                        cacheItem.classList.add('playing');
+                    }
+
+                    const keyNumber = index === 9 ? '0' : (index + 1).toString();
+
+                    cacheItem.innerHTML = `
+                        <div class="cache-text">${item.text || 'Unknown Text'}</div>
+                        <div class="cache-info">
+                            <div>
+                                <span class="cache-key">${keyNumber}</span>
+                                <span class="cache-meta">${item.timestamp} | ${this.formatBytes(item.size)}</span>
+                            </div>
+                            <button class="delete-btn" onclick="event.stopPropagation();" data-index="${index}">DEL</button>
+                        </div>
+                    `;
+
+                    cacheItem.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('delete-btn')) {
+                            return;
+                        }
+                        this.playFromCache(index);
+                    });
+
+                    const deleteBtn = cacheItem.querySelector('.delete-btn');
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.deleteFromCache(index);
+                    });
+
+                    this.cacheListEl.appendChild(cacheItem);
+                });
+            }
+
+            playFromCache(index) {
+                if (index < 0 || index >= this.audioCache.length) {
+                    return;
+                }
+
+                const cacheItem = this.audioCache[index];
+                this.audioPlayer.src = cacheItem.url;
+                this.audioPlayer.style.display = 'block';
+
+                this.audioPlayer.play().then(() => {
+                    this.currentPlayingIndex = index;
+                    this.updateCacheDisplay();
+                    this.log(`Playing cached audio ${index + 1}: ${cacheItem.text.substring(0, 30)}...`, 'success');
+                }).catch((error) => {
+                    this.log(`Cached playback failed: ${error}`, 'error');
+                });
+
+                this.audioPlayer.addEventListener('ended', () => {
+                    this.currentPlayingIndex = -1;
+                    this.updateCacheDisplay();
+                }, { once: true });
+            }
+
+            deleteFromCache(index) {
+                if (index < 0 || index >= this.audioCache.length) {
+                    return;
+                }
+
+                const deletedItem = this.audioCache[index];
+
+                if (this.currentPlayingIndex === index) {
+                    this.audioPlayer.pause();
+                    this.currentPlayingIndex = -1;
+                }
+                else if (this.currentPlayingIndex > index) {
+                    this.currentPlayingIndex--;
+                }
+
+                URL.revokeObjectURL(deletedItem.url);
+                this.audioCache.splice(index, 1);
+                this.updateCacheDisplay();
+
+                this.log(`Cache entry deleted: ${deletedItem.text.substring(0, 20)}... | Remaining: ${this.audioCache.length}/10`, 'info');
+            }
+
+            hexToUint8Array(hexString) {
+                const bytes = new Uint8Array(hexString.length / 2);
+                for (let i = 0; i < hexString.length; i += 2) {
+                    bytes[i / 2] = parseInt(hexString.substr(i, 2), 16);
+                }
+                return bytes;
+            }
+
+            formatBytes(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            updateStatus(type, message) {
+                this.statusEl.className = `status ${type}`;
+                this.statusEl.textContent = message;
+            }
+
+            log(message, level = 'info') {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry ${level}`;
+                logEntry.innerHTML = `
+                    <span class="log-timestamp">[${timestamp}]</span>
+                    ${message}
+                `;
+
+                this.logsEl.appendChild(logEntry);
+                this.logsEl.scrollTop = this.logsEl.scrollHeight;
+            }
+
+            startHeartbeat() {
+                setInterval(() => {
+                    if (this.isConnected && this.ws.readyState === WebSocket.OPEN) {
+                        this.ws.send(JSON.stringify({
+                            type: 'ping',
+                            timestamp: Date.now()
+                        }));
+                    }
+                }, 30000);
+            }
+        }
+
+        // 全局函数用于按钮点击 (备用)
+        function changeExpression(expression) {
+            // 使用新的Live2D系统
+            toggleExpression();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化粒子系统
+            const canvas = document.getElementById('particleCanvas');
+            const particleSystem = new ParticleSystem(canvas);
+
+            // 初始化TTS客户端
+            const client = new EvercallTTS();
+            client.startHeartbeat();
+        });
+    </script>
+</body>
+</html>
