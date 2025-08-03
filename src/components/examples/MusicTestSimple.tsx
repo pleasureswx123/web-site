@@ -19,14 +19,14 @@ export default function MusicTestSimple() {
     <div className="min-h-screen bg-ak-dark">
       {/* 导航组件 - 包含音乐按钮 */}
       <OriginalNavigation currentSection={currentSection} />
-      
+
       {/* 背景音乐组件 - 右下角 */}
       <BackgroundMusic />
-      
+
       {/* 主要内容 */}
       <div className="pt-24 px-6 pb-12">
         <div className="max-w-2xl mx-auto space-y-6">
-          
+
           {/* 标题 */}
           <div className="text-center space-y-4">
             <Badge variant="outline" className="border-ak-primary text-ak-primary">
@@ -50,7 +50,7 @@ export default function MusicTestSimple() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
-                
+
                 {/* 播放状态 */}
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-ak-light-gray">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -91,7 +91,7 @@ export default function MusicTestSimple() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              
+
               {/* 导航栏控制 */}
               <div className="p-3 rounded-lg bg-ak-light-gray border border-ak-border">
                 <h4 className="font-medium text-ak-text mb-2 flex items-center gap-2">
@@ -120,7 +120,7 @@ export default function MusicTestSimple() {
                   📀 音频文件信息
                 </h4>
                 <div className="text-sm text-ak-text-secondary space-y-1">
-                  <p>• 文件: /audio/bgm.mp3</p>
+                  <p>• 文件: /audio/bg_audio.mp3</p>
                   <p>• 大小: 3.0MB</p>
                   <p>• 格式: MP3 (128kbps, 44.1kHz, 立体声)</p>
                   <p>• 播放: 循环播放</p>

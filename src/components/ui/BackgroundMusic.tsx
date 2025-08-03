@@ -60,7 +60,7 @@ export default function BackgroundMusic() {
     >
       <audio
         ref={audioRef}
-        src="/audio/bgm.mp3"
+        src="/audio/bg_audio.mp3"
         loop
         preload="auto"
         onPlay={() => useMusicControl.setState({ isPlaying: true })}

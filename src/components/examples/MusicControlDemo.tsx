@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Slider } from '@/components/ui/slider'
 import { useMusic } from '@/hooks/useMusicControl'
-import { 
-  Play, 
-  Pause, 
-  Volume2, 
-  VolumeX, 
-  Music, 
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Music,
   Headphones,
   CheckCircle,
   Info
@@ -31,14 +31,14 @@ export default function MusicControlDemo() {
     <div className="min-h-screen bg-ak-dark">
       {/* 导航组件 */}
       <OriginalNavigation currentSection={currentSection} />
-      
+
       {/* 背景音乐组件 */}
       <BackgroundMusic />
-      
+
       {/* 主要内容 */}
       <div className="pt-24 px-6 pb-12">
         <div className="max-w-4xl mx-auto space-y-8">
-          
+
           {/* 标题区域 */}
           <div className="text-center space-y-4">
             <Badge variant="outline" className="border-ak-primary text-ak-primary">
@@ -48,7 +48,7 @@ export default function MusicControlDemo() {
               背景音乐控制演示
             </h1>
             <p className="text-xl text-ak-text-secondary max-w-2xl mx-auto">
-              导航栏音乐按钮现在可以真正控制 /audio/bgm.mp3 的播放
+              导航栏音乐按钮现在可以真正控制 /audio/bg_audio.mp3 的播放
             </p>
           </div>
 
@@ -65,7 +65,7 @@ export default function MusicControlDemo() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
+
                 {/* 播放状态 */}
                 <div className="flex items-center gap-4 p-4 rounded-lg bg-ak-light-gray border border-ak-border">
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
@@ -101,7 +101,7 @@ export default function MusicControlDemo() {
                   </div>
                   <div>
                     <p className="font-medium text-ak-text">音频文件</p>
-                    <p className="text-sm text-purple-400">bgm.mp3</p>
+                    <p className="text-sm text-purple-400">bg_audio.mp3</p>
                   </div>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function MusicControlDemo() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              
+
               {/* 播放控制 */}
               <div className="flex items-center justify-center gap-4">
                 <Button
@@ -128,7 +128,7 @@ export default function MusicControlDemo() {
                   <Play className="w-4 h-4 mr-2" />
                   播放
                 </Button>
-                
+
                 <Button
                   onClick={togglePlay}
                   variant="outline"
@@ -146,7 +146,7 @@ export default function MusicControlDemo() {
                     </>
                   )}
                 </Button>
-                
+
                 <Button
                   onClick={pause}
                   disabled={!isPlaying}
@@ -188,8 +188,8 @@ export default function MusicControlDemo() {
                     onClick={() => setVolume(vol)}
                     variant={Math.abs(volume - vol) < 0.05 ? "default" : "outline"}
                     size="sm"
-                    className={Math.abs(volume - vol) < 0.05 
-                      ? "bg-ak-primary text-black" 
+                    className={Math.abs(volume - vol) < 0.05
+                      ? "bg-ak-primary text-black"
                       : "border-ak-border text-ak-text-secondary hover:border-ak-primary hover:text-ak-primary"
                     }
                   >
@@ -202,7 +202,7 @@ export default function MusicControlDemo() {
 
           {/* 功能说明 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
+
             {/* 导航栏控制 */}
             <Card className="bg-ak-gray border-ak-border">
               <CardHeader>
@@ -293,7 +293,7 @@ const { isPlaying, togglePlay } = useMusic()
 setAudioRef(audioRef.current)`}</code>
                 </pre>
               </div>
-              
+
               <div className="mt-4 p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <div className="flex items-center gap-2 text-green-400 mb-2">
                   <CheckCircle className="w-4 h-4" />

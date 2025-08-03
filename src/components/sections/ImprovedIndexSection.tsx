@@ -17,32 +17,6 @@ export default function ImprovedIndexSection() {
     <section className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Background overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/30 z-10" />
-      {/*增加背景图片*/}
-      <motion.div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-sm"
-        style={{ backgroundImage: 'url(/images/new_background.png)' }}
-        animate={{ backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        {/* 添加渐变遮罩以增强视觉效果 */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-l from-slate-900/30 via-transparent to-slate-900/50 backdrop-blur-sm"
-          animate={{
-            background: [
-              'linear-gradient(to left, rgba(15, 23, 42, 0.3) 0%, transparent 50%, rgba(15, 23, 42, 0.5) 100%)',
-              'linear-gradient(to right, rgba(15, 23, 42, 0.5) 0%, transparent 50%, rgba(15, 23, 42, 0.3) 100%)',
-              'linear-gradient(to left, rgba(15, 23, 42, 0.3) 0%, transparent 50%, rgba(15, 23, 42, 0.5) 100%)'
-            ]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        {/* 添加额外的模糊层 */}
-        <motion.div
-          className="absolute inset-0 backdrop-blur-md bg-slate-900/10"
-          animate={{ opacity: [0.1, 0.3, 0.1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
 
       {/* Background video */}
       <video
@@ -55,7 +29,7 @@ export default function ImprovedIndexSection() {
         data-autoplay="1"
         autoPlay
       >
-        <source src="/videos/bg-video.mp4" type="video/mp4" />
+        <source src="/videos/background.mp4" type="video/mp4" />
       </video>
 
       {/* Canvas overlay */}

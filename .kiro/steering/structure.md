@@ -6,7 +6,7 @@
 arknights-clone/
 ├── .kiro/                     # Kiro IDE configuration
 ├── public/                    # Static assets (42 official files)
-│   ├── audio/                # Background music (bgm.mp3)
+│   ├── audio/                # Background music (bg_audio.mp3)
 │   ├── fonts/                # Official fonts (7 files, ~15MB)
 │   ├── images/               # Official images (~25MB)
 │   │   ├── backgrounds/      # Main background images
