@@ -96,19 +96,19 @@ export default function ImprovedIndexSection() {
 
               <div className="space-y-3">
                 <motion.div
-                  className="font-ak-title text-xl lg:text-2xl xl:text-3xl font-medium tracking-wide text-ak-secondary"
+                  className="font-ak-title text-3xl lg:text-4xl xl:text-5xl font-medium tracking-wide text-ak-secondary"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.9 }}
                 >
-                  RHODES ISLAND
+                  连接平行世界
                 </motion.div>
                 <motion.div className="font-mono text-sm lg:text-base tracking-wider text-white/70 uppercase"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1.1 }}
                 >
-                  http://60.205.169.140/
+                  http://www.xinliuyuansu.com/
                 </motion.div>
               </div>
             </div>
