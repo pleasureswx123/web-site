@@ -9,33 +9,21 @@ import { ChevronRight } from 'lucide-react'
 const carouselBanners = [
   {
     id: 1,
-    title: '心流元素动画「黎明前奏」',
-    image: '/images/banners/news_20250721.png',
-    url: 'https://www.bilibili.com/video/BV1dwg5zCEBD',
+    title: '地底之谜揭晓：神秘装置EVERCALL或将改写人类文明走向',
+    image: '/images/news/change.jpg',
+    url: '/images/news/change.jpg',
   },
   {
     id: 2,
-    title: '泰拉记事社',
-    image: '/images/banners/news_20250714.jpg',
-    url: 'https://terra-historicus.hypergryph.com/',
+    title: 'EVERCALL新角色悠悠的上线预告',
+    image: '/images/news/role.jpg',
+    url: '/images/news/role.jpg',
   },
   {
     id: 3,
-    title: '心流元素动画「黎明前奏」',
-    image: '/images/banners/news_20250710.jpg',
-    url: 'https://www.bilibili.com/bangumi/media/md26627738',
-  },
-  {
-    id: 4,
-    title: '「沙中之火」活动',
-    image: '/images/banners/news_20250708.jpg',
-    url: '/news/4956',
-  },
-  {
-    id: 5,
-    title: '「沙洲遗闻」活动',
-    image: '/images/banners/news_20240501.png',
-    url: '/ra/taleswithinthesand',
+    title: '内测招募页',
+    image: '/images/news/recruitment.jpg',
+    url: '/images/news/recruitment.jpg',
   },
 ]
 
@@ -43,32 +31,32 @@ const carouselBanners = [
 const newsData = [
   {
     id: 1,
-    type: '公告',
-    date: '2025 // 07 / 22',
-    title: '[心流元素]07月22日16:00闪断更新公告',
-    url: '/news/5134',
+    type: '新闻',
+    date: '2025 // 08 / 01',
+    title: '地底之谜揭晓：神秘装置EVERCALL或将改写人类文明走向',
+    url: '/news/1',
   },
   {
     id: 2,
     type: '新闻',
     date: '2025 // 07 / 19',
-    title: '《心流元素》制作组通讯#55期',
-    url: '/news/0722',
+    title: 'EVERCALL新角色悠悠的上线预告',
+    url: '/news/2',
   },
   {
     id: 3,
-    type: '公告',
+    type: '新闻',
     date: '2025 // 07 / 17',
-    title: '[心流元素]07月17日02:30闪断更新公告',
-    url: '/news/7390',
-  },
+    title: '内测招募页',
+    url: '/news/3',
+  }
 ]
 
 export default function ImprovedInformationSection() {
   const [currentBanner, setCurrentBanner] = useState(4) // 默认显示第5个（索引4）
-  const [activeFilter, setActiveFilter] = useState('最新')
+  const [activeFilter, setActiveFilter] = useState('新闻')
 
-  const filters = ['最新', '公告', '活动', '新闻']
+  const filters = ['新闻']
 
   // 自动轮播
   useEffect(() => {
@@ -83,9 +71,7 @@ export default function ImprovedInformationSection() {
     setCurrentBanner(index)
   }
 
-  const filteredNews = newsData.filter(item =>
-    activeFilter === '最新' || item.type === activeFilter
-  )
+  const filteredNews = newsData.filter(item => item.type === '新闻')
 
   // 计算轮播位置 - 适配两列布局
   const getTransformStyle = () => {
@@ -190,7 +176,7 @@ export default function ImprovedInformationSection() {
                 ))}
 
                 {/* READ MORE 按钮 */}
-                <motion.div
+                {/*<motion.div
                   className="pt-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -208,7 +194,7 @@ export default function ImprovedInformationSection() {
                       <ChevronRight className="w-full h-full" />
                     </div>
                   </motion.a>
-                </motion.div>
+                </motion.div>*/}
               </motion.div>
             </div>
 
