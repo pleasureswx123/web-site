@@ -97,7 +97,7 @@ export default function ImprovedIndexSection() {
                   ease: "easeInOut"
                 }}
               >
-                GVERCALL
+                EVERCALL
               </motion.div>
             </motion.div>
           </div>
@@ -117,7 +117,7 @@ export default function ImprovedIndexSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
               >
-                GVERCALL
+                EVERCALL
               </motion.h1>
 
               <div className="space-y-3">
@@ -134,7 +134,7 @@ export default function ImprovedIndexSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1.1 }}
                 >
-                  https://gvercall.vercel.app/
+                  http://60.205.169.140/
                 </motion.div>
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function ImprovedIndexSection() {
               animate={{ opacity: 0.6 }}
               transition={{ duration: 0.8, delay: 1.3 }}
             >
-              @2024-2025 <br />Gvercall Co. Ltd.All
+              @2024-2025 <br />Evercall Co. Ltd.All
             </motion.div>
           </motion.div>
 
@@ -219,7 +219,7 @@ export default function ImprovedIndexSection() {
             <motion.a
               className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-cyan-500/30 hover:border-cyan-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-cyan-500/20"
               target="_blank"
-              href="https://www.skland.com/game/GVERCALL"
+              href="https://www.skland.com/game/Evercall"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -234,7 +234,7 @@ export default function ImprovedIndexSection() {
             <motion.a
               className="group flex items-center gap-3 px-4 py-3 bg-black/60 border border-white/15 text-white text-sm backdrop-blur-md transition-all duration-300 hover:bg-orange-500/30 hover:border-orange-500/60 hover:-translate-x-1 hover:shadow-lg hover:shadow-orange-500/20"
               target="_blank"
-              href="https://user.hypergryph.com/payment/GVERCALL?source_from=ak_official"
+              href="https://user.hypergryph.com/payment/Evercall?source_from=ak_official"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >

@@ -5,12 +5,12 @@ import './globals.css'
 import '../styles/hollow-text.css';
 
 export const metadata: Metadata = {
-  title: 'Gvercall',
+  title: 'Evercall',
   description: '心流元素官方网站',
   keywords: '心流元素,二次元',
   authors: [{ name: 'shangwenxue' }],
   openGraph: {
-    title: 'Gvercall',
+    title: 'Evercall',
     description: '心流元素官方网站',
     type: 'website',
     locale: 'zh_CN',
@@ -38,10 +38,10 @@ export default function RootLayout({
         {/* SVG Definitions */}
         <svg xmlns="http://www.w3.org/2000/svg" style={{ display: 'none' }}>
           <defs>
-            {/* Gvercall Logo */}
+            {/* Evercall Logo */}
             <g id="svg_def-title_arknights">
               <text x="0" y="60" fontFamily="Arial, sans-serif" fontSize="48" fontWeight="bold" fill="currentColor">
-                Gvercall
+                Evercall
               </text>
             </g>
 

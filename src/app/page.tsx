@@ -258,7 +258,7 @@ export default function Home() {
           >
               <span
                 className="font-ak-secondary text-[0.65rem] font-medium text-white/80 tracking-[0.4em] uppercase after:absolute after:right-[-15px] after:top-1/2 after:w-2 after:h-2 after:bg-ak-primary/30 after:rounded-full after:-translate-y-1/2">
-                GVERCALL
+                EVERCALL
               </span>
           </motion.div>
 

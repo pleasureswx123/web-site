@@ -109,13 +109,13 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             <span className="relative inline-block">
-              GVERCALL
+              EVERCALL
               {/* 主发光效果 */}
-              <span className="absolute inset-0 text-cyan-300 opacity-30 blur-md">GVERCALL</span>
+              <span className="absolute inset-0 text-cyan-300 opacity-30 blur-md">EVERCALL</span>
               {/* 细节发光 */}
-              <span className="absolute inset-0 text-cyan-400 opacity-60 blur-sm">GVERCALL</span>
+              <span className="absolute inset-0 text-cyan-400 opacity-60 blur-sm">EVERCALL</span>
               {/* 渐变文字 */}
-              <span className="absolute inset-0 text-transparent bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text">GVERCALL</span>
+              <span className="absolute inset-0 text-transparent bg-gradient-to-r from-white via-cyan-100 to-white bg-clip-text">EVERCALL</span>
             </span>
           </motion.h1>
 
@@ -253,7 +253,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               {/* 底部品牌信息 */}
               <div className="pt-4 border-t border-gray-800/50">
                 <div className="text-xs text-gray-400 font-mono tracking-wider">
-                  <span className="text-white/80">GVERCALL</span>
+                  <span className="text-white/80">EVERCALL</span>
                   <span className="mx-3 text-gray-600">|</span>
                   <span>RHODES ISLAND PHARMACEUTICAL</span>
                 </div>

@@ -118,7 +118,7 @@ export default function ImprovedInformationSection() {
       {/* 背景装饰 */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
       <div className="absolute -left-5 bottom-[70px] text-[100px] font-bold text-white/20 z-10]">
-        GVERCALL NEWS
+        EVERCALL NEWS
       </div>
 
       <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
