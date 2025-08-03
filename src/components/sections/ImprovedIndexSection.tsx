@@ -33,7 +33,7 @@ export default function ImprovedIndexSection() {
       </video>
 
       {/* Video blur overlay for dreamy effect */}
-      <div className="absolute inset-0 backdrop-blur-lg bg-white/5 z-[1]" />
+      <div className="absolute inset-0 backdrop-blur-md bg-white/5 z-[1]" />
 
       {/* Additional soft gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900/20 via-transparent to-slate-900/30 z-[2]" />

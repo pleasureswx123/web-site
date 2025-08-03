@@ -15,7 +15,7 @@ const mediaContent = [
     year: '2024',
     description: '深入探索泰拉大陆的历史变迁，从古代文明到现代都市的演进过程。',
     fullDescription: '《泰拉编年史》是一部全面记录泰拉大陆历史的纪录片系列，通过精美的视觉效果和深度的叙事，展现了这片土地上各个种族、文明的兴衰更替。',
-    image: '/images/backgrounds/bg.jpg',
+    image: '/images/world/bg1.jpg',
     color: 'from-blue-600 to-purple-600',
     accentColor: 'text-blue-400',
     tags: ['历史', '文明', '纪录片']
@@ -28,7 +28,7 @@ const mediaContent = [
     year: '2024',
     description: '罗德岛干员的详细档案资料，包含个人履历、技能分析和战斗记录。',
     fullDescription: '《干员档案》收录了罗德岛所有干员的完整资料，从基础信息到深层背景故事，为指挥官提供全面的人员了解。',
-    image: '/images/characters/amiya.png',
+    image: '/images/world/bg2.png',
     color: 'from-orange-600 to-red-600',
     accentColor: 'text-orange-400',
     tags: ['干员', '档案', '数据库']
@@ -41,49 +41,10 @@ const mediaContent = [
     year: '2024',
     description: '泰拉世界的地理环境、城市分布和区域特色的详细图集。',
     fullDescription: '《世界图集》通过高精度的地图和详细的地理信息，展现泰拉大陆的地形地貌、气候特征和人文景观。',
-    image: '/images/backgrounds/bg-mobile.jpg',
+    image: '/images/world/bg3.png',
     color: 'from-green-600 to-teal-600',
     accentColor: 'text-green-400',
     tags: ['地理', '地图', '环境']
-  },
-  {
-    id: 'cultural-heritage',
-    title: 'CULTURAL HERITAGE',
-    subtitle: '文化遗产',
-    category: 'CULTURE',
-    year: '2024',
-    description: '泰拉各地区的文化传统、艺术作品和非物质文化遗产。',
-    fullDescription: '《文化遗产》记录了泰拉大陆丰富多彩的文化传统，从古老的仪式到现代的艺术表达，展现文化的传承与创新。',
-    image: '/images/characters/chen.png',
-    color: 'from-purple-600 to-pink-600',
-    accentColor: 'text-purple-400',
-    tags: ['文化', '艺术', '传统']
-  },
-  {
-    id: 'tech-innovation',
-    title: 'TECH INNOVATION',
-    subtitle: '科技创新',
-    category: 'TECHNOLOGY',
-    year: '2024',
-    description: '泰拉世界的科技发展、源石技术和未来科技展望。',
-    fullDescription: '《科技创新》探索泰拉世界的科技前沿，从源石技术的应用到人工智能的发展，展现科技改变世界的力量。',
-    image: '/images/characters/kaltsit.png',
-    color: 'from-cyan-600 to-blue-600',
-    accentColor: 'text-cyan-400',
-    tags: ['科技', '创新', '未来']
-  },
-  {
-    id: 'monster-siren',
-    title: 'MONSTER SIREN',
-    subtitle: '塞壬唱片',
-    category: 'MUSIC',
-    year: '2024',
-    description: '官方音乐厂牌，为泰拉世界创作原创音乐作品。',
-    fullDescription: '《塞壬唱片》是心流元素官方音乐厂牌，致力于创作高质量的游戏音乐，涵盖电子、古典、摇滚等多种风格。',
-    image: '/images/characters/texas.png',
-    color: 'from-indigo-600 to-purple-600',
-    accentColor: 'text-indigo-400',
-    tags: ['音乐', '原创', '厂牌']
   }
 ]
 
@@ -156,8 +117,8 @@ export default function MediaSection() {
         {!isDetailView ? (
           // 网格视图 - 现代化卡片布局
             <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
-              <div className="relative w-full h-full z-10 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30">
-                <motion.div key="grid" className="relative z-10 h-full p-8" initial={{opacity: 0}}
+              <div className="relative w-full h-full z-10 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30 flex items-center justify-center">
+                <motion.div key="grid" className="relative z-10 p-8" initial={{opacity: 0}}
                             animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.6}}>{/* 页面标题 */}
                   <motion.div
                     className="text-center mb-4"
@@ -172,7 +133,7 @@ export default function MediaSection() {
                         animate={{opacity: 1, y: 0}}
                         transition={{delay: 0.3}}
                       >
-                        ABOUT TERRA
+                        WORLD
                       </motion.h1>
                       <motion.div
                         className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-blue-600 mx-auto mb-2"
@@ -180,14 +141,6 @@ export default function MediaSection() {
                         animate={{scaleX: 1}}
                         transition={{delay: 0.5, duration: 0.8}}
                       />
-                      <motion.p
-                        className="text-gray-300 text-lg max-w-2xl mx-auto"
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        transition={{delay: 0.6}}
-                      >
-                        探索泰拉大陆的深层奥秘，了解这个世界的历史、文化与未来
-                      </motion.p>
                     </div>
                   </motion.div>
 

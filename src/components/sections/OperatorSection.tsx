@@ -29,8 +29,8 @@ const operatorData = [
     constellation: '双鱼座',
     constellationNote: '理性与浪漫的矛盾体',
     description: '动漫设计专业大一学生，性格温柔细腻却藏着韧性。她善于捕捉人们情绪中细微的波动，也能将生活里的美学感悟转化为具体的创作。 她总习惯用樱花牌铅笔作画，能把他人的焦虑画成会绽放的云朵，用漫画分镜化解尴尬的瞬间；遇到创作瓶颈时，也会凭着耐心慢慢摸索突破。她的速写本就像一个治愈人心的秘密基地，每一笔画里，都藏着 “让裂痕生长出星光” 的温暖力量。',
-    image: '/images/roles/yoyo.jpg',
-    avatar: '/images/roles/yoyo.jpg',
+    image: '/images/roles/yoyo1.png',
+    avatar: '/images/roles/yoyo1.png',
   }
 ]
 
@@ -46,17 +46,8 @@ export default function OperatorSection() {
     <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* 背景图片 */}
       <div className="absolute inset-0">
-        <Image src="/images/role.png" alt="背景" fill className="object-cover" priority/>
-        <div className="absolute inset-0 bg-black/50" />
-      </div>
-
-      {/* 背景装饰 */}
-      <div className="absolute inset-0">
-        {/* 几何装饰元素 */}
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 border border-ak-primary/20 rounded-full animate-pulse" />
-        <div className="absolute bottom-1/4 left-1/4 w-32 h-32 border border-ak-secondary/20 rounded-full animate-pulse delay-1000" />
-        {/* 网格背景 */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <Image src="/images/roles/yoyo.jpg" alt="背景" fill className="object-cover" priority/>
+        <div className="absolute inset-0 bg-black/75  backdrop-blur-lg" />
       </div>
 
       <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
@@ -82,7 +73,7 @@ export default function OperatorSection() {
                   alt={operator.nameCn}
                   width={64}
                   height={64}
-                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                  className="w-full h-full object-contain group-hover:brightness-110 transition-all duration-300"
                 />
                 {selectedOperator.id === operator.id && (
                   <div className="absolute inset-0 bg-ak-primary/20 rounded-full" />
@@ -93,36 +84,22 @@ export default function OperatorSection() {
 
             {/* 中间：角色信息 */}
             <div className="flex-1 flex flex-col justify-center px-12 max-w-2xl">
-              {/* 职业标签 */}
-              <motion.div
-                className="flex items-center space-x-2 mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="w-6 h-6 bg-ak-secondary rounded flex items-center justify-center shadow-lg shadow-ak-secondary/30">
-                  <CheckCircle className="w-4 h-4 text-black" />
-                </div>
-                <span className="text-ak-secondary font-medium text-sm tracking-wider">
-              {selectedOperator.professionCn}
-            </span>
-              </motion.div>
 
               {/* 角色名称 */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={selectedOperator.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.5 }}
+                  initial={{opacity: 0, y: 30}}
+                  animate={{opacity: 1, y: 0}}
+                  exit={{opacity: 0, y: -30}}
+                  transition={{duration: 0.5}}
                 >
-                  <h1 className="text-6xl font-bold text-white mb-2 tracking-wider font-mono">
-                    {selectedOperator.name}
-                  </h1>
-                  <h2 className="text-2xl text-gray-300 mb-8 font-light">
+                  <h2 className="text-6xl font-bold text-white mb-2 tracking-wider font-mono">
                     {selectedOperator.nameCn}
                   </h2>
+                  <h1 className="text-2xl text-gray-300 mb-8 font-light">
+                    {selectedOperator.name}
+                  </h1>
                 </motion.div>
               </AnimatePresence>
 
