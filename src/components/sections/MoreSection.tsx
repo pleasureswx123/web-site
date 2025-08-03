@@ -10,34 +10,34 @@ const moreContent = [
     id: 'evercall-rules',
     title: 'Evercall_玩法说明',
     titleEn: 'EVERCALL RULES',
-    description: 'Roguelike玩法模式，每次挑战都有不同的体验。在这个模式中，你需要运用策略和运气来克服各种挑战。',
+    description: '专为【深度陪伴】打造的拟人化 AI 数字人体验系统，Live2D动态表现、长期记忆、情绪识别、真实对话节奏。',
     image: '/images/more/bg3.jpg',
     icon: '/images/more/bg3.jpg',
     backgroundImage: '/images/more/bg3.jpg',
     tabs: [
       {
         id: 'overview',
-        title: '玩法概述',
-        content: '集成战略是心流元素的Roguelike玩法模式，每次进入都会有不同的体验。玩家需要在随机生成的地图中做出选择，收集道具和招募临时干员。',
-        image: '/images/more/is-overview.jpg'
+        title: '什么是 Evercall？',
+        content: '它是一款专为【深度陪伴】打造的拟人化 AI 数字人体验系统，Live2D动态表现、长期记忆、情绪识别、真实对话节奏，让你在虚拟世界中，拥有一个只属于你的她。',
+        image: '/images/more/bg3.jpg'
       },
       {
-        id: 'rewards',
-        title: '奖励机制',
-        content: '通过完成集成战略可以获得各种奖励，包括源石锭、材料、家具等。难度越高，奖励越丰厚。',
-        image: '/images/more/is-rewards.jpg'
+        id: 'features',
+        title: '核心功能',
+        content: '1. 高拟真对话系统：支持多轮上下文记忆、情绪识别、语速调节与自然断句。\n2. 情感陪伴机制：内建陪伴节奏（早安、午间、晚安等）、节日与纪念日互动。\n3. 个性化定制：支持角色性格选择、声音风格、着装搭配、场景模式自定义。\n4. 长期记忆库：可记录与用户的对话、事件、偏好与变化，持续成长。\n5. 表情与动作：同步表情包、Live2D动作演绎，打造沉浸互动体验。\n6. 交互场景：您的虚拟伙伴既可以出现在其专属场景，也可以直接出现在您的桌面上。',
+        image: '/images/more/bg3.jpg'
       },
       {
-        id: 'strategy',
-        title: '攻略技巧',
-        content: '合理选择路线、平衡风险与收益、善用临时招募系统是通关的关键。每个主题都有独特的机制和策略。',
-        image: '/images/more/is-strategy.jpg'
+        id: 'audience',
+        title: '适用人群',
+        content: '- 喜欢二次元拟人角色与情感互动的用户\n- 希望获得情绪出口或情感价值人群\n- 热爱体验前沿AI技术与数字人互动方式的探索者',
+        image: '/images/more/bg3.jpg'
       },
       {
-        id: 'updates',
-        title: '版本更新',
-        content: '集成战略会定期更新新的主题和内容，带来全新的挑战和体验。敬请期待更多精彩内容。',
-        image: '/images/more/is-updates.jpg'
+        id: 'goal',
+        title: 'Evercall 的目标',
+        content: '我们希望通过Evercall，在数字时代重新定义"陪伴"的意义。让每个用户在虚拟世界中，也能感受到被理解、被回应与被珍惜的情感连接。',
+        image: '/images/more/bg3.jpg'
       }
     ]
   },
@@ -45,34 +45,34 @@ const moreContent = [
     id: 'privacy-policy',
     title: '隐私政策和服务条款',
     titleEn: 'PRIVACY POLICY & TERMS',
-    description: '全新的战略模拟玩法，体验不同的战术策略。在这个模式中建设基地，管理资源，制定长期发展策略。',
+    description: 'EVERCALL 隐私政策和服务条款，保护用户权益，规范服务使用，确保安全合规的使用体验。',
     image: '/images/more/bg2.webp',
     icon: '/images/more/bg2.webp',
     backgroundImage: '/images/more/bg2.webp',
     tabs: [
       {
-        id: 'gameplay',
-        title: '玩法介绍',
-        content: '生息演算是一个战略模拟玩法，玩家需要建设和管理自己的基地，合理分配资源，制定发展策略。',
-        image: '/images/more/ra-gameplay.jpg'
+        id: 'privacy-overview',
+        title: '隐私政策概述',
+        content: '本隐私政策自 2025 年 8 月 27 日起生效。描述了EVERCALL从您那里收集和处理的关于您的信息类型。我们致力于保护您的隐私权益，确保信息安全。',
+        image: '/images/more/bg2.webp'
       },
       {
-        id: 'construction',
-        title: '建设系统',
-        content: '通过建造各种设施来提升基地的功能，包括生产设施、防御设施、研究设施等。',
-        image: '/images/more/ra-construction.jpg'
+        id: 'data-collection',
+        title: '信息收集',
+        content: '我们收集您直接提供的信息（如姓名、邮箱、电话等）、使用服务时自动获得的数据（如设备信息、使用记录等）以及从其他来源获得的信息。收集信息仅用于提供更好的服务体验。',
+        image: '/images/more/bg2.webp'
       },
       {
-        id: 'resources',
-        title: '资源管理',
-        content: '合理管理各种资源，包括人力、物资、能源等，确保基地的正常运转和持续发展。',
-        image: '/images/more/ra-resources.jpg'
+        id: 'data-usage',
+        title: '信息使用',
+        content: '我们使用收集的信息来：提供、管理和运营服务；生成和分析服务使用情况；根据您的偏好定制服务；与您沟通；分析、维护、改进服务；开发新功能和服务；处理付款；检测和防止欺诈等。',
+        image: '/images/more/bg2.webp'
       },
       {
-        id: 'combat',
-        title: '战斗系统',
-        content: '派遣干员执行各种任务，包括探索、战斗、收集等，获取更多资源和情报。',
-        image: '/images/more/ra-combat.jpg'
+        id: 'terms-service',
+        title: '服务条款',
+        content: '使用EVERCALL服务即表示您同意遵守我们的服务条款。包括用户行为规范、内容审核政策、知识产权保护、未成年人保护等重要条款。我们保留根据法律法规终止违规服务的权利。',
+        image: '/images/more/bg2.webp'
       }
     ]
   },
@@ -80,34 +80,34 @@ const moreContent = [
     id: 'animation-demo',
     title: '动画演示',
     titleEn: 'ANIMATION DEMO',
-    description: '心流元素官方动画作品，深入了解泰拉世界的故事和角色。高质量的动画制作带来沉浸式体验。',
+    description: 'EVERCALL 动画演示展示，体验 Live2D 动态表现和情感互动的魅力，感受虚拟陪伴的真实体验。',
     image: '/images/more/bg.png',
     icon: '/images/more/bg.png',
     backgroundImage: '/images/more/bg.png',
     tabs: [
       {
-        id: 'prelude',
-        title: '黎明前奏',
-        content: '心流元素首部动画作品，讲述了罗德岛成立初期的故事，展现了阿米娅等角色的成长历程。',
-        image: '/images/more/anime-prelude.jpg'
+        id: 'live2d-demo',
+        title: 'Live2D 演示',
+        content: '这里放演示动画 - 体验 EVERCALL 的 Live2D 动态表现技术，观看虚拟角色的自然动作和表情变化，感受真实的互动体验。',
+        image: '/images/more/bg.png'
       },
       {
-        id: 'perish',
-        title: '灭亡序曲',
-        content: '第二部动画作品，深入探讨了感染者问题和社会矛盾，剧情更加深刻和复杂。',
-        image: '/images/more/anime-perish.jpg'
+        id: 'interaction-demo',
+        title: '互动演示',
+        content: '展示 EVERCALL 的情感互动功能，包括语音对话、情绪识别、个性化回应等核心特性，让您提前体验深度陪伴的魅力。',
+        image: '/images/more/bg.png'
       },
       {
-        id: 'holy-knight',
-        title: '圣骑士光',
-        content: '以卡西米尔为背景的动画作品，展现了骑士竞技和政治斗争的复杂关系。',
-        image: '/images/more/anime-knight.jpg'
+        id: 'customization-demo',
+        title: '定制演示',
+        content: '演示角色个性化定制功能，包括外观设计、性格设定、声音风格等多维度自定义选项，打造专属于您的虚拟伙伴。',
+        image: '/images/more/bg.png'
       },
       {
-        id: 'future',
-        title: '未来作品',
-        content: '更多精彩的动画作品正在制作中，将为玩家带来更多泰拉世界的精彩故事。',
-        image: '/images/more/anime-future.jpg'
+        id: 'scene-demo',
+        title: '场景演示',
+        content: '展示多样化的交互场景，从专属房间到桌面陪伴，体验不同环境下的虚拟陪伴模式，感受无处不在的温暖陪伴。',
+        image: '/images/more/bg.png'
       }
     ]
   }
@@ -221,13 +221,13 @@ export default function MoreSection() {
                     </div>
 
                     {/* 内容区域 */}
-                    <div className="relative z-10 min-h-screen flex">
+                    <div className="relative z-10 min-h-screen flex overflow-hidden">
                       {/* 左侧主要内容 */}
-                      <div className="flex-1 flex items-center px-12">
+                      <div className="flex-1 flex items-start px-12 py-16 overflow-y-auto max-h-screen">
                         <AnimatePresence mode="wait">
                           <motion.div
                             key={`${selectedContent.id}-${activeTab}`}
-                            className="max-w-2xl"
+                            className="max-w-2xl w-full"
                             initial={{opacity: 0, x: -50}}
                             animate={{opacity: 1, x: 0}}
                             exit={{opacity: 0, x: 50}}
@@ -251,32 +251,40 @@ export default function MoreSection() {
 
                             {/* Tab内容 */}
                             <motion.div
-                              className="space-y-6"
+                              className="space-y-6 mb-8"
                               initial={{opacity: 0, y: 20}}
                               animate={{opacity: 1, y: 0}}
                               transition={{delay: 0.4}}
                             >
-                              <h3 className="text-xl font-bold text-white">
+                              <h3 className="text-2xl font-bold text-white mb-4">
                                 {selectedContent.tabs[activeTab]?.title}
                               </h3>
-                              <p className="text-gray-300 text-lg leading-relaxed">
-                                {selectedContent.tabs[activeTab]?.content}
-                              </p>
+                              <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-6">
+                                <div className="text-gray-300 text-lg leading-relaxed whitespace-pre-line">
+                                  {selectedContent.tabs[activeTab]?.content}
+                                </div>
+                              </div>
                             </motion.div>
 
-                            {/* 访问网站按钮 */}
                             <motion.div
-                              className="mt-8 flex space-x-4"
+                              className="flex space-x-4"
                               initial={{opacity: 0, y: 20}}
                               animate={{opacity: 1, y: 0}}
                               transition={{delay: 0.6}}
                             >
                               <motion.button
-                                className="bg-ak-secondary hover:bg-ak-secondary/80 text-white px-8 py-3 rounded transition-colors duration-300 shadow-lg shadow-ak-secondary/30 hover:shadow-ak-secondary/50"
+                                className="bg-ak-secondary hover:bg-ak-secondary/80 text-white px-8 py-3 rounded-lg transition-colors duration-300 shadow-lg shadow-ak-secondary/30 hover:shadow-ak-secondary/50 font-medium"
                                 whileHover={{scale: 1.05}}
                                 whileTap={{scale: 0.95}}
                               >
                                 访问官网
+                              </motion.button>
+                              <motion.button
+                                className="bg-transparent hover:bg-white/10 text-white border border-gray-400 hover:border-white px-8 py-3 rounded-lg transition-all duration-300 font-medium"
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
+                              >
+                                了解更多
                               </motion.button>
                             </motion.div>
                           </motion.div>
@@ -284,17 +292,21 @@ export default function MoreSection() {
                       </div>
 
                       {/* 右侧Tab导航 */}
-                      <div className="w-80 flex flex-col justify-center pr-8">
+                      <div className="w-80 flex flex-col justify-start pr-8 py-16 max-h-screen overflow-y-auto">
                         <motion.div
                           className="space-y-4"
                           initial={{opacity: 0, x: 50}}
                           animate={{opacity: 1, x: 0}}
                           transition={{duration: 0.6, delay: 0.3}}
                         >
+                          <div className="mb-6">
+                            <h4 className="text-white text-lg font-bold mb-2">内容导航</h4>
+                            <div className="w-12 h-0.5 bg-ak-secondary"></div>
+                          </div>
                           {selectedContent.tabs.map((tab, index) => (
                             <motion.button
                               key={tab.id}
-                              className={`w-full text-left p-4 rounded-lg border transition-all duration-300 ${activeTab === index
+                              className={`w-full text-left p-4 rounded-lg border transition-all duration-300 backdrop-blur-sm ${activeTab === index
                                 ? 'bg-ak-secondary/20 border-ak-secondary text-white shadow-lg shadow-ak-secondary/20'
                                 : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white hover:bg-black/40'
                               }`}
@@ -306,8 +318,11 @@ export default function MoreSection() {
                               whileTap={{scale: 0.98}}
                             >
                               <div className="flex items-center justify-between">
-                                <span className="font-medium">{tab.title}</span>
-                                <ChevronRight className="w-4 h-4"/>
+                                <div className="flex items-center space-x-3">
+                                  <div className={`w-2 h-2 rounded-full ${activeTab === index ? 'bg-ak-secondary' : 'bg-gray-500'}`}></div>
+                                  <span className="font-medium">{tab.title}</span>
+                                </div>
+                                <ChevronRight className={`w-4 h-4 transition-transform ${activeTab === index ? 'text-ak-secondary' : ''}`}/>
                               </div>
                             </motion.button>
                           ))}
