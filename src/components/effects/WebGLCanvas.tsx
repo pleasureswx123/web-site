@@ -46,7 +46,7 @@ export default function WebGLCanvas({ className = '', style }: ParticleCanvasPro
     const radius = 200 // 圆形E的半径，放大2倍（原来120 -> 240）
 
     // 艺术体圆形E的结构：有开口的圆环 + 中间水平线
-    const spacing = 4 // 减小间距，增加粒子密度（原来9 -> 4）
+    const spacing = 40 // 减小间距，增加粒子密度（原来9 -> 4）
     const strokeWidth = 20 // 增加笔画宽度，更多层粒子（原来3 -> 5）
 
     // 1. 创建有开口的圆形外环（右侧开口）
@@ -69,11 +69,16 @@ export default function WebGLCanvas({ className = '', style }: ParticleCanvasPro
     const lineStartX = centerX - outerRadius + spacing
     const lineEndX = centerX + innerRadius - spacing // 只延伸到内圆，不封闭开口
 
+    // 计算水平线的粗细，使其与圆环粗细一致
+    const lineThickness = strokeWidth * spacing // 与圆环粗细保持一致
+    const halfThickness = lineThickness / 2
+
     for (let x = lineStartX; x <= lineEndX; x += spacing) {
-      for (let t = -2; t <= 2; t++) { // 增加垂直层数，从-1到1改为-2到2
+      // 垂直方向填充，使线条粗细与圆环一致
+      for (let y = lineY - halfThickness; y <= lineY + halfThickness; y += spacing) {
         positions.push({
           x: x,
-          y: lineY + t * spacing * 0.5 // 调整垂直间距，让线条更密集
+          y: y
         })
       }
     }
