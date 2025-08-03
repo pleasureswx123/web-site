@@ -85,8 +85,8 @@ const newsDetailContent: Record<number, {
 
 她亲切随和，主动热情，无论是与同学、老师还是陌生人交流都自然轻松，像自带"亲和力磁场"，能快速拉近距离。她善良，喜欢小动物，经常帮助流浪猫。性格柔和有韧性，遇到创作瓶颈或他人困境时，用耐心坚持化解，似缓缓溪流，润泽又有力量。`,
     image: '/images/news/role.jpg',
-    color: 'from-pink-600 to-rose-600',
-    accentColor: 'text-pink-400',
+    color: 'from-blue-600 to-purple-600',
+    accentColor: 'text-blue-400',
     tags: ['新角色', '悠悠', '学妹', '陪伴AI'],
     sections: [
       {
@@ -132,8 +132,8 @@ EVERCALL是您随时随地的情绪出口，在疲惫或是失落的时候，永
 
 我们正在招募首批内测官，与我们一起探索这个充满可能性的平行世界。`,
     image: '/images/news/recruitment.jpg',
-    color: 'from-green-600 to-teal-600',
-    accentColor: 'text-green-400',
+    color: 'from-blue-600 to-purple-600',
+    accentColor: 'text-blue-400',
     tags: ['内测招募', '平行世界', '情感陪伴', 'AI伙伴'],
     sections: [
       {
@@ -174,7 +174,7 @@ const carouselBanners = [
     id: 3,
     title: '内测招募页',
     image: '/images/news/recruitment.jpg',
-    url: 'www.baidu.com',
+    url: 'https://www.baidu.com/',
   }
 ]
 
@@ -199,7 +199,7 @@ const newsData = [
     type: '新闻',
     date: '2025 // 07 / 17',
     title: '内测招募页',
-    url: 'www.baidu.com',
+    url: 'https://www.baidu.com/',
   }
 ]
 
@@ -485,13 +485,13 @@ export default function ImprovedInformationSection() {
                         className="object-cover opacity-60"
                         priority
                       />
-                      <div className="absolute inset-0 bg-black/70"></div>
+                      <div className="absolute inset-0 bg-black/50 backdrop-blur-md"></div>
                     </div>
 
                     {/* 返回按钮 */}
                     <motion.button
                       onClick={handleBackToList}
-                      className="fixed top-24 left-8 z-50 flex items-center gap-3 px-6 py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
+                      className="fixed bottom-12 right-60 z-50 flex items-center gap-3 px-6 py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, x: -20 }}
@@ -499,14 +499,15 @@ export default function ImprovedInformationSection() {
                       transition={{ delay: 0.3 }}
                     >
                       <ArrowLeft className="w-5 h-5" />
-                      <span className="font-medium">返回新闻列表</span>
+                      <span className="font-medium">返回</span>
                     </motion.button>
 
                     {/* 内容区域 - 左右分栏布局 */}
                     <div className="relative z-10 h-full overflow-y-auto">
-                      <div className="max-w-7xl mx-auto flex px-8 py-16 gap-8 min-h-screen pb-20">
+                      {/*<div className="max-w-7xl mx-auto flex px-8 py-16 gap-8 min-h-screen pb-20">*/}
+                      <div className="w-full flex px-20 py-16 gap-8 min-h-screen pb-20">
                         {/* 左侧主要内容 */}
-                        <div className="flex-1 max-w-4xl">
+                        <div className="flex-1">
                           <motion.div
                             className="w-full"
                             initial={{ opacity: 0, x: -50 }}
@@ -536,14 +537,29 @@ export default function ImprovedInformationSection() {
                               {newsDetailContent[selectedNews].subtitle}
                             </h2>
 
-                            {/* 新闻元信息 */}
-                            <div className="flex items-center gap-6 text-white/70 text-sm border-b border-white/20 pb-6">
-                              <span className="flex items-center gap-2">
-                                📅 {newsDetailContent[selectedNews].date}
-                              </span>
-                              <span className="flex items-center gap-2">
-                                📰 EVERCALL NEWS
-                              </span>
+                            {/* 新闻元信息与标签 */}
+                            <div className="flex items-center justify-between border-b border-white/20 pb-6">
+                              {/* 左侧：新闻元信息 */}
+                              <div className="flex items-center gap-6 text-white/70 text-sm">
+                                <span className="flex items-center gap-2">
+                                  📅 {newsDetailContent[selectedNews].date}
+                                </span>
+                                <span className="flex items-center gap-2">
+                                  📰 EVERCALL NEWS
+                                </span>
+                              </div>
+
+                              {/* 右侧：标签 */}
+                              <div className="flex flex-wrap gap-2">
+                                {newsDetailContent[selectedNews].tags.map((tag, index) => (
+                                  <span
+                                    key={index}
+                                    className={`px-3 py-1 rounded-full text-sm ${newsDetailContent[selectedNews].accentColor} bg-white/10 border border-white/20`}
+                                  >
+                                    #{tag}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
 
                           </motion.div>
@@ -582,20 +598,7 @@ export default function ImprovedInformationSection() {
                             </div>
                           </motion.div>
 
-                            {/* 标签 */}
-                            <motion.div className="mb-8" initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}}
-                                        transition={{delay: 0.8}}>
-                              <div className="flex flex-wrap gap-2">
-                                {newsDetailContent[selectedNews].tags.map((tag, index) => (
-                                  <span
-                                    key={index}
-                                    className={`px-3 py-1 rounded-full text-sm ${newsDetailContent[selectedNews].accentColor} bg-white/10 border border-white/20`}
-                                  >
-                                  #{tag}
-                                </span>
-                                ))}
-                              </div>
-                            </motion.div>
+
 
                           </motion.div>
                         </div>
@@ -623,9 +626,9 @@ export default function ImprovedInformationSection() {
                               whileHover={{ scale: 1.02 }}
                             >
                               <div className="flex items-start gap-3">
-                                <div className={`w-6 h-6 rounded-full ${newsDetailContent[selectedNews].accentColor.replace('text-', 'bg-')} flex items-center justify-center text-black font-bold text-xs flex-shrink-0 mt-1`}>
+                                {/*<div className={`w-6 h-6 rounded-full ${newsDetailContent[selectedNews].accentColor.replace('text-', 'bg-')} flex items-center justify-center text-black font-bold text-xs flex-shrink-0 mt-1`}>
                                   {index + 1}
-                                </div>
+                                </div>*/}
                                 <div className="flex-1">
                                   <h5 className={`font-semibold mb-2 ${newsDetailContent[selectedNews].accentColor} text-sm`}>
                                     {section.title}
