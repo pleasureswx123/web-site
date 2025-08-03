@@ -465,10 +465,10 @@ export default function ImprovedInformationSection() {
             </div>
               </motion.div>
             ) : (
-              // 详情视图
+              // 详情视图 - 借鉴 MoreSection 但保持新闻特色
               <motion.div
                 key="detail"
-                className="h-full w-full relative bg-black"
+                className="h-full w-full relative z-[20]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -476,152 +476,173 @@ export default function ImprovedInformationSection() {
               >
                 {selectedNews && newsDetailContent[selectedNews] && (
                   <>
-                    {/* 全屏背景 */}
-                    <div className="absolute inset-0">
+                    {/* 全屏背景图 */}
+                    <div className="fixed inset-0">
                       <Image
                         src={newsDetailContent[selectedNews].image}
                         alt={newsDetailContent[selectedNews].title}
                         fill
-                        sizes="100vw"
-                        className="object-cover"
+                        className="object-cover opacity-60"
                         priority
                       />
-                      <div className={`absolute inset-0 bg-gradient-to-t ${newsDetailContent[selectedNews].color} opacity-80`}></div>
-                      <div className="absolute inset-0 bg-black/50"></div>
+                      <div className="absolute inset-0 bg-black/70"></div>
                     </div>
 
                     {/* 返回按钮 */}
-                    <div className="absolute top-8 left-8 z-50">
-                      <motion.button
-                        onClick={handleBackToList}
-                        className="flex items-center gap-3 px-6 py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <ArrowLeft className="w-5 h-5" />
-                        <span className="font-medium">返回新闻列表</span>
-                      </motion.button>
-                    </div>
+                    <motion.button
+                      onClick={handleBackToList}
+                      className="fixed top-24 left-8 z-50 flex items-center gap-3 px-6 py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <ArrowLeft className="w-5 h-5" />
+                      <span className="font-medium">返回新闻列表</span>
+                    </motion.button>
 
-                    {/* 内容区域 */}
-                    <div className="relative z-40 h-full overflow-y-auto">
-                      <div className="min-h-full flex flex-col">
-                        {/* 头部信息 */}
-                        <motion.div
-                          className="pt-32 pb-12 px-12"
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.4 }}
-                        >
-                          <div className="max-w-4xl mx-auto">
+                    {/* 内容区域 - 左右分栏布局 */}
+                    <div className="relative z-10 h-full overflow-y-auto">
+                      <div className="max-w-7xl mx-auto flex px-8 py-16 gap-8 min-h-screen pb-20">
+                        {/* 左侧主要内容 */}
+                        <div className="flex-1 max-w-4xl">
+                          <motion.div
+                            className="w-full"
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6 }}
+                          >
+                          {/* 新闻头部信息 */}
+                          <motion.div
+                            className="mb-10"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                          >
                             {/* 分类标签 */}
-                            <motion.div
-                              className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white mb-6"
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 0.5 }}
-                            >
-                              <span className={`w-2 h-2 rounded-full ${newsDetailContent[selectedNews].accentColor.replace('text-', 'bg-')}`}></span>
+                            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${newsDetailContent[selectedNews].accentColor} bg-white/10 backdrop-blur-sm border border-white/20 mb-6`}>
+                              <span className="w-2 h-2 bg-current rounded-full"></span>
                               {newsDetailContent[selectedNews].category}
-                            </motion.div>
+                            </div>
 
                             {/* 标题 */}
-                            <motion.h1
-                              className="text-5xl font-bold text-white mb-4 leading-tight"
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.6 }}
-                            >
+                            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
                               {newsDetailContent[selectedNews].title}
-                            </motion.h1>
+                            </h1>
 
                             {/* 副标题 */}
-                            <motion.h2
-                              className={`text-2xl font-medium mb-6 ${newsDetailContent[selectedNews].accentColor}`}
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.7 }}
-                            >
+                            <h2 className={`text-xl ${newsDetailContent[selectedNews].accentColor} mb-6 font-medium`}>
                               {newsDetailContent[selectedNews].subtitle}
-                            </motion.h2>
+                            </h2>
 
-                            {/* 日期和标签 */}
-                            <motion.div
-                              className="flex items-center gap-6 text-white/80"
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.8 }}
-                            >
-                              <span className="text-lg">{newsDetailContent[selectedNews].date}</span>
-                              <div className="flex gap-2">
+                            {/* 新闻元信息 */}
+                            <div className="flex items-center gap-6 text-white/70 text-sm border-b border-white/20 pb-6">
+                              <span className="flex items-center gap-2">
+                                📅 {newsDetailContent[selectedNews].date}
+                              </span>
+                              <span className="flex items-center gap-2">
+                                📰 EVERCALL NEWS
+                              </span>
+                            </div>
+
+                          </motion.div>
+
+                          {/* 新闻摘要 */}
+                          <motion.div
+                            className="mb-8"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                          >
+                            <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-6">
+                              <h3 className={`text-lg font-bold mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
+                                新闻摘要
+                              </h3>
+                              <div className="text-gray-300 text-base leading-relaxed">
+                                {newsDetailContent[selectedNews].description}
+                              </div>
+                            </div>
+                          </motion.div>
+
+                          {/* 正文内容 */}
+                          <motion.div
+                            className="mb-8"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6 }}
+                          >
+                            <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-6">
+                              <h3 className={`text-lg font-bold mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
+                                详细报道
+                              </h3>
+                              <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
+                                {newsDetailContent[selectedNews].fullDescription}
+                              </div>
+                            </div>
+                          </motion.div>
+
+                            {/* 标签 */}
+                            <motion.div className="mb-8" initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}}
+                                        transition={{delay: 0.8}}>
+                              <div className="flex flex-wrap gap-2">
                                 {newsDetailContent[selectedNews].tags.map((tag, index) => (
                                   <span
                                     key={index}
-                                    className="px-3 py-1 bg-white/10 rounded-full text-sm"
+                                    className={`px-3 py-1 rounded-full text-sm ${newsDetailContent[selectedNews].accentColor} bg-white/10 border border-white/20`}
                                   >
-                                    {tag}
-                                  </span>
+                                  #{tag}
+                                </span>
                                 ))}
                               </div>
                             </motion.div>
+
+                          </motion.div>
+                        </div>
+
+                        {/* 右侧导航栏 - 新闻章节 */}
+                        <div className="w-80 flex-shrink-0">
+                          <motion.div
+                            className="space-y-4"
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                          >
+                          <div className="mb-6">
+                            <h4 className="text-white/80 text-lg font-bold mb-2">相关要点</h4>
+                            <div className={`w-12 h-0.5 ${newsDetailContent[selectedNews].accentColor.replace('text-', 'bg-')}`}></div>
                           </div>
-                        </motion.div>
 
-                        {/* 主要内容 */}
-                        <motion.div
-                          className="flex-1 px-12 pb-20"
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.9 }}
-                        >
-                          <div className="max-w-4xl mx-auto space-y-8">
-                            {/* 简介 */}
-                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                              <h3 className="text-2xl font-semibold text-white mb-6">概述</h3>
-                              <p className="text-white/90 text-lg leading-relaxed">
-                                {newsDetailContent[selectedNews].description}
-                              </p>
-                            </div>
-
-                            {/* 详细内容 */}
-                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                              <h3 className="text-2xl font-semibold text-white mb-6">详细内容</h3>
-                              <div className="prose prose-invert max-w-none">
-                                <div className="text-white/90 text-base leading-relaxed whitespace-pre-line">
-                                  {newsDetailContent[selectedNews].fullDescription}
+                          {newsDetailContent[selectedNews].sections.map((section, index) => (
+                            <motion.div
+                              key={index}
+                              className="w-full text-left p-4 rounded-lg border bg-black/30 border-gray-600 backdrop-blur-sm hover:border-gray-400 hover:bg-black/40 transition-all duration-300"
+                              initial={{ opacity: 0, x: 20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                              whileHover={{ scale: 1.02 }}
+                            >
+                              <div className="flex items-start gap-3">
+                                <div className={`w-6 h-6 rounded-full ${newsDetailContent[selectedNews].accentColor.replace('text-', 'bg-')} flex items-center justify-center text-black font-bold text-xs flex-shrink-0 mt-1`}>
+                                  {index + 1}
+                                </div>
+                                <div className="flex-1">
+                                  <h5 className={`font-semibold mb-2 ${newsDetailContent[selectedNews].accentColor} text-sm`}>
+                                    {section.title}
+                                  </h5>
+                                  <p className="text-gray-400 text-xs leading-relaxed line-clamp-3">
+                                    {section.content}
+                                  </p>
                                 </div>
                               </div>
-                            </div>
-
-                            {/* 章节内容 */}
-                            {newsDetailContent[selectedNews].sections && (
-                              <div className="space-y-6">
-                                <h3 className="text-2xl font-semibold text-white">相关内容</h3>
-                                {newsDetailContent[selectedNews].sections.map((section, index) => (
-                                  <motion.div
-                                    key={index}
-                                    className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 1.0 + index * 0.1 }}
-                                  >
-                                    <h4 className={`text-xl font-semibold mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
-                                      {section.title}
-                                    </h4>
-                                    <p className="text-white/90 leading-relaxed text-lg">
-                                      {section.content}
-                                    </p>
-                                  </motion.div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
+                            </motion.div>
+                          ))}
                         </motion.div>
                       </div>
+                      </div>
                     </div>
+
+
                   </>
                 )}
               </motion.div>
