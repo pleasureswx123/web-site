@@ -10,12 +10,7 @@ import OperatorSection from '@/components/sections/OperatorSection'
 import WorldSection from '@/components/sections/WorldSection'
 import MediaSection from '@/components/sections/MediaSection'
 import MoreSection from '@/components/sections/MoreSection'
-import IndexSection from '@/components/sections/IndexSection'
-import Footer from '@/components/layout/Footer'
 import BackgroundMusic from '@/components/ui/BackgroundMusic'
-import MusicInteractionPrompt from '@/components/ui/MusicInteractionPrompt'
-import ScrollIndicator from '@/components/ui/ScrollIndicator'
-import CanvasBackground from '@/components/ui/CanvasBackground'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
