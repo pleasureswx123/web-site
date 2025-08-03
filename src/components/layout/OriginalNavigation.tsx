@@ -30,8 +30,8 @@ const navigationItems = [
   { id: 'index', label: 'INDEX', labelCn: '首页' },
   { id: 'information', label: 'EVENTS', labelCn: '新闻' },
   { id: 'operator', label: 'CHARACTERS', labelCn: '角色' },
-  { id: 'world', label: 'WORLD', labelCn: '设定' },
-  { id: 'media', label: 'MEDIA', labelCn: '泰拉万象' },
+  { id: 'world', label: 'PRESET', labelCn: '设定' },
+  { id: 'media', label: 'WORLD', labelCn: '世界' },
   { id: 'more', label: 'MORE', labelCn: '更多内容' },
 ]
 

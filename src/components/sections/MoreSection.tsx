@@ -11,9 +11,9 @@ const moreContent = [
     title: 'Evercall_玩法说明',
     titleEn: 'EVERCALL RULES',
     description: 'Roguelike玩法模式，每次挑战都有不同的体验。在这个模式中，你需要运用策略和运气来克服各种挑战。',
-    image: '/images/more/bg2.webp',
-    icon: '/images/more/bg2.webp',
-    backgroundImage: '/images/more/bg2.webp',
+    image: '/images/more/bg3.jpg',
+    icon: '/images/more/bg3.jpg',
+    backgroundImage: '/images/more/bg3.jpg',
     tabs: [
       {
         id: 'overview',
@@ -46,9 +46,9 @@ const moreContent = [
     title: '隐私政策和服务条款',
     titleEn: 'PRIVACY POLICY & TERMS',
     description: '全新的战略模拟玩法，体验不同的战术策略。在这个模式中建设基地，管理资源，制定长期发展策略。',
-    image: '/images/more/bg.png',
-    icon: '/images/more/bg.png',
-    backgroundImage: '/images/more/bg.png',
+    image: '/images/more/bg2.webp',
+    icon: '/images/more/bg2.webp',
+    backgroundImage: '/images/more/bg2.webp',
     tabs: [
       {
         id: 'gameplay',
@@ -81,9 +81,9 @@ const moreContent = [
     title: '动画演示',
     titleEn: 'ANIMATION DEMO',
     description: '心流元素官方动画作品，深入了解泰拉世界的故事和角色。高质量的动画制作带来沉浸式体验。',
-    image: '/images/more/animation.jpg',
-    icon: '/images/icons/icon-animation.png',
-    backgroundImage: '/images/backgrounds/anime-bg.jpg',
+    image: '/images/more/bg.png',
+    icon: '/images/more/bg.png',
+    backgroundImage: '/images/more/bg.png',
     tabs: [
       {
         id: 'prelude',
