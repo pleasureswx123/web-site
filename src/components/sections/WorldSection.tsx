@@ -4,8 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { ChevronRight, ChevronLeft, ArrowLeft } from 'lucide-react'
 import { useMousePosition } from '@/hooks/useMousePosition'
-import CSSStarfield from '@/components/effects/CSSStarfield'
-import WebGLCanvas from '@/components/effects/WebGLCanvas'
+import { SplineScene } from '@/components/ui/SplineScene'
 
 const worldData = [
   {
@@ -96,32 +95,27 @@ export default function WorldSection() {
 
   return (
     <section className="min-h-screen relative overflow-hidden bg-black">
-      {/* 网格背景 */}
-      <div className="absolute inset-0">
-        <div
-          className="w-full h-full opacity-20"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }}
-        />
-         {/*备用的轻量级 CSS 星空效果 */}
-         <CSSStarfield
-          className="opacity-80"
-          starCount={150}
-          animationSpeed={1.2}
+      <div className="fixed inset-0 left-96 right-0 z-[1]">
+        <SplineScene
+          scene="https://prod.spline.design/3nwdhktYae3S1gh7/scene.splinecode"
+          className="pointer-events-auto w-full h-full"
+          fallbackText="Loading 3D Scene..."
         />
       </div>
+      {/* 网格背景 */}
+      {/*<div className="absolute inset-0 z-[2] opacity-50" style={{
+        backgroundImage: ` linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px) `,
+        backgroundSize: '50px 50px'
+      }}></div>*/}
+      <div className="absolute inset-0 z-[3] bg-gradient-to-r from-black from-20% via-transparent via-60% to-transparent to-100%"></div>
 
       <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full">
           <AnimatePresence mode="wait">
             {viewMode === 'list' ? (
               // 列表视图
-              <motion.div key="list" className="relative z-10 flex w-full h-full" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}}>
+              <motion.div key="list" className="relative z-10 flex w-full h-full" initial={{opacity: 0}}
+                          animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}}>
                 {/* 左侧列表 */}
                 <div className="w-1/3 min-w-32 flex flex-col justify-center px-12 pl-20 space-y-2">
                   {worldData.map((item, index) => (
@@ -138,7 +132,8 @@ export default function WorldSection() {
                     >
                       {/* 背景残影文字 */}
                       <div className="absolute inset-0 flex items-center justify-end pr-4 pointer-events-none">
-                        <span className="text-6xl font-bold text-white/5 group-hover:text-white/10 transition-all duration-300 select-none whitespace-nowrap">
+                        <span
+                          className="text-6xl font-bold text-white/5 group-hover:text-white/10 transition-all duration-300 select-none whitespace-nowrap">
                           {item.title}
                         </span>
                       </div>
@@ -166,19 +161,6 @@ export default function WorldSection() {
 
                 {/* 右侧装饰 */}
                 <div className="flex-1 flex items-center justify-center relative">
-
-                {/* WebGL Canvas 效果 */}
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1.2, delay: 0.5 }}
-                >
-                  <WebGLCanvas
-                    className="pointer-events-auto"
-                  />
-                </motion.div>
-
                 </div>
               </motion.div>
             ) : (
@@ -314,10 +296,10 @@ export default function WorldSection() {
               left: mousePosition.x - 120,
               top: mousePosition.y - 130,
             }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
+            initial={{opacity: 0, scale: 0.8}}
+            animate={{opacity: 1, scale: 1}}
+            exit={{opacity: 0, scale: 0.8}}
+            transition={{duration: 0.2}}
           >
             <div className="relative w-64 h-64 overflow-hidden">
               <img
@@ -336,5 +318,5 @@ export default function WorldSection() {
       </AnimatePresence>
 
     </section>
-)
+  )
 }
