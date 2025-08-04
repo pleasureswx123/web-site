@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import { ChevronRight, ChevronLeft, ArrowLeft } from 'lucide-react'
 import { useMousePosition } from '@/hooks/useMousePosition'
 import { SplineScene } from '@/components/ui/SplineScene'
@@ -76,6 +76,14 @@ export default function WorldSection() {
     setHoveredItem(null)
   }
 
+  useEffect(() => {
+    if (viewMode === 'detail') {
+      setTimeout(() => {
+        setHoveredItem(null)
+      }, 300)
+    }
+  }, [viewMode])
+
   const handleBack = () => {
     setViewMode('list')
     setSelectedWorld(null)
@@ -95,13 +103,16 @@ export default function WorldSection() {
 
   return (
     <section className="min-h-screen relative overflow-hidden bg-black">
-      <div className="fixed inset-0 left-80 right-0 z-[1]">
-        <SplineScene
-          scene="https://prod.spline.design/3nwdhktYae3S1gh7/scene.splinecode"
-          className="pointer-events-auto w-full h-full"
-          fallbackText="Loading 3D Scene..."
-        />
-      </div>
+      {viewMode === 'list' && (
+        <div className="fixed inset-0 left-80 right-0 z-[1]">
+          <SplineScene
+            scene="https://prod.spline.design/3nwdhktYae3S1gh7/scene.splinecode"
+            className="pointer-events-auto w-full h-full"
+            fallbackText="Loading 3D Scene..."
+          />
+        </div>
+      )}
+
       {/* 网格背景 */}
       {/*<div className="absolute inset-0 z-[2] opacity-50" style={{
         backgroundImage: ` linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px) `,
@@ -120,9 +131,12 @@ export default function WorldSection() {
                 {/* 左侧列表 */}
                 <div className="w-1/3 min-w-32 flex flex-col justify-center px-12 pl-20 space-y-2 relative">
                   {/* 背景装饰 - EVERCALL 文字 */}
-                  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="absolute inset-0 top-10 pointer-events-none overflow-hidden"  style={{
+                    backgroundImage: ` linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px) `,
+                    backgroundSize: '50px 50px'
+                  }}>
                     <motion.div
-                      className="text-[10rem] font-black font-ak-secondary select-none whitespace-nowrap transform -rotate-90 origin-center bg-gradient-to-b from-white/[0.1] from-0% via-white/[0.05] via-3% to-black"
+                      className="text-[8rem] font-black font-ak-secondary select-none whitespace-nowrap bg-gradient-to-b from-white/[0.1] from-0% via-white/[0.05] via-3% to-black"
                       style={{
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
@@ -134,28 +148,28 @@ export default function WorldSection() {
                   </div>
 
                   {/* 左侧装饰线条 */}
-                  <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
-                  <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>
+                  {/*<div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
+                  <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>*/}
 
                   {/* 左侧装饰线条 */}
                   <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
                   <div className="absolute right-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>
 
                   {/* 顶部装饰 */}
-                  <motion.div
+                  {/*<motion.div
                     className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-ak-secondary/50 to-transparent"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
-                  ></motion.div>
+                  ></motion.div>*/}
 
                   {/* 底部装饰 */}
-                  <motion.div
+                  {/*<motion.div
                     className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-ak-secondary/50 to-transparent"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 1, delay: 1 }}
-                  ></motion.div>
+                  ></motion.div>*/}
 
                   {/* 角落装饰点 */}
                   <motion.div
@@ -233,16 +247,6 @@ export default function WorldSection() {
                   {/* 右侧装饰线条 */}
                   <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-ak-secondary/20 to-transparent"></div>
 
-                  {/* 科技感装饰元素 */}
-                  <motion.div
-                    className="absolute top-16 right-4 w-12 h-12 border border-ak-secondary/20 transform rotate-45"
-                    initial={{ opacity: 0, rotate: 0 }}
-                    animate={{ opacity: 1, rotate: 45 }}
-                    transition={{ duration: 1, delay: 1.5 }}
-                  >
-                    <div className="absolute inset-2 border border-ak-secondary/10"></div>
-                  </motion.div>
-
                   <motion.div
                     className="absolute bottom-16 right-8 w-8 h-8 border border-ak-secondary/30"
                     initial={{ opacity: 0, scale: 0 }}
@@ -254,7 +258,7 @@ export default function WorldSection() {
 
                   {/* 数据流装饰 */}
                   <motion.div
-                    className="absolute top-1/3 right-2 flex flex-col space-y-1"
+                    className="absolute top-1/3 right-2 flex flex-col space-y-1 rotate-180"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 2 }}
@@ -429,7 +433,7 @@ export default function WorldSection() {
 
       {/* 跟随鼠标的图片 */}
       <AnimatePresence>
-        {hoveredItem && (
+        {hoveredItem && viewMode === 'list' && (
           <motion.div
             className="fixed pointer-events-none z-[40]"
             style={{
