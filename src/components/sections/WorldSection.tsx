@@ -95,7 +95,7 @@ export default function WorldSection() {
 
   return (
     <section className="min-h-screen relative overflow-hidden bg-black">
-      <div className="fixed inset-0 left-96 right-0 z-[1]">
+      <div className="fixed inset-0 left-80 right-0 z-[1]">
         <SplineScene
           scene="https://prod.spline.design/3nwdhktYae3S1gh7/scene.splinecode"
           className="pointer-events-auto w-full h-full"
@@ -116,8 +116,65 @@ export default function WorldSection() {
               // 列表视图
               <motion.div key="list" className="relative z-10 flex w-full h-full" initial={{opacity: 0}}
                           animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}}>
+
                 {/* 左侧列表 */}
-                <div className="w-1/3 min-w-32 flex flex-col justify-center px-12 pl-20 space-y-2">
+                <div className="w-1/3 min-w-32 flex flex-col justify-center px-12 pl-20 space-y-2 relative">
+                  {/* 背景装饰 - EVERCALL 文字 */}
+                  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <motion.div
+                      className="text-[10rem] font-black font-ak-secondary select-none whitespace-nowrap transform -rotate-90 origin-center bg-gradient-to-b from-white/[0.1] from-0% via-white/[0.05] via-3% to-black"
+                      style={{
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text'
+                      }}
+                    >
+                      EVERCALL
+                    </motion.div>
+                  </div>
+
+                  {/* 左侧装饰线条 */}
+                  <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
+                  <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>
+
+                  {/* 左侧装饰线条 */}
+                  <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
+                  <div className="absolute right-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>
+
+                  {/* 顶部装饰 */}
+                  <motion.div
+                    className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-ak-secondary/50 to-transparent"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1, delay: 0.8 }}
+                  ></motion.div>
+
+                  {/* 底部装饰 */}
+                  <motion.div
+                    className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-ak-secondary/50 to-transparent"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1, delay: 1 }}
+                  ></motion.div>
+
+                  {/* 角落装饰点 */}
+                  <motion.div
+                    className="absolute top-4 left-8 w-2 h-2 bg-ak-secondary/60 transform rotate-45"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 1.2 }}
+                  ></motion.div>
+                  <motion.div
+                    className="absolute bottom-4 left-8 w-2 h-2 bg-ak-secondary/60 transform rotate-45"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 1.3 }}
+                  ></motion.div>
+
+                  {/* 渐变背景 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-ak-secondary/[0.02] via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ak-secondary/[0.01] to-transparent"></div>
+
                   {worldData.map((item, index) => (
                     <motion.button
                       key={item.id}
@@ -130,6 +187,13 @@ export default function WorldSection() {
                       transition={{duration: 0.6, delay: index * 0.1}}
                       whileHover={{x: 10}}
                     >
+                      {/* 序号装饰 */}
+                      <div className="absolute left-0 top-2 w-8 h-8 flex items-center justify-center">
+                        <span className="text-xs font-mono text-ak-secondary/40 group-hover:text-ak-secondary/80 transition-colors">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+
                       {/* 背景残影文字 */}
                       <div className="absolute inset-0 flex items-center justify-end pr-4 pointer-events-none">
                         <span
@@ -138,7 +202,10 @@ export default function WorldSection() {
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between relative z-10">
+                      {/* 悬停时的装饰线 */}
+                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-ak-secondary transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
+
+                      <div className="flex items-center justify-between relative z-10 ml-8">
                         <div>
                           <h3
                             className="text-2xl font-bold text-white group-hover:text-ak-secondary transition-colors mb-2">
@@ -155,9 +222,82 @@ export default function WorldSection() {
                           <ChevronRight className="w-6 h-6"/>
                         </motion.div>
                       </div>
+
+                      {/* 底部装饰点 */}
+                      <div className="absolute bottom-0 left-8 right-8 flex justify-center">
+                        <div className="w-1 h-1 bg-ak-secondary/20 group-hover:bg-ak-secondary/60 transition-colors duration-300"></div>
+                      </div>
                     </motion.button>
                   ))}
+
+                  {/* 右侧装饰线条 */}
+                  <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-ak-secondary/20 to-transparent"></div>
+
+                  {/* 科技感装饰元素 */}
+                  <motion.div
+                    className="absolute top-16 right-4 w-12 h-12 border border-ak-secondary/20 transform rotate-45"
+                    initial={{ opacity: 0, rotate: 0 }}
+                    animate={{ opacity: 1, rotate: 45 }}
+                    transition={{ duration: 1, delay: 1.5 }}
+                  >
+                    <div className="absolute inset-2 border border-ak-secondary/10"></div>
+                  </motion.div>
+
+                  <motion.div
+                    className="absolute bottom-16 right-8 w-8 h-8 border border-ak-secondary/30"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 1.8 }}
+                  >
+                    <div className="absolute inset-1 bg-ak-secondary/5"></div>
+                  </motion.div>
+
+                  {/* 数据流装饰 */}
+                  <motion.div
+                    className="absolute top-1/3 right-2 flex flex-col space-y-1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 2 }}
+                  >
+                    {[...Array(6)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="w-1 h-1 bg-ak-secondary/30"
+                        initial={{ scaleY: 0 }}
+                        animate={{ scaleY: 1 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: 2 + i * 0.1,
+                          repeat: Infinity,
+                          repeatType: "reverse",
+                          repeatDelay: 2
+                        }}
+                      ></motion.div>
+                    ))}
+                  </motion.div>
+
+                  {/* 左上角标识 */}
+                  <motion.div
+                    className="absolute top-8 left-12 text-xs font-mono text-ak-secondary/60 tracking-wider"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                  >
+                    NAVIGATION
+                  </motion.div>
+
+                  {/* 左下角状态指示 */}
+                  <motion.div
+                    className="absolute bottom-8 left-12 flex items-center space-x-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                  >
+                    <div className="w-2 h-2 bg-ak-secondary rounded-full animate-pulse"></div>
+                    <span className="text-xs font-mono text-ak-secondary/60">ACTIVE</span>
+                  </motion.div>
                 </div>
+
 
                 {/* 右侧装饰 */}
                 <div className="flex-1 flex items-center justify-center relative">
