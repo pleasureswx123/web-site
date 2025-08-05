@@ -11,11 +11,13 @@ import WorldSection from '@/components/sections/WorldSection'
 import MediaSection from '@/components/sections/MediaSection'
 import MoreSection from '@/components/sections/MoreSection'
 import BackgroundMusic from '@/components/ui/BackgroundMusic'
+import { useCurrentDate } from '@/hooks/useCurrentDate'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [currentSection, setCurrentSection] = useState('index')
   const [direction, setDirection] = useState(0) // -1 for left, 1 for right
+  const currentDate = useCurrentDate() // 获取实时日期
 
   // 页面顺序定义
   const sections = ['index', 'events', 'characters', 'preset', 'world', 'more']
@@ -224,7 +226,7 @@ export default function Home() {
               className="absolute bottom-[-10px] left-0 right-0 h-[40px] bg-gradient-to-t from-ak-dark/90 via-ak-dark/70 to-transparent z-[3] pointer-events-none"></div>
           </motion.div>
 
-          {/* 分数线 - 特殊字体 */}
+          {/* 实时日期 - 特殊字体 */}
           <motion.div
             className="relative z-[4] mt-[-20px]"
             key={`fraction-${currentSection}`}
@@ -232,14 +234,8 @@ export default function Home() {
             animate={{opacity: 1, x: 0}}
             transition={{duration: 0.4, delay: 0.1}}
           >
-              <span
-                className="font-ak-title text-lg font-bold text-white/95 tracking-[0.15em] uppercase relative before:absolute before:left-[-10px] before:top-1/2 before:w-[30px] before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-ak-primary before:to-transparent before:-translate-y-1/2">
-                // {currentSection === 'index' && '00'}
-                {currentSection === 'events' && '01'}
-                {currentSection === 'characters' && '02'}
-                {currentSection === 'preset' && '03'}
-                {currentSection === 'world' && '04'}
-                {currentSection === 'more' && '05'} / 05
+              <span className="font-ak-title text-lg font-bold text-white/95 tracking-[0.15em] uppercase relative before:absolute before:left-[-10px] before:top-1/2 before:w-[30px] before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-ak-primary before:to-transparent before:-translate-y-1/2">
+                {currentDate || '2025/08/01'}
               </span>
           </motion.div>
 
@@ -272,7 +268,7 @@ export default function Home() {
               {currentSection === 'characters' && 'CHARACTERS'}
               {currentSection === 'preset' && 'PRESET'}
               {currentSection === 'world' && 'WORLD'}
-              {currentSection === 'more' && 'MORE CONTENT'}
+              {currentSection === 'more' && 'MORE'}
             </div>
           </motion.div>
 
