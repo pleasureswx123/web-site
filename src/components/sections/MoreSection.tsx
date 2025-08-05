@@ -267,7 +267,7 @@ export default function MoreSection() {
               // 列表视图
               <motion.div
                 key="list"
-                className="h-full relative grid grid-cols-3 grid-rows-1"
+                className="h-[calc(100vh-2.5rem)] relative grid grid-cols-3 grid-rows-1  -mt-20"
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
@@ -279,12 +279,12 @@ export default function MoreSection() {
                 {moreContent.map((item, index) => (
                   <motion.button
                     key={item.id}
-                    className="group relative h-[100vh] overflow-hidden cursor-pointer -mt-28"
+                    className="group relative h-full overflow-hidden cursor-pointer"
                     onClick={() => handleItemClick(item)}
                     initial={{opacity: 0, y: 30}}
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 0.6, delay: index * 0.1}}
-                    whileHover={{scale: 1.05}}
+                    whileHover={{scale: 1.00}}
                     whileTap={{scale: 0.95}}
                   >
                     {/* 背景图片 */}
