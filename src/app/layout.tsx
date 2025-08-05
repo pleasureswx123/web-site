@@ -31,8 +31,46 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <head>
-        {/*<link rel="icon" href="/favicon.svg" type="image/svg+xml" />*/}
+        {/* DNS预解析优化 */}
+        <link rel="dns-prefetch" href="https://prod.spline.design" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+        {/* 预连接到关键外部资源 */}
+        <link rel="preconnect" href="https://prod.spline.design" crossOrigin="" />
+
+        {/* 预加载关键字体 */}
+        <link
+          rel="preload"
+          href="/fonts/SourceHanSansSC-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/Novecentosanswide-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/Oswald-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+        />
+
+        {/* Favicon */}
         <link rel="icon" href="/images/favicon.png" type="image/png" />
+
+        {/* 性能提示 */}
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+
+        {/* 资源提示 */}
+        <meta httpEquiv="x-dns-prefetch-control" content="on" />
       </head>
       <body className="bg-ak-dark text-ak-text antialiased font-ak-primary font-medium">
         {/* SVG Definitions */}

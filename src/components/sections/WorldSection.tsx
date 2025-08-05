@@ -102,16 +102,36 @@ export default function WorldSection() {
   }
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-black">
-      {viewMode === 'list' && (
-        <div className="fixed inset-0 left-80 right-0 z-[1]">
-          <SplineScene
-            scene="https://prod.spline.design/3nwdhktYae3S1gh7/scene.splinecode"
-            className="pointer-events-auto w-full h-full"
-            fallbackText="Loading 3D Scene..."
-          />
-        </div>
-      )}
+    <motion.section
+      className="min-h-screen relative overflow-hidden bg-black"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
+      {/* 使用 display 控制显示/隐藏，避免重新创建组件，提升性能 */}
+      <motion.div
+        className="fixed inset-0 left-80 right-0 z-[1]"
+        style={{ display: viewMode === 'list' ? 'block' : 'none' }}
+        initial={{ opacity: 0, scale: 1.1 }}
+        animate={{
+          opacity: viewMode === 'list' ? 1 : 0,
+          scale: viewMode === 'list' ? 1 : 1.1,
+          filter: viewMode === 'list' ? 'blur(0px)' : 'blur(10px)'
+        }}
+        transition={{
+          duration: 0.8,
+          ease: [0.25, 0.1, 0.25, 1],
+          opacity: { duration: 0.6 },
+          scale: { duration: 0.8 },
+          filter: { duration: 0.5 }
+        }}
+      >
+        <SplineScene
+          scene="https://prod.spline.design/3nwdhktYae3S1gh7/scene.splinecode"
+          className="pointer-events-auto w-full h-full"
+          fallbackText="Loading..."
+        />
+      </motion.div>
 
       {/* 网格背景 */}
       {/*<div className="absolute inset-0 z-[2] opacity-50" style={{
@@ -196,10 +216,25 @@ export default function WorldSection() {
                       onClick={() => handleItemClick(item)}
                       onMouseEnter={() => setHoveredItem(item)}
                       onMouseLeave={() => setHoveredItem(null)}
-                      initial={{opacity: 0, x: -50}}
-                      animate={{opacity: 1, x: 0}}
-                      transition={{duration: 0.6, delay: index * 0.1}}
-                      whileHover={{x: 10}}
+                      initial={{opacity: 0, x: -50, rotateY: -15}}
+                      animate={{opacity: 1, x: 0, rotateY: 0}}
+                      transition={{
+                        duration: 0.8,
+                        delay: index * 0.15,
+                        ease: [0.25, 0.1, 0.25, 1],
+                        rotateY: { duration: 0.6, delay: index * 0.15 + 0.2 }
+                      }}
+                      whileHover={{
+                        x: 15,
+                        scale: 1.02,
+                        rotateY: 2,
+                        transition: { duration: 0.3, ease: "easeOut" }
+                      }}
+                      whileTap={{
+                        scale: 0.98,
+                        x: 8,
+                        transition: { duration: 0.1 }
+                      }}
                     >
                       {/* 序号装饰 */}
                       <div className="absolute left-0 top-2 w-8 h-8 flex items-center justify-center">
@@ -321,20 +356,64 @@ export default function WorldSection() {
                 <motion.button
                   className="absolute left-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
                   onClick={handlePrevious}
-                  whileHover={{scale: 1.1}}
-                  whileTap={{scale: 0.9}}
+                  initial={{ opacity: 0, x: -20, rotateY: -90 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.8,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }}
+                  whileHover={{
+                    scale: 1.15,
+                    x: -5,
+                    boxShadow: "0 0 25px rgba(255,255,255,0.4)",
+                    borderColor: "#00FFFF",
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{
+                    scale: 0.9,
+                    x: -2,
+                    transition: { duration: 0.1 }
+                  }}
                 >
-                  <ChevronLeft className="w-6 h-6 text-white"/>
+                  <motion.div
+                    whileHover={{ x: -2 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronLeft className="w-6 h-6 text-white"/>
+                  </motion.div>
                 </motion.button>
 
                 {/* 右侧导航箭头 */}
                 <motion.button
                   className="absolute right-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
                   onClick={handleNext}
-                  whileHover={{scale: 1.1}}
-                  whileTap={{scale: 0.9}}
+                  initial={{ opacity: 0, x: 20, rotateY: 90 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.8,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }}
+                  whileHover={{
+                    scale: 1.15,
+                    x: 5,
+                    boxShadow: "0 0 25px rgba(255,255,255,0.4)",
+                    borderColor: "#00FFFF",
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{
+                    scale: 0.9,
+                    x: 2,
+                    transition: { duration: 0.1 }
+                  }}
                 >
-                  <ChevronRight className="w-6 h-6 text-white"/>
+                  <motion.div
+                    whileHover={{ x: 2 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronRight className="w-6 h-6 text-white"/>
+                  </motion.div>
                 </motion.button>
 
                 {/* 中间内容区域 */}
@@ -414,16 +493,42 @@ export default function WorldSection() {
 
                 {/* 返回按钮 */}
                 <motion.button
-                  className="absolute bottom-8 right-8 flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-400 px-6 py-3 transition-all duration-300"
+                  className="absolute bottom-8 right-8 flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-400 px-6 py-3 transition-all duration-300 backdrop-blur-sm"
                   onClick={handleBack}
-                  whileHover={{scale: 1.05}}
-                  whileTap={{scale: 0.95}}
-                  initial={{opacity: 0, y: 20}}
-                  animate={{opacity: 1, y: 0}}
-                  transition={{delay: 0.7}}
+                  initial={{opacity: 0, y: 30, scale: 0.8}}
+                  animate={{opacity: 1, y: 0, scale: 1}}
+                  transition={{
+                    delay: 0.9,
+                    duration: 0.5,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }}
+                  whileHover={{
+                    scale: 1.08,
+                    y: -2,
+                    backgroundColor: "rgba(55, 65, 81, 0.9)",
+                    borderColor: "#00FFFF",
+                    boxShadow: "0 8px 25px rgba(0, 255, 255, 0.2)",
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{
+                    scale: 0.95,
+                    y: 0,
+                    transition: { duration: 0.1 }
+                  }}
                 >
-                  <ArrowLeft className="w-4 h-4 text-gray-400"/>
-                  <span className="text-gray-300">返回</span>
+                  <motion.div
+                    whileHover={{ x: -3 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ArrowLeft className="w-4 h-4 text-gray-400"/>
+                  </motion.div>
+                  <motion.span
+                    className="text-gray-300"
+                    whileHover={{ color: "#00FFFF" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    返回
+                  </motion.span>
                 </motion.button>
               </motion.div>
             )}
@@ -440,27 +545,93 @@ export default function WorldSection() {
               left: mousePosition.x - 120,
               top: mousePosition.y - 130,
             }}
-            initial={{opacity: 0, scale: 0.8}}
-            animate={{opacity: 1, scale: 1}}
-            exit={{opacity: 0, scale: 0.8}}
-            transition={{duration: 0.2}}
+            initial={{
+              opacity: 0,
+              scale: 0.6,
+              rotateX: -20,
+              rotateY: 15,
+              filter: "blur(10px)"
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              rotateX: 0,
+              rotateY: 0,
+              filter: "blur(0px)"
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.8,
+              rotateX: 10,
+              rotateY: -10,
+              filter: "blur(5px)"
+            }}
+            transition={{
+              duration: 0.4,
+              ease: [0.25, 0.1, 0.25, 1],
+              scale: { duration: 0.3 },
+              filter: { duration: 0.2 }
+            }}
           >
-            <div className="relative w-64 h-64 overflow-hidden">
-              <img
+            <motion.div
+              className="relative w-64 h-64 overflow-hidden rounded-lg shadow-2xl"
+              animate={{
+                rotateY: [0, 2, -2, 0],
+                rotateX: [0, 1, -1, 0]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              {/* 发光边框效果 */}
+              <motion.div
+                className="absolute inset-0 rounded-lg"
+                style={{
+                  background: "linear-gradient(45deg, transparent, rgba(0,255,255,0.3), transparent)",
+                  filter: "blur(1px)"
+                }}
+                animate={{
+                  rotate: [0, 360]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+
+              <motion.img
                 src={hoveredItem.hoverImage}
                 alt={hoveredItem.titleCn}
-                className="w-full h-full object-cover brightness-50 backdrop-blur-sm opacity-85"
+                className="w-full h-full object-cover brightness-75 backdrop-blur-sm opacity-90 rounded-lg"
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3 }}
                 onError={(e) => {
                   // 如果图片加载失败，显示一个占位符
                   const target = e.target as HTMLImageElement;
                   target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjE2MCIgdmlld0JveD0iMCAwIDI1NiAxNjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyNTYiIGhlaWdodD0iMTYwIiBmaWxsPSIjMTExODI3Ii8+CjxwYXRoIGQ9Ik0xMjggODBMMTQ0IDk2SDE0NFY5NkgxMTJWOTZMMTI4IDgwWiIgZmlsbD0iIzAwRkZGRiIvPgo8dGV4dCB4PSIxMjgiIHk9IjEyMCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwRkZGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K';
                 }}
               />
-            </div>
+
+              {/* 信息标签 */}
+              <motion.div
+                className="absolute bottom-2 left-2 right-2 bg-black/60 backdrop-blur-sm rounded px-2 py-1"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+              >
+                <div className="text-ak-secondary text-xs font-mono">
+                  {hoveredItem.titleCn}
+                </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-    </section>
+    </motion.section>
   )
 }

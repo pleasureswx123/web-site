@@ -38,19 +38,12 @@ export default function ImprovedIndexSection() {
       {/* Additional soft gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900/20 via-transparent to-slate-900/30 z-[2]" />
 
-      {/* Canvas overlay */}
-      <canvas
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 opacity-30"
-        width="960"
-        height="540"
-      />
-
       {/* Floating background elements */}
       <div className="absolute top-[10%] right-[20%] w-48 h-48 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse"></div>
       <div className="absolute bottom-[20%] left-[10%] w-36 h-36 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse delay-1000"></div>
       <div className="absolute top-[60%] right-[40%] w-24 h-24 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse delay-500"></div>
 
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50 pointer-events-none">
+      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-[50] select-none pointer-events-none">
         <div className="relative w-full h-full z-[20]">
           {/* 镂空文字效果演示 - 最佳效果 */}
           <div className='opacity-20'>
@@ -122,7 +115,7 @@ export default function ImprovedIndexSection() {
                 <motion.a
                   className="group flex items-center gap-2 px-3 py-2 bg-black/60 border border-white/15 text-white text-xs backdrop-blur-md transition-all duration-300 hover:bg-blue-500/30 hover:border-blue-500/60 hover:translate-x-1 hover:shadow-lg hover:shadow-blue-500/20"
                   target="_blank"
-                  href="https://itunes.apple.com/cn/app/id1454663939?mt=8"
+                  href="/"
                   whileHover={{scale: 1.02}}
                   whileTap={{scale: 0.98}}
                 >
@@ -137,7 +130,7 @@ export default function ImprovedIndexSection() {
                 <motion.a
                   className="group flex items-center gap-2 px-3 py-2 bg-black/60 border border-white/15 text-white text-xs backdrop-blur-md transition-all duration-300 hover:bg-green-500/30 hover:border-green-500/60 hover:translate-x-1 hover:shadow-lg hover:shadow-green-500/20"
                   target="_blank"
-                  href="https://ak.hypergryph.com/downloads/android_lastest"
+                  href="/"
                   whileHover={{scale: 1.02}}
                   whileTap={{scale: 0.98}}
                 >
@@ -152,7 +145,7 @@ export default function ImprovedIndexSection() {
                 <motion.a
                   className="group flex items-center gap-2 px-3 py-2 bg-black/60 border border-white/15 text-white text-xs backdrop-blur-md transition-all duration-300 hover:bg-cyan-500/30 hover:border-cyan-500/60 hover:translate-x-1 hover:shadow-lg hover:shadow-cyan-500/20"
                   target="_blank"
-                  href="https://www.skland.com/game/Evercall"
+                  href="/"
                   whileHover={{scale: 1.02}}
                   whileTap={{scale: 0.98}}
                 >

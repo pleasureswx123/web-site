@@ -348,17 +348,9 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* Footer - 调整位置 */}
-      {/*<div className="relative z-[90]">*/}
-      {/*  <Footer />*/}
-      {/*</div>*/}
-
       <div className="invisible">
         {/* 背景音乐控制器 */}
         <BackgroundMusic/>
-
-        {/* 音乐交互提示 */}
-        {/*<MusicInteractionPrompt />*/}
       </div>
     </div>
   )
