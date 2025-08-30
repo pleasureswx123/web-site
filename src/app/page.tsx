@@ -339,7 +339,15 @@ export default function Home() {
           transition={{duration: 0.8, delay: 0.6}}
         >
           <p className="text-ak-text-secondary text-sm">
-            Copyright ©2024 - 2025 北京心流元素科技有限公司
+            Copyright ©2025 - 2026 北京心流元素科技有限公司 |
+            <a
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ak-text-secondary hover:text-ak-primary transition-colors duration-200 ml-1"
+            >
+              京ICP备2025138391号
+            </a>
           </p>
         </motion.div>
       </div>
