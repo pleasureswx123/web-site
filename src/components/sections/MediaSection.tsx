@@ -216,7 +216,7 @@ export default function MediaSection() {
       <AnimatePresence mode="wait">
         {!isDetailView ? (
           // 网格视图 - 响应式卡片布局，为移动端导航栏预留更多空间
-            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 overflow-hidden z-50">
+            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 overflow-hidden z-[30]">
               <div className="relative w-full h-full z-10 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30 flex items-center justify-center">
                 <motion.div key="grid" className="relative z-10 p-4 lg:p-8" initial={{opacity: 0}}
                             animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.6}}>{/* 页面标题 */}
@@ -367,7 +367,7 @@ export default function MediaSection() {
             </div>
 
             {/* 可滚动内容区域 - 移动端适配，为导航栏预留更多空间 */}
-            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 z-50">
+            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 z-[30]">
               <div className="relative w-full h-full overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/40">
 
                 {/* 内容容器 */}
@@ -499,7 +499,7 @@ export default function MediaSection() {
             </div>
 
             {/* 固定导航控制 - 移动端适配 */}
-            <div className="fixed bottom-6 lg:bottom-12 left-1/2 transform -translate-x-1/2 z-[60]">
+            <div className="fixed bottom-6 lg:bottom-12 left-1/2 transform -translate-x-1/2 z-[40]">
               <motion.div
                 className="flex items-center space-x-4 lg:space-x-6 bg-black/50 backdrop-blur-md rounded-full px-4 lg:px-6 py-2 lg:py-3 border border-white/30 shadow-2xl"
                 initial={{opacity: 0, y: 30}}
@@ -540,7 +540,7 @@ export default function MediaSection() {
 
             {/* 固定返回按钮 - 移动端适配，避免被导航栏遮挡 */}
             <motion.button
-              className="fixed top-20 right-4 lg:top-24 lg:right-60 flex items-center space-x-2 lg:space-x-3 bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/30 hover:border-white/50 px-4 lg:px-6 py-2 lg:py-3 rounded-full transition-all duration-300 z-[60] shadow-2xl"
+              className="fixed top-20 right-4 lg:top-24 lg:right-60 flex items-center space-x-2 lg:space-x-3 bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/30 hover:border-white/50 px-4 lg:px-6 py-2 lg:py-3 rounded-full transition-all duration-300 z-[40] shadow-2xl"
               onClick={handleBackToGrid}
               initial={{opacity: 0, y: -20}}
               animate={{opacity: 1, y: 0}}
@@ -554,7 +554,7 @@ export default function MediaSection() {
 
             {/* 固定项目计数器 - 移动端适配，避免被导航栏遮挡 */}
             <motion.div
-              className="fixed top-20 left-4 lg:top-24 lg:left-8 text-white/80 font-mono text-xs lg:text-sm z-[60] bg-black/50 backdrop-blur-md px-3 lg:px-4 py-1.5 lg:py-2 rounded-full border border-white/30 shadow-2xl"
+              className="fixed top-20 left-4 lg:top-24 lg:left-8 text-white/80 font-mono text-xs lg:text-sm z-[40] bg-black/50 backdrop-blur-md px-3 lg:px-4 py-1.5 lg:py-2 rounded-full border border-white/30 shadow-2xl"
               initial={{opacity: 0, x: -20}}
               animate={{opacity: 1, x: 0}}
               transition={{delay: 0.5}}

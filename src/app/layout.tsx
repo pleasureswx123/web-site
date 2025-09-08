@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 /* 引入镂空文字效果样式 */
-import '../styles/hollow-text.css';
+import '../styles/hollow-text.css'
+import { LayoutProvider } from '@/components/providers/LayoutProvider'
 
 export const metadata: Metadata = {
   title: 'Evercall',
@@ -178,7 +179,9 @@ export default function RootLayout({
         </svg>
 
         <div id="root" className="min-h-screen">
-          {children}
+          <LayoutProvider>
+            {children}
+          </LayoutProvider>
         </div>
       </body>
     </html>

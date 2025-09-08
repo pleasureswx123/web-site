@@ -60,7 +60,7 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black to-transparent">
+    <nav className="w-full bg-gradient-to-b from-black to-transparent">
         <div className="flex h-20 items-center justify-between px-4 sm:px-6">
           {/* Logo */}
           <motion.a
