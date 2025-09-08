@@ -53,37 +53,43 @@ export default function OperatorSection() {
       <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full z-10">
           <div className="flex flex-col lg:flex-row w-full h-full">
-            {/* 左侧：角色头像列表 */}
-            <motion.div className="flex flex-row lg:flex-col justify-center items-center py-4 lg:py-8 px-4 lg:px-8 lg:pl-10 space-x-4 lg:space-x-0 lg:space-y-4" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>{operatorData.map((operator, index) => (
-              <motion.button
-                key={operator.id}
-                className={`group relative w-16 h-16 rounded-full overflow-hidden border-2 transition-all duration-300 ${selectedOperator.id === operator.id
-                  ? 'border-ak-primary shadow-lg shadow-ak-primary/50 scale-110'
-                  : 'border-ak-border hover:border-ak-text-secondary hover:shadow-md hover:shadow-ak-text-secondary/30'
-                }`}
-                onClick={() => handleOperatorSelect(operator)}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: selectedOperator.id === operator.id ? 1.1 : 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Image
-                  src={operator.avatar || operator.image}
-                  alt={operator.nameCn}
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-contain group-hover:brightness-110 transition-all duration-300"
-                />
-                {selectedOperator.id === operator.id && (
-                  <div className="absolute inset-0 bg-ak-primary/20 rounded-full" />
-                )}
-              </motion.button>
-            ))}
+            {/* 角色头像列表 - 移动端顶部，桌面端左侧 */}
+            <motion.div
+              className="flex flex-row lg:flex-col justify-center items-center py-3 lg:py-8 px-4 lg:px-8 lg:pl-10 space-x-3 lg:space-x-0 lg:space-y-4 order-1 lg:order-none"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              {operatorData.map((operator, index) => (
+                <motion.button
+                  key={operator.id}
+                  className={`group relative w-12 h-12 lg:w-16 lg:h-16 rounded-full overflow-hidden border-2 transition-all duration-300 ${selectedOperator.id === operator.id
+                    ? 'border-ak-primary shadow-lg shadow-ak-primary/50 scale-110'
+                    : 'border-ak-border hover:border-ak-text-secondary hover:shadow-md hover:shadow-ak-text-secondary/30'
+                  }`}
+                  onClick={() => handleOperatorSelect(operator)}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ scale: selectedOperator.id === operator.id ? 1.1 : 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Image
+                    src={operator.avatar || operator.image}
+                    alt={operator.nameCn}
+                    width={64}
+                    height={64}
+                    className="w-full h-full object-contain group-hover:brightness-110 transition-all duration-300"
+                  />
+                  {selectedOperator.id === operator.id && (
+                    <div className="absolute inset-0 bg-ak-primary/20 rounded-full" />
+                  )}
+                </motion.button>
+              ))}
             </motion.div>
 
-            {/* 中间：角色信息 */}
-            <div className="flex-1 flex flex-col justify-center px-4 lg:px-12 max-w-2xl">
+            {/* 角色信息区域 - 移动端调整布局 */}
+            <div className="flex-1 flex flex-col justify-center px-4 lg:px-12 max-w-2xl order-3 lg:order-none">
 
               {/* 角色名称 */}
               <AnimatePresence mode="wait">
@@ -93,11 +99,12 @@ export default function OperatorSection() {
                   animate={{opacity: 1, y: 0}}
                   exit={{opacity: 0, y: -30}}
                   transition={{duration: 0.5}}
+                  className="text-center lg:text-left"
                 >
-                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-2 tracking-wider font-mono">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2 tracking-wider font-mono">
                     {selectedOperator.nameCn}
                   </h2>
-                  <h1 className="text-xl sm:text-2xl text-gray-300 mb-6 lg:mb-8 font-light">
+                  <h1 className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-4 lg:mb-6 xl:mb-8 font-light">
                     {selectedOperator.name}
                   </h1>
                 </motion.div>
@@ -130,35 +137,35 @@ export default function OperatorSection() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={selectedOperator.id}
-                  className="space-y-3 mb-8"
+                  className="space-y-3 mb-6 lg:mb-8"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5, delay: 0.15 }}
                 >
                   {/* 生日信息 */}
-                  <div className="flex items-start space-x-3">
-                    <Calendar className="w-4 h-4 text-ak-secondary mt-0.5" />
-                    <div className="flex flex-col">
-                      <div className="flex items-center space-x-2">
+                  <div className="flex items-start space-x-3 justify-center lg:justify-start">
+                    <Calendar className="w-4 h-4 text-ak-secondary mt-0.5 flex-shrink-0" />
+                    <div className="flex flex-col text-center lg:text-left">
+                      <div className="flex items-center space-x-2 justify-center lg:justify-start">
                         <span className="text-gray-400 text-sm">生日:</span>
                         <span className="text-white font-medium">{selectedOperator.birthday}</span>
                       </div>
-                      <span className="text-gray-500 text-xs mt-1 leading-relaxed">
+                      <span className="text-gray-500 text-xs mt-1 leading-relaxed max-w-xs">
                         {selectedOperator.birthdayNote}
                       </span>
                     </div>
                   </div>
 
                   {/* 星座信息 */}
-                  <div className="flex items-start space-x-3">
-                    <Star className="w-4 h-4 text-ak-secondary mt-0.5" />
-                    <div className="flex flex-col">
-                      <div className="flex items-center space-x-2">
+                  <div className="flex items-start space-x-3 justify-center lg:justify-start">
+                    <Star className="w-4 h-4 text-ak-secondary mt-0.5 flex-shrink-0" />
+                    <div className="flex flex-col text-center lg:text-left">
+                      <div className="flex items-center space-x-2 justify-center lg:justify-start">
                         <span className="text-gray-400 text-sm">星座:</span>
                         <span className="text-white font-medium">{selectedOperator.constellation}</span>
                       </div>
-                      <span className="text-gray-500 text-xs mt-1 leading-relaxed">
+                      <span className="text-gray-500 text-xs mt-1 leading-relaxed max-w-xs">
                         {selectedOperator.constellationNote}
                       </span>
                     </div>
@@ -170,7 +177,7 @@ export default function OperatorSection() {
               <AnimatePresence mode="wait">
                 <motion.p
                   key={selectedOperator.id}
-                  className="text-gray-300 leading-relaxed text-lg max-w-xl mb-8"
+                  className="text-gray-300 leading-relaxed text-sm sm:text-base lg:text-lg max-w-xl mb-6 lg:mb-8 text-center lg:text-left px-2 lg:px-0"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
@@ -207,8 +214,8 @@ export default function OperatorSection() {
               </motion.div>*/}
             </div>
 
-            {/* 右侧：角色立绘 */}
-            <div className="flex-1 flex items-center justify-center relative">
+            {/* 角色立绘 - 移动端顶部，桌面端右侧 */}
+            <div className="flex-1 flex items-center justify-center relative order-2 lg:order-none min-h-[300px] lg:min-h-0">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={selectedOperator.id}
@@ -223,7 +230,7 @@ export default function OperatorSection() {
                     alt={selectedOperator.nameCn}
                     width={600}
                     height={800}
-                    className="object-contain max-h-[100vh]"
+                    className="object-contain max-h-[40vh] lg:max-h-[80vh] w-auto"
                     priority
                   />
 
@@ -232,11 +239,11 @@ export default function OperatorSection() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* 导航箭头 - 只在有多个干员时显示 */}
+              {/* 导航箭头 - 移动端隐藏，桌面端显示 */}
               {operatorData.length > 1 && (
                 <>
                   <motion.button
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
+                    className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => {
@@ -249,7 +256,7 @@ export default function OperatorSection() {
                   </motion.button>
 
                   <motion.button
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
+                    className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-ak-primary rounded-full items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-ak-primary/20"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => {

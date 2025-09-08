@@ -108,16 +108,12 @@ export default function WorldSection() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
-      {/* 使用 display 控制显示/隐藏，避免重新创建组件，提升性能 */}
+      {/* SplineScene - 仅在桌面端且列表模式时显示 */}
       <motion.div
-        className="fixed inset-0 left-80 right-0 z-[1]"
-        style={{ display: viewMode === 'list' ? 'block' : 'none' }}
+        className={`fixed inset-0 left-80 right-0 z-[1] ${viewMode === 'list' ? 'hidden lg:block' : 'hidden'}`}
         initial={{ opacity: 0, scale: 1.1 }}
-        animate={{
-          opacity: viewMode === 'list' ? 1 : 0,
-          scale: viewMode === 'list' ? 1 : 1.1,
-          filter: viewMode === 'list' ? 'blur(0px)' : 'blur(10px)'
-        }}
+        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
         transition={{
           duration: 0.8,
           ease: [0.25, 0.1, 0.25, 1],
@@ -140,7 +136,7 @@ export default function WorldSection() {
       }}></div>*/}
       <div className="absolute inset-0 z-[3] bg-gradient-to-r from-black from-20% via-transparent via-60% to-transparent to-100%"></div>
 
-      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-16 lg:pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full">
           <AnimatePresence mode="wait">
             {viewMode === 'list' ? (
@@ -148,10 +144,10 @@ export default function WorldSection() {
               <motion.div key="list" className="relative z-10 flex w-full h-full" initial={{opacity: 0}}
                           animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.5}}>
 
-                {/* 左侧列表 */}
-                <div className="w-1/3 min-w-32 flex flex-col justify-center px-12 pl-20 space-y-2 relative">
-                  {/* 背景装饰 - EVERCALL 文字 */}
-                  <div className="absolute inset-0 top-10 pointer-events-none overflow-hidden"  style={{
+                {/* 列表容器 - 移动端全宽，桌面端左侧 */}
+                <div className="w-full lg:w-1/3 lg:min-w-32 flex flex-col justify-center px-4 lg:px-12 lg:pl-20 space-y-2 relative">
+                  {/* 背景装饰 - EVERCALL 文字（桌面端显示） */}
+                  <div className="hidden lg:block absolute inset-0 top-10 pointer-events-none overflow-hidden"  style={{
                     backgroundImage: ` linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px) `,
                     backgroundSize: '50px 50px'
                   }}>
@@ -171,9 +167,9 @@ export default function WorldSection() {
                   {/*<div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
                   <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>*/}
 
-                  {/* 左侧装饰线条 */}
-                  <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
-                  <div className="absolute right-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>
+                  {/* 装饰线条（桌面端显示） */}
+                  <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/30 to-transparent"></div>
+                  <div className="hidden lg:block absolute right-4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-ak-secondary/10 to-transparent"></div>
 
                   {/* 顶部装饰 */}
                   {/*<motion.div
@@ -191,15 +187,15 @@ export default function WorldSection() {
                     transition={{ duration: 1, delay: 1 }}
                   ></motion.div>*/}
 
-                  {/* 角落装饰点 */}
+                  {/* 角落装饰点（桌面端显示） */}
                   <motion.div
-                    className="absolute top-4 left-8 w-2 h-2 bg-ak-secondary/60 transform rotate-45"
+                    className="hidden lg:block absolute top-4 left-8 w-2 h-2 bg-ak-secondary/60 transform rotate-45"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 1.2 }}
                   ></motion.div>
                   <motion.div
-                    className="absolute bottom-4 left-8 w-2 h-2 bg-ak-secondary/60 transform rotate-45"
+                    className="hidden lg:block absolute bottom-4 left-8 w-2 h-2 bg-ak-secondary/60 transform rotate-45"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: 1.3 }}
@@ -212,7 +208,7 @@ export default function WorldSection() {
                   {worldData.map((item, index) => (
                     <motion.button
                       key={item.id}
-                      className="group text-left border-b border-gray-700 hover:border-ak-secondary pb-4 transition-all duration-300 hover:bg-ak-secondary/5 px-4 py-2 relative overflow-hidden"
+                      className="group text-left border-b border-gray-700 hover:border-ak-secondary pb-3 lg:pb-4 transition-all duration-300 hover:bg-ak-secondary/5 px-3 lg:px-4 py-2 relative overflow-hidden"
                       onClick={() => handleItemClick(item)}
                       onMouseEnter={() => setHoveredItem(item)}
                       onMouseLeave={() => setHoveredItem(null)}
@@ -222,14 +218,14 @@ export default function WorldSection() {
                       whileHover={{x: 10}}
                     >
                       {/* 序号装饰 */}
-                      <div className="absolute left-0 top-2 w-8 h-8 flex items-center justify-center">
+                      <div className="absolute left-0 top-2 w-6 lg:w-8 h-6 lg:h-8 flex items-center justify-center">
                         <span className="text-xs font-mono text-ak-secondary/40 group-hover:text-ak-secondary/80 transition-colors">
                           {String(index + 1).padStart(2, '0')}
                         </span>
                       </div>
 
-                      {/* 背景残影文字 */}
-                      <div className="absolute inset-0 flex items-center justify-end pr-4 pointer-events-none">
+                      {/* 背景残影文字（桌面端显示） */}
+                      <div className="hidden lg:flex absolute inset-0 items-center justify-end pr-4 pointer-events-none">
                         <span
                           className="text-6xl font-bold text-white/5 group-hover:text-white/10 transition-all duration-300 select-none whitespace-nowrap">
                           {item.title}
@@ -239,10 +235,10 @@ export default function WorldSection() {
                       {/* 悬停时的装饰线 */}
                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-ak-secondary transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
 
-                      <div className="flex items-center justify-between relative z-10 ml-8">
+                      <div className="flex items-center justify-between relative z-10 ml-6 lg:ml-8">
                         <div>
                           <h3
-                            className="text-2xl font-bold text-white group-hover:text-ak-secondary transition-colors mb-2">
+                            className="text-lg sm:text-xl lg:text-2xl font-bold text-white group-hover:text-ak-secondary transition-colors mb-1 lg:mb-2">
                             {item.titleCn}
                           </h3>
                           <p className="text-gray-400 text-xs font-mono tracking-wider">
@@ -253,22 +249,22 @@ export default function WorldSection() {
                           className="text-gray-600 group-hover:text-ak-secondary transition-colors"
                           whileHover={{x: 5}}
                         >
-                          <ChevronRight className="w-6 h-6"/>
+                          <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6"/>
                         </motion.div>
                       </div>
 
                       {/* 底部装饰点 */}
-                      <div className="absolute bottom-0 left-8 right-8 flex justify-center">
+                      <div className="absolute bottom-0 left-6 lg:left-8 right-6 lg:right-8 flex justify-center">
                         <div className="w-1 h-1 bg-ak-secondary/20 group-hover:bg-ak-secondary/60 transition-colors duration-300"></div>
                       </div>
                     </motion.button>
                   ))}
 
-                  {/* 右侧装饰线条 */}
-                  <div className="absolute right-0 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-ak-secondary/20 to-transparent"></div>
+                  {/* 装饰元素（桌面端显示） */}
+                  <div className="hidden lg:block absolute right-0 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-ak-secondary/20 to-transparent"></div>
 
                   <motion.div
-                    className="absolute bottom-16 right-8 w-8 h-8 border border-ak-secondary/30"
+                    className="hidden lg:block absolute bottom-16 right-8 w-8 h-8 border border-ak-secondary/30"
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 1.8 }}
@@ -276,9 +272,9 @@ export default function WorldSection() {
                     <div className="absolute inset-1 bg-ak-secondary/5"></div>
                   </motion.div>
 
-                  {/* 数据流装饰 */}
+                  {/* 数据流装饰（桌面端显示） */}
                   <motion.div
-                    className="absolute top-1/3 right-2 flex flex-col space-y-1 rotate-180"
+                    className="hidden lg:flex absolute top-1/3 right-2 flex-col space-y-1 rotate-180"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 2 }}
@@ -300,9 +296,9 @@ export default function WorldSection() {
                     ))}
                   </motion.div>
 
-                  {/* 左上角标识 */}
+                  {/* 标识文字（桌面端显示） */}
                   <motion.div
-                    className="absolute top-8 left-12 text-xs font-mono text-ak-secondary/60 tracking-wider"
+                    className="hidden lg:block absolute top-8 left-12 text-xs font-mono text-ak-secondary/60 tracking-wider"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.3 }}
@@ -310,9 +306,9 @@ export default function WorldSection() {
                     NAVIGATION
                   </motion.div>
 
-                  {/* 左下角状态指示 */}
+                  {/* 状态指示（桌面端显示） */}
                   <motion.div
-                    className="absolute bottom-8 left-12 flex items-center space-x-2"
+                    className="hidden lg:flex absolute bottom-8 left-12 items-center space-x-2"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
@@ -323,8 +319,8 @@ export default function WorldSection() {
                 </div>
 
 
-                {/* 右侧装饰 */}
-                <div className="flex-1 flex items-center justify-center relative">
+                {/* 右侧装饰（桌面端显示） */}
+                <div className="hidden lg:flex flex-1 items-center justify-center relative">
                 </div>
               </motion.div>
             ) : (
@@ -337,9 +333,9 @@ export default function WorldSection() {
                 exit={{opacity: 0}}
                 transition={{duration: 0.5}}
               >
-                {/* 左侧导航箭头 */}
+                {/* 导航箭头（桌面端显示） */}
                 <motion.button
-                  className="absolute left-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
+                  className="hidden lg:flex absolute left-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
                   onClick={handlePrevious}
                   whileHover={{scale: 1.1}}
                   whileTap={{scale: 0.9}}
@@ -347,9 +343,8 @@ export default function WorldSection() {
                   <ChevronLeft className="w-6 h-6 text-white"/>
                 </motion.button>
 
-                {/* 右侧导航箭头 */}
                 <motion.button
-                  className="absolute right-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 flex items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
+                  className="hidden lg:flex absolute right-16 top-1/2 -translate-y-1/2 w-12 h-12 border border-white hover:bg-white/20 items-center justify-center transition-all duration-300 z-20 hover:shadow-lg hover:shadow-white/30"
                   onClick={handleNext}
                   whileHover={{scale: 1.1}}
                   whileTap={{scale: 0.9}}
@@ -357,8 +352,8 @@ export default function WorldSection() {
                   <ChevronRight className="w-6 h-6 text-white"/>
                 </motion.button>
 
-                {/* 中间内容区域 */}
-                <div className="flex-1 flex items-center justify-center px-24">
+                {/* 内容区域 - 移动端适配 */}
+                <div className="flex-1 flex items-center justify-center px-4 lg:px-24">
                   <AnimatePresence mode="wait">
                     {selectedWorld && (
                       <motion.div
@@ -371,7 +366,7 @@ export default function WorldSection() {
                       >
                         {/* 医疗记录标题 */}
                         <motion.div
-                          className="text-ak-secondary text-sm font-mono tracking-wider mb-4"
+                          className="text-ak-secondary text-xs lg:text-sm font-mono tracking-wider mb-3 lg:mb-4"
                           initial={{opacity: 0}}
                           animate={{opacity: 1}}
                           transition={{delay: 0.2}}
@@ -381,7 +376,7 @@ export default function WorldSection() {
 
                         {/* 主标题 */}
                         <motion.h1
-                          className="text-6xl font-bold text-white mb-4 tracking-wider"
+                          className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 lg:mb-4 tracking-wider"
                           initial={{opacity: 0, y: 20}}
                           animate={{opacity: 1, y: 0}}
                           transition={{delay: 0.3}}
@@ -390,7 +385,7 @@ export default function WorldSection() {
                         </motion.h1>
 
                         <motion.h2
-                          className="text-2xl text-ak-secondary font-mono mb-8"
+                          className="text-lg lg:text-xl xl:text-2xl text-ak-secondary font-mono mb-6 lg:mb-8"
                           initial={{opacity: 0, y: 20}}
                           animate={{opacity: 1, y: 0}}
                           transition={{delay: 0.4}}
@@ -400,7 +395,7 @@ export default function WorldSection() {
 
                         {/* 描述文本 */}
                         <motion.p
-                          className="text-gray-300 text-lg leading-relaxed max-w-3xl mx-auto mb-8"
+                          className="text-gray-300 text-sm lg:text-base xl:text-lg leading-relaxed max-w-3xl mx-auto mb-6 lg:mb-8 px-2 lg:px-0"
                           initial={{opacity: 0, y: 20}}
                           animate={{opacity: 1, y: 0}}
                           transition={{delay: 0.5}}
@@ -410,7 +405,7 @@ export default function WorldSection() {
 
                         {/* 页码指示器 */}
                         <motion.div
-                          className="text-ak-secondary text-sm font-mono"
+                          className="text-ak-secondary text-xs lg:text-sm font-mono"
                           initial={{opacity: 0}}
                           animate={{opacity: 1}}
                           transition={{delay: 0.6}}
@@ -432,9 +427,9 @@ export default function WorldSection() {
                   />
                 </div>
 
-                {/* 返回按钮 */}
+                {/* 返回按钮 - 移动端适配 */}
                 <motion.button
-                  className="absolute bottom-8 right-8 flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-400 px-6 py-3 transition-all duration-300"
+                  className="absolute bottom-6 right-6 lg:bottom-8 lg:right-8 flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-700 border border-gray-600 hover:border-gray-400 px-4 lg:px-6 py-2 lg:py-3 transition-all duration-300"
                   onClick={handleBack}
                   whileHover={{scale: 1.05}}
                   whileTap={{scale: 0.95}}
@@ -443,7 +438,7 @@ export default function WorldSection() {
                   transition={{delay: 0.7}}
                 >
                   <ArrowLeft className="w-4 h-4 text-gray-400"/>
-                  <span className="text-gray-300">返回</span>
+                  <span className="text-gray-300 text-sm lg:text-base">返回</span>
                 </motion.button>
               </motion.div>
             )}
@@ -451,11 +446,11 @@ export default function WorldSection() {
         </div>
       </div>
 
-      {/* 跟随鼠标的图片 */}
+      {/* 跟随鼠标的图片（桌面端显示） */}
       <AnimatePresence>
         {hoveredItem && viewMode === 'list' && (
           <motion.div
-            className="fixed pointer-events-none z-[40]"
+            className="hidden lg:block fixed pointer-events-none z-[40]"
             style={{
               left: mousePosition.x - 120,
               top: mousePosition.y - 130,
