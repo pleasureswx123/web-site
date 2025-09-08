@@ -260,7 +260,7 @@ export default function MoreSection() {
   return (
     <section className="w-full h-full relative overflow-hidden">
 
-      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 overflow-hidden z-[30]">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-[30]">
         <div className="relative w-full h-full z-[20]">
           <AnimatePresence mode="wait">
             {viewMode === 'list' ? (
@@ -460,7 +460,7 @@ export default function MoreSection() {
 
                     {/* 返回按钮 - 移动端适配位置 */}
                     <motion.button
-                      className="fixed z-[40] top-20 right-4 lg:absolute lg:bottom-8 lg:right-8 lg:top-auto flex items-center space-x-2 bg-black/50 hover:bg-black/70 backdrop-blur-md border border-gray-600 hover:border-gray-400 px-4 lg:px-6 py-2 lg:py-3 rounded-full lg:rounded transition-all duration-300 shadow-2xl"
+                      className="fixed z-[40] top-24 right-4 lg:absolute lg:bottom-8 lg:right-8 lg:top-auto flex items-center space-x-2 bg-black/50 hover:bg-black/70 backdrop-blur-md border border-gray-600 hover:border-gray-400 px-4 lg:px-6 py-2 lg:py-3 rounded-full lg:rounded transition-all duration-300 shadow-2xl"
                       onClick={handleBack}
                       initial={{opacity: 0, y: 20}}
                       animate={{opacity: 1, y: 0}}

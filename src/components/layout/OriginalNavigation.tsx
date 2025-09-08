@@ -112,16 +112,16 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
           <div className="lg:hidden">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/50">
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-black/95 border-ak-primary/20">
+              <SheetContent side="right" className="bg-black/95 border-ak-primary/20 top-20">
                 <SheetHeader>
                   <SheetTitle className="text-ak-primary font-ak-title">导航菜单</SheetTitle>
-                  <SheetDescription className="text-ak-text-secondary">
+                  {/*<SheetDescription className="text-ak-text-secondary">
                     选择要访问的页面
-                  </SheetDescription>
+                  </SheetDescription>*/}
                 </SheetHeader>
                 <div className="mt-6 space-y-4">
                   {navigationItems.map((item) => (
