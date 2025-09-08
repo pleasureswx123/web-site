@@ -260,14 +260,14 @@ export default function MoreSection() {
   return (
     <section className="w-full h-full relative overflow-hidden">
 
-      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full z-[20]">
           <AnimatePresence mode="wait">
             {viewMode === 'list' ? (
-              // 列表视图
+              // 列表视图 - 移动端适配：垂直布局，桌面端水平布局
               <motion.div
                 key="list"
-                className="h-[calc(100vh-2.5rem)] relative grid grid-cols-3 grid-rows-1  -mt-20"
+                className="h-full relative grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-0 lg:grid-rows-1 p-4 lg:p-0 lg:-mt-20 overflow-y-auto lg:overflow-hidden"
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
@@ -279,7 +279,7 @@ export default function MoreSection() {
                 {moreContent.map((item, index) => (
                   <motion.button
                     key={item.id}
-                    className="group relative h-full overflow-hidden cursor-pointer"
+                    className="group relative h-64 lg:h-full overflow-hidden cursor-pointer rounded-lg lg:rounded-none"
                     onClick={() => handleItemClick(item)}
                     initial={{opacity: 0, y: 30}}
                     animate={{opacity: 1, y: 0}}
@@ -300,20 +300,20 @@ export default function MoreSection() {
                         className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300"/>
                     </div>
 
-                    {/* 内容 */}
-                    <div className="relative z-10 h-full flex flex-col justify-end p-6 text-left">
+                    {/* 内容 - 移动端适配 */}
+                    <div className="relative z-10 h-full flex flex-col justify-end p-4 lg:p-6 text-left">
                       <h3
-                        className="text-2xl font-bold text-white/80 mb-2 group-hover:text-ak-secondary transition-colors">
+                        className="text-lg lg:text-2xl font-bold text-white/80 mb-2 group-hover:text-ak-secondary transition-colors">
                         {item.title}
                       </h3>
 
-                      <p className="text-gray-300 text-sm font-mono tracking-wider mb-4">
+                      <p className="text-gray-300 text-xs lg:text-sm font-mono tracking-wider mb-3 lg:mb-4">
                         {item.titleEn}
                       </p>
 
-                      <div className="flex items-center text-ak-secondary text-sm">
+                      <div className="flex items-center text-ak-secondary text-xs lg:text-sm">
                         <span>VIEW MORE</span>
-                        <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"/>
+                        <ChevronRight className="w-3 h-3 lg:w-4 lg:h-4 ml-2 group-hover:translate-x-1 transition-transform"/>
                       </div>
                     </div>
                   </motion.button>
@@ -343,10 +343,10 @@ export default function MoreSection() {
                       <div className="absolute inset-0 bg-black/60"></div>
                     </div>
 
-                    {/* 内容区域 */}
-                    <div className="relative z-10 h-full flex overflow-hidden">
-                      {/* 左侧主要内容 */}
-                      <div className="flex-1 flex items-start px-12 py-16 pb-28 overflow-y-auto max-h-screen">
+                    {/* 内容区域 - 移动端适配：垂直布局 */}
+                    <div className="relative z-10 h-full flex flex-col lg:flex-row overflow-hidden">
+                      {/* 主要内容 - 移动端全宽，桌面端左侧 */}
+                      <div className="flex-1 flex items-start px-4 lg:px-12 py-6 lg:py-16 pb-20 lg:pb-28 overflow-y-auto max-h-screen">
                         <AnimatePresence mode="wait">
                           <motion.div
                             key={`${selectedContent.id}-${activeTab}`}
@@ -356,34 +356,34 @@ export default function MoreSection() {
                             exit={{opacity: 0, x: 50}}
                             transition={{duration: 0.6}}
                           >
-                            {/* 主标题 */}
+                            {/* 主标题 - 移动端适配 */}
                             <motion.div
-                              className="mb-8"
+                              className="mb-6 lg:mb-8"
                               initial={{opacity: 0, y: 20}}
                               animate={{opacity: 1, y: 0}}
                               transition={{delay: 0.2}}
                             >
-                              <h1 className="text-5xl font-bold text-white/80 mb-4 leading-tight">
+                              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white/80 mb-3 lg:mb-4 leading-tight">
                                 {selectedContent.titleEn}
                               </h1>
-                              <h2 className="text-2xl text-ak-secondary mb-6">
+                              <h2 className="text-lg sm:text-xl lg:text-2xl text-ak-secondary mb-4 lg:mb-6">
                                 {selectedContent.title}
                               </h2>
-                              <div className="w-20 h-1 bg-ak-secondary shadow-lg shadow-ak-secondary/50"/>
+                              <div className="w-16 lg:w-20 h-1 bg-ak-secondary shadow-lg shadow-ak-secondary/50"/>
                             </motion.div>
 
-                            {/* Tab内容 */}
+                            {/* Tab内容 - 移动端适配 */}
                             <motion.div
-                              className="space-y-6 mb-8"
+                              className="space-y-4 lg:space-y-6 mb-6 lg:mb-8"
                               initial={{opacity: 0, y: 20}}
                               animate={{opacity: 1, y: 0}}
                               transition={{delay: 0.4}}
                             >
-                              <h3 className="text-2xl font-bold text-white/80 mb-4">
+                              <h3 className="text-xl lg:text-2xl font-bold text-white/80 mb-3 lg:mb-4">
                                 {selectedContent.tabs[activeTab]?.title}
                               </h3>
-                              <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-6">
-                                <div className="text-gray-300 text-lg leading-relaxed whitespace-pre-line">
+                              <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-4 lg:p-6">
+                                <div className="text-gray-300 text-sm lg:text-lg leading-relaxed whitespace-pre-line">
                                   {selectedContent.tabs[activeTab]?.content}
                                 </div>
                               </div>
@@ -419,22 +419,22 @@ export default function MoreSection() {
                         </AnimatePresence>
                       </div>
 
-                      {/* 右侧Tab导航 */}
-                      <div className="w-80 flex flex-col justify-start pr-8 py-16 max-h-screen overflow-y-auto">
+                      {/* Tab导航 - 移动端水平滚动，桌面端右侧垂直 */}
+                      <div className="w-full lg:w-80 flex lg:flex-col justify-start px-4 lg:pr-8 py-4 lg:py-16 max-h-screen overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto">
                         <motion.div
-                          className="space-y-4"
+                          className="flex lg:flex-col space-x-3 lg:space-x-0 lg:space-y-4 min-w-max lg:min-w-0"
                           initial={{opacity: 0, x: 50}}
                           animate={{opacity: 1, x: 0}}
                           transition={{duration: 0.6, delay: 0.3}}
                         >
-                          <div className="mb-6">
+                          <div className="hidden lg:block mb-6">
                             <h4 className="text-white/80 text-lg font-bold mb-2">内容导航</h4>
                             <div className="w-12 h-0.5 bg-ak-secondary"></div>
                           </div>
                           {selectedContent.tabs.map((tab, index) => (
                             <motion.button
                               key={tab.id}
-                              className={`w-full text-left p-4 rounded-lg border transition-all duration-300 backdrop-blur-sm ${activeTab === index
+                              className={`w-auto lg:w-full text-left p-3 lg:p-4 rounded-lg border transition-all duration-300 backdrop-blur-sm whitespace-nowrap lg:whitespace-normal ${activeTab === index
                                 ? 'bg-ak-secondary/20 border-ak-secondary text-white/80 shadow-lg shadow-ak-secondary/20'
                                 : 'bg-black/30 border-gray-600 text-gray-400 hover:border-gray-400 hover:text-white/80 hover:bg-black/40'
                               }`}
@@ -446,11 +446,11 @@ export default function MoreSection() {
                               whileTap={{scale: 0.98}}
                             >
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center space-x-2 lg:space-x-3">
                                   <div className={`w-2 h-2 rounded-full ${activeTab === index ? 'bg-ak-secondary' : 'bg-gray-500'}`}></div>
-                                  <span className="font-medium">{tab.title}</span>
+                                  <span className="font-medium text-sm lg:text-base">{tab.title}</span>
                                 </div>
-                                <ChevronRight className={`w-4 h-4 transition-transform ${activeTab === index ? 'text-ak-secondary' : ''}`}/>
+                                <ChevronRight className={`w-3 h-3 lg:w-4 lg:h-4 transition-transform ${activeTab === index ? 'text-ak-secondary' : ''} hidden lg:block`}/>
                               </div>
                             </motion.button>
                           ))}
@@ -458,9 +458,9 @@ export default function MoreSection() {
                       </div>
                     </div>
 
-                    {/* 返回按钮 */}
+                    {/* 返回按钮 - 移动端适配位置 */}
                     <motion.button
-                      className="absolute z-20 bottom-8 right-8 flex items-center space-x-2 bg-black/50 hover:bg-black/70 border border-gray-600 hover:border-gray-400 px-6 py-3 rounded transition-all duration-300"
+                      className="fixed z-20 top-20 right-4 lg:absolute lg:bottom-8 lg:right-8 lg:top-auto flex items-center space-x-2 bg-black/50 hover:bg-black/70 backdrop-blur-md border border-gray-600 hover:border-gray-400 px-4 lg:px-6 py-2 lg:py-3 rounded-full lg:rounded transition-all duration-300 shadow-2xl"
                       onClick={handleBack}
                       initial={{opacity: 0, y: 20}}
                       animate={{opacity: 1, y: 0}}
@@ -469,7 +469,7 @@ export default function MoreSection() {
                       whileTap={{scale: 0.95}}
                     >
                       <ArrowLeft className="w-4 h-4 text-gray-300"/>
-                      <span className="text-gray-300">返回</span>
+                      <span className="text-gray-300 text-sm lg:text-base">返回</span>
                     </motion.button>
                   </>
                 )}
