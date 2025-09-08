@@ -298,17 +298,17 @@ export default function ImprovedInformationSection() {
               // 列表视图
               <motion.div
                 key="list"
-                className="flex h-full"
+                className="flex flex-col lg:flex-row h-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-            {/* 左侧新闻列表区域 - 根据UI图重构 */}
-            <div className="w-1/5 min-w-80 flex flex-col pointer-events-auto p-5">
-              {/* 新闻分类标签页 - 水平布局 */}
+            {/* 左侧新闻列表区域 - 响应式布局 */}
+            <div className="w-full lg:w-1/5 lg:min-w-80 flex flex-col pointer-events-auto p-3 lg:p-5">
+              {/* 新闻分类标签页 - 响应式布局 */}
               <motion.div
-                className="flex gap-1 mb-2 bg-black/20 backdrop-blur-sm border-b border-gray-600/100"
+                className="flex gap-1 mb-2 lg:mb-2 bg-black/20 backdrop-blur-sm border-b border-gray-600/100"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
@@ -316,7 +316,7 @@ export default function ImprovedInformationSection() {
                 {filters.map((filter, index) => (
                   <motion.button
                     key={filter}
-                    className={`flex-1 px-1 py-1 text-sm font-medium transition-all duration-300 ${activeFilter === filter
+                    className={`flex-1 px-2 lg:px-1 py-2 lg:py-1 text-sm lg:text-sm font-medium transition-all duration-300 ${activeFilter === filter
                         ? 'bg-cyan-400 text-black shadow-lg'
                         : 'text-white/80 hover:text-white hover:bg-white/10'
                       }`}
@@ -332,9 +332,9 @@ export default function ImprovedInformationSection() {
                 ))}
               </motion.div>
 
-              {/* 新闻列表 - 根据UI图重新设计 */}
+              {/* 新闻列表 - 响应式设计 */}
               <motion.div
-                className="flex-1 overflow-y-auto"
+                className="flex-1 overflow-y-auto max-h-48 lg:max-h-none"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
@@ -342,7 +342,7 @@ export default function ImprovedInformationSection() {
                 {filteredNews.map((news, index) => (
                   <motion.div
                     key={news.id}
-                    className="group flex items-start gap-4 py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 cursor-pointer"
+                    className="group flex items-start gap-3 lg:gap-4 py-3 lg:py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 cursor-pointer"
                     onClick={() => handleNewsClick(news)}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -350,18 +350,18 @@ export default function ImprovedInformationSection() {
                     whileHover={{ x: 5 }}
                   >
                     {/* 左侧类型标签 */}
-                    <div className={`flex-shrink-0 px-2 py-1 text-sm font-medium rounded font-bold text-cyan-500`}>
+                    <div className={`flex-shrink-0 px-2 py-1 text-xs lg:text-sm font-medium rounded font-bold text-cyan-500`}>
                       {news.type}
                     </div>
 
                     {/* 右侧内容区域 */}
                     <div className="flex-1 min-w-0">
                       {/* 日期 */}
-                      <div className="text-white/60 text-[9px] font-mono">
+                      <div className="text-white/60 text-[8px] lg:text-[9px] font-mono">
                         {news.date}
                       </div>
                       {/* 标题 */}
-                      <div className="text-white text-sm group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
+                      <div className="text-white text-xs lg:text-sm group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
                         {news.title}
                       </div>
                     </div>
@@ -391,10 +391,10 @@ export default function ImprovedInformationSection() {
               </motion.div>
             </div>
 
-            {/* 右侧主轮播横幅区域 - 较宽 */}
-            <div className="flex-1 flex flex-col pointer-events-auto">
+            {/* 右侧主轮播横幅区域 - 响应式布局 */}
+            <div className="flex-1 flex flex-col pointer-events-auto mt-4 lg:mt-0">
               {/* 主轮播横幅 */}
-              <div className="relative overflow-hidden aspect-[16/9]">
+              <div className="relative overflow-hidden aspect-[16/9] lg:aspect-[16/9]">
                 <div className="relative w-full h-full">
                   <div
                     className="flex transition-transform duration-500 ease-out h-full"
@@ -426,8 +426,8 @@ export default function ImprovedInformationSection() {
                                 priority={isActive}
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                              <div className="absolute bottom-8 left-8 text-white">
-                                <h3 className="text-3xl font-bold mb-2 drop-shadow-lg">{banner.title}</h3>
+                              <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 text-white">
+                                <h3 className="text-lg sm:text-xl lg:text-3xl font-bold mb-2 drop-shadow-lg">{banner.title}</h3>
                               </div>
                             </div>
                           </div>
@@ -450,11 +450,11 @@ export default function ImprovedInformationSection() {
               </div>
 
               {/* 轮播指示器 */}
-              <div className="flex justify-center gap-2 mt-4">
+              <div className="flex justify-center gap-2 mt-2 lg:mt-4">
                 {carouselBanners.map((_, index) => (
                   <button
                     key={index}
-                    className={`w-2 h-2 transition-all duration-300 ${index === currentBanner
+                    className={`w-2 h-2 lg:w-2 lg:h-2 transition-all duration-300 ${index === currentBanner
                         ? 'bg-ak-primary shadow-lg shadow-ak-primary/50'
                         : 'bg-white/30 hover:bg-white/50'
                       }`}
@@ -488,25 +488,24 @@ export default function ImprovedInformationSection() {
                       <div className="absolute inset-0 bg-black/50 backdrop-blur-md"></div>
                     </div>
 
-                    {/* 返回按钮 */}
+                    {/* 返回按钮 - 响应式位置 */}
                     <motion.button
                       onClick={handleBackToList}
-                      className="fixed bottom-12 right-60 z-50 flex items-center gap-3 px-6 py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
+                      className="fixed bottom-6 right-6 lg:bottom-12 lg:right-60 z-50 flex items-center gap-2 lg:gap-3 px-4 lg:px-6 py-2 lg:py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <ArrowLeft className="w-5 h-5" />
-                      <span className="font-medium">返回</span>
+                      <ArrowLeft className="w-4 h-4 lg:w-5 lg:h-5" />
+                      <span className="font-medium text-sm lg:text-base">返回</span>
                     </motion.button>
 
-                    {/* 内容区域 - 左右分栏布局 */}
+                    {/* 内容区域 - 响应式布局 */}
                     <div className="relative z-10 h-full overflow-y-auto">
-                      {/*<div className="max-w-7xl mx-auto flex px-8 py-16 gap-8 min-h-screen pb-20">*/}
-                      <div className="w-full flex px-20 py-16 gap-8 min-h-screen pb-20">
-                        {/* 左侧主要内容 */}
+                      <div className="w-full flex flex-col lg:flex-row px-4 lg:px-20 py-8 lg:py-16 gap-4 lg:gap-8 min-h-screen pb-20">
+                        {/* 主要内容 */}
                         <div className="flex-1">
                           <motion.div
                             className="w-full"
@@ -516,31 +515,31 @@ export default function ImprovedInformationSection() {
                           >
                           {/* 新闻头部信息 */}
                           <motion.div
-                            className="mb-10"
+                            className="mb-6 lg:mb-10"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
                           >
                             {/* 分类标签 */}
-                            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${newsDetailContent[selectedNews].accentColor} bg-white/10 backdrop-blur-sm border border-white/20 mb-6`}>
-                              <span className="w-2 h-2 bg-current rounded-full"></span>
+                            <div className={`inline-flex items-center gap-2 px-3 lg:px-4 py-1 lg:py-2 rounded-full text-xs lg:text-sm font-bold ${newsDetailContent[selectedNews].accentColor} bg-white/10 backdrop-blur-sm border border-white/20 mb-4 lg:mb-6`}>
+                              <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-current rounded-full"></span>
                               {newsDetailContent[selectedNews].category}
                             </div>
 
                             {/* 标题 */}
-                            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 lg:mb-4 leading-tight">
                               {newsDetailContent[selectedNews].title}
                             </h1>
 
                             {/* 副标题 */}
-                            <h2 className={`text-xl ${newsDetailContent[selectedNews].accentColor} mb-6 font-medium`}>
+                            <h2 className={`text-lg lg:text-xl ${newsDetailContent[selectedNews].accentColor} mb-4 lg:mb-6 font-medium`}>
                               {newsDetailContent[selectedNews].subtitle}
                             </h2>
 
                             {/* 新闻元信息与标签 */}
-                            <div className="flex items-center justify-between border-b border-white/20 pb-6">
-                              {/* 左侧：新闻元信息 */}
-                              <div className="flex items-center gap-6 text-white/70 text-sm">
+                            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between border-b border-white/20 pb-4 lg:pb-6 gap-3 lg:gap-0">
+                              {/* 新闻元信息 */}
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-3 lg:gap-6 text-white/70 text-xs lg:text-sm">
                                 <span className="flex items-center gap-2">
                                   📅 {newsDetailContent[selectedNews].date}
                                 </span>
@@ -549,12 +548,12 @@ export default function ImprovedInformationSection() {
                                 </span>
                               </div>
 
-                              {/* 右侧：标签 */}
+                              {/* 标签 */}
                               <div className="flex flex-wrap gap-2">
                                 {newsDetailContent[selectedNews].tags.map((tag, index) => (
                                   <span
                                     key={index}
-                                    className={`px-3 py-1 rounded-full text-sm ${newsDetailContent[selectedNews].accentColor} bg-white/10 border border-white/20`}
+                                    className={`px-2 lg:px-3 py-1 rounded-full text-xs lg:text-sm ${newsDetailContent[selectedNews].accentColor} bg-white/10 border border-white/20`}
                                   >
                                     #{tag}
                                   </span>
@@ -566,16 +565,16 @@ export default function ImprovedInformationSection() {
 
                           {/* 新闻摘要 */}
                           <motion.div
-                            className="mb-8"
+                            className="mb-6 lg:mb-8"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
                           >
-                            <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-6">
-                              <h3 className={`text-lg font-bold mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
+                            <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-4 lg:p-6">
+                              <h3 className={`text-base lg:text-lg font-bold mb-3 lg:mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
                                 新闻摘要
                               </h3>
-                              <div className="text-gray-300 text-base leading-relaxed">
+                              <div className="text-gray-300 text-sm lg:text-base leading-relaxed">
                                 {newsDetailContent[selectedNews].description}
                               </div>
                             </div>
@@ -583,28 +582,26 @@ export default function ImprovedInformationSection() {
 
                           {/* 正文内容 */}
                           <motion.div
-                            className="mb-8"
+                            className="mb-6 lg:mb-8"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
                           >
-                            <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-6">
-                              <h3 className={`text-lg font-bold mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
+                            <div className="bg-black/30 backdrop-blur-sm border border-gray-600/50 rounded-lg p-4 lg:p-6">
+                              <h3 className={`text-base lg:text-lg font-bold mb-3 lg:mb-4 ${newsDetailContent[selectedNews].accentColor}`}>
                                 详细报道
                               </h3>
-                              <div className="text-gray-300 text-base leading-relaxed whitespace-pre-line">
+                              <div className="text-gray-300 text-sm lg:text-base leading-relaxed whitespace-pre-line">
                                 {newsDetailContent[selectedNews].fullDescription}
                               </div>
                             </div>
                           </motion.div>
 
-
-
                           </motion.div>
                         </div>
 
-                        {/* 右侧导航栏 - 新闻章节 */}
-                        <div className="w-80 flex-shrink-0">
+                        {/* 右侧导航栏 - 新闻章节（移动端隐藏或移到底部） */}
+                        <div className="hidden lg:block w-80 flex-shrink-0">
                           <motion.div
                             className="space-y-4"
                             initial={{ opacity: 0, x: 50 }}
