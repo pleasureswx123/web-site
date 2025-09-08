@@ -287,7 +287,7 @@ export default function ImprovedInformationSection() {
       className="relative w-full h-screen bg-gradient-to-br from-slate-900 via-black/20 to-slate-800">
       {/* 背景装饰 */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
-      <div className="absolute left-5 bottom-[10px] text-[100px] font-bold text-white/20 z-10]">
+      <div className="absolute left-2 bottom-10 text-[100px] font-bold text-white/20 z-10] leading-none">
         EVERCALL NEWS
       </div>
 
@@ -298,171 +298,171 @@ export default function ImprovedInformationSection() {
               // 列表视图
               <motion.div
                 key="list"
-                className="flex flex-col lg:flex-row h-full"
+                className="flex flex-col lg:flex-row"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-            {/* 左侧新闻列表区域 - 响应式布局 */}
-            <div className="w-full lg:w-1/5 lg:min-w-80 flex flex-col pointer-events-auto p-3 lg:p-5">
-              {/* 新闻分类标签页 - 响应式布局 */}
-              <motion.div
-                className="flex gap-1 mb-2 lg:mb-2 bg-black/20 backdrop-blur-sm border-b border-gray-600/100"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                {filters.map((filter, index) => (
-                  <motion.button
-                    key={filter}
-                    className={`flex-1 px-2 lg:px-1 py-2 lg:py-1 text-sm lg:text-sm font-medium transition-all duration-300 ${activeFilter === filter
-                        ? 'bg-cyan-400 text-black shadow-lg'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
-                      }`}
-                    onClick={() => setActiveFilter(filter)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                  >
-                    {filter}
-                  </motion.button>
-                ))}
-              </motion.div>
-
-              {/* 新闻列表 - 响应式设计 */}
-              <motion.div
-                className="flex-1 overflow-y-auto max-h-48 lg:max-h-none"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                {filteredNews.map((news, index) => (
+                {/* 左侧新闻列表区域 - 移动端显示在轮播下方 */}
+                <div className="w-full lg:w-1/5 lg:min-w-80 flex flex-col pointer-events-auto p-3 lg:p-5 order-2 lg:order-1">
+                  {/* 新闻分类标签页 - 响应式布局 */}
                   <motion.div
-                    key={news.id}
-                    className="group flex items-start gap-3 lg:gap-4 py-3 lg:py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 cursor-pointer"
-                    onClick={() => handleNewsClick(news)}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    whileHover={{ x: 5 }}
+                    className="flex gap-1 mb-2 lg:mb-2 bg-black/20 backdrop-blur-sm border-b border-gray-600/100"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
                   >
-                    {/* 左侧类型标签 */}
-                    <div className={`flex-shrink-0 px-2 py-1 text-xs lg:text-sm font-medium rounded font-bold text-cyan-500`}>
-                      {news.type}
-                    </div>
-
-                    {/* 右侧内容区域 */}
-                    <div className="flex-1 min-w-0">
-                      {/* 日期 */}
-                      <div className="text-white/60 text-[8px] lg:text-[9px] font-mono">
-                        {news.date}
-                      </div>
-                      {/* 标题 */}
-                      <div className="text-white text-xs lg:text-sm group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
-                        {news.title}
-                      </div>
-                    </div>
+                    {filters.map((filter, index) => (
+                      <motion.button
+                        key={filter}
+                        className={`flex-1 px-2 lg:px-1 py-2 lg:py-1 text-sm lg:text-sm font-medium transition-all duration-300 ${activeFilter === filter
+                            ? 'bg-cyan-400 text-black shadow-lg'
+                            : 'text-white/80 hover:text-white hover:bg-white/10'
+                          }`}
+                        onClick={() => setActiveFilter(filter)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                      >
+                        {filter}
+                      </motion.button>
+                    ))}
                   </motion.div>
-                ))}
 
-                {/* READ MORE 按钮 */}
-                {/*<motion.div
-                  className="pt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1 }}
-                >
-                  <motion.a
-                    className="group flex items-center gap-2 px-3 py-1 bg-gray-700/50 hover:bg-gray-600/50 transition-all duration-300 text-white/80 hover:text-white text-sm w-[110px]"
-                    target="_blank"
-                    href="/news"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                  {/* 新闻列表 - 响应式设计 */}
+                  <motion.div
+                    className="flex-1 overflow-y-auto max-h-48 lg:max-h-none"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
                   >
-                    <span className="font-medium text-[12px]">READ MORE</span>
-                    <div className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300">
-                      <ChevronRight className="w-full h-full" />
-                    </div>
-                  </motion.a>
-                </motion.div>*/}
-              </motion.div>
-            </div>
+                    {filteredNews.map((news, index) => (
+                      <motion.div
+                        key={news.id}
+                        className="group flex items-start gap-3 lg:gap-4 py-3 lg:py-4 px-2 border-b border-gray-600/30 hover:bg-black/50 transition-all duration-300 cursor-pointer"
+                        onClick={() => handleNewsClick(news)}
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        whileHover={{ x: 5 }}
+                      >
+                        {/* 左侧类型标签 */}
+                        <div className={`flex-shrink-0 px-2 py-1 text-xs lg:text-sm font-medium rounded font-bold text-cyan-500`}>
+                          {news.type}
+                        </div>
 
-            {/* 右侧主轮播横幅区域 - 响应式布局 */}
-            <div className="flex-1 flex flex-col pointer-events-auto mt-4 lg:mt-0">
-              {/* 主轮播横幅 */}
-              <div className="relative overflow-hidden aspect-[16/9] lg:aspect-[16/9]">
-                <div className="relative w-full h-full">
-                  <div
-                    className="flex transition-transform duration-500 ease-out h-full"
-                    style={getTransformStyle()}
-                  >
-                    {carouselBanners.map((banner, index) => {
-                      const isActive = index === currentBanner
-
-                      return (
-                        <motion.div
-                          key={banner.id}
-                          className="flex-shrink-0 cursor-pointer h-full"
-                          style={{ width: '100%' }}
-                          onClick={() => handleBannerClick(index)}
-                          whileHover={{ scale: isActive ? 1.02 : 1 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <div
-                            className="block w-full h-full group cursor-pointer"
-                            onClick={() => handleBannerNewsClick(banner)}
-                          >
-                            <div className="relative w-full h-full overflow-hidden shadow-2xl">
-                              <Image
-                                src={banner.image}
-                                alt={banner.title}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
-                                priority={isActive}
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                              <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 text-white">
-                                <h3 className="text-lg sm:text-xl lg:text-3xl font-bold mb-2 drop-shadow-lg">{banner.title}</h3>
-                              </div>
-                            </div>
+                        {/* 右侧内容区域 */}
+                        <div className="flex-1 min-w-0">
+                          {/* 日期 */}
+                          <div className="text-white/60 text-[8px] lg:text-[9px] font-mono">
+                            {news.date}
                           </div>
-                        </motion.div>
-                      )
-                    })}
+                          {/* 标题 */}
+                          <div className="text-white text-xs lg:text-sm group-hover:text-cyan-400 transition-colors duration-300 line-clamp-2">
+                            {news.title}
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+
+                    {/* READ MORE 按钮 */}
+                    {/*<motion.div
+                      className="pt-4"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 1 }}
+                    >
+                      <motion.a
+                        className="group flex items-center gap-2 px-3 py-1 bg-gray-700/50 hover:bg-gray-600/50 transition-all duration-300 text-white/80 hover:text-white text-sm w-[110px]"
+                        target="_blank"
+                        href="/news"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <span className="font-medium text-[12px]">READ MORE</span>
+                        <div className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300">
+                          <ChevronRight className="w-full h-full" />
+                        </div>
+                      </motion.a>
+                    </motion.div>*/}
+                  </motion.div>
+                </div>
+
+                {/* 右侧主轮播横幅区域 - 移动端显示在新闻列表上方 */}
+                <div className="flex-1 flex flex-col pointer-events-auto mb-4 lg:mt-0 order-1 lg:order-2">
+                  {/* 主轮播横幅 */}
+                  <div className="relative overflow-hidden aspect-[16/9] lg:aspect-[16/9]">
+                    <div className="relative w-full h-full">
+                      <div
+                        className="flex transition-transform duration-500 ease-out h-full"
+                        style={getTransformStyle()}
+                      >
+                        {carouselBanners.map((banner, index) => {
+                          const isActive = index === currentBanner
+
+                          return (
+                            <motion.div
+                              key={banner.id}
+                              className="flex-shrink-0 cursor-pointer h-full"
+                              style={{ width: '100%' }}
+                              onClick={() => handleBannerClick(index)}
+                              whileHover={{ scale: isActive ? 1.02 : 1 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <div
+                                className="block w-full h-full group cursor-pointer"
+                                onClick={() => handleBannerNewsClick(banner)}
+                              >
+                                <div className="relative w-full h-full overflow-hidden shadow-2xl">
+                                  <Image
+                                    src={banner.image}
+                                    alt={banner.title}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
+                                    priority={isActive}
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                  <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 text-white">
+                                    <h3 className="text-lg sm:text-xl lg:text-3xl font-bold mb-2 drop-shadow-lg">{banner.title}</h3>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 轮播滚动条 */}
+                  <div className="">
+                    <div className="relative w-full h-1 bg-white/20  overflow-hidden">
+                      <motion.div
+                        className="absolute top-0 left-0 h-full bg-ak-primary/50  shadow-lg shadow-ak-primary/50"
+                        style={getScrollbarStyle()}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 轮播指示器 */}
+                  <div className="flex justify-center gap-2 mt-2 lg:mt-4">
+                    {carouselBanners.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`w-2 h-2 lg:w-2 lg:h-2 transition-all duration-300 ${index === currentBanner
+                            ? 'bg-ak-primary shadow-lg shadow-ak-primary/50'
+                            : 'bg-white/30 hover:bg-white/50'
+                          }`}
+                        onClick={() => handleBannerClick(index)}
+                      />
+                    ))}
                   </div>
                 </div>
-              </div>
-
-              {/* 轮播滚动条 */}
-              <div className="">
-                <div className="relative w-full h-1 bg-white/20  overflow-hidden">
-                  <motion.div
-                    className="absolute top-0 left-0 h-full bg-ak-primary/50  shadow-lg shadow-ak-primary/50"
-                    style={getScrollbarStyle()}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </div>
-
-              {/* 轮播指示器 */}
-              <div className="flex justify-center gap-2 mt-2 lg:mt-4">
-                {carouselBanners.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`w-2 h-2 lg:w-2 lg:h-2 transition-all duration-300 ${index === currentBanner
-                        ? 'bg-ak-primary shadow-lg shadow-ak-primary/50'
-                        : 'bg-white/30 hover:bg-white/50'
-                      }`}
-                    onClick={() => handleBannerClick(index)}
-                  />
-                ))}
-              </div>
-            </div>
               </motion.div>
             ) : (
               // 详情视图 - 借鉴 MoreSection 但保持新闻特色
@@ -491,7 +491,7 @@ export default function ImprovedInformationSection() {
                     {/* 返回按钮 - 响应式位置 */}
                     <motion.button
                       onClick={handleBackToList}
-                      className="fixed bottom-6 right-6 lg:bottom-12 lg:right-60 z-50 flex items-center gap-2 lg:gap-3 px-4 lg:px-6 py-2 lg:py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
+                      className="fixed bottom-11 right-6 lg:bottom-12 lg:right-60 z-50 flex items-center gap-2 lg:gap-3 px-4 lg:px-6 py-2 lg:py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, x: -20 }}
