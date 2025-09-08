@@ -61,11 +61,11 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black to-transparent">
-        <div className="flex h-20 items-center justify-between px-6">
+        <div className="flex h-20 items-center justify-between px-4 sm:px-6">
           {/* Logo */}
           <motion.a
             href="/#index"
-            className="flex items-center ml-8"
+            className="flex items-center ml-0 sm:ml-4 lg:ml-8"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
@@ -75,7 +75,7 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
               alt="心流元素"
               width={513}
               height={100}
-              className="h-8 w-auto object-contain"
+              className="h-6 sm:h-8 w-auto object-contain"
               priority
             />
           </motion.a>
@@ -152,7 +152,7 @@ export default function OriginalNavigation({ currentSection }: OriginalNavigatio
 
           {/* Right Icons */}
           <motion.div
-            className="flex items-center space-x-6"
+            className="flex items-center space-x-3 sm:space-x-6"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}

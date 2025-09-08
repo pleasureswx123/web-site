@@ -216,7 +216,7 @@ export default function MediaSection() {
       <AnimatePresence mode="wait">
         {!isDetailView ? (
           // 网格视图 - 现代化卡片布局
-            <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
               <div className="relative w-full h-full z-10 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30 flex items-center justify-center">
                 <motion.div key="grid" className="relative z-10 p-8" initial={{opacity: 0}}
                             animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.6}}>{/* 页面标题 */}

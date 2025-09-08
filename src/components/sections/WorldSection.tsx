@@ -140,7 +140,7 @@ export default function WorldSection() {
       }}></div>*/}
       <div className="absolute inset-0 z-[3] bg-gradient-to-r from-black from-20% via-transparent via-60% to-transparent to-100%"></div>
 
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full">
           <AnimatePresence mode="wait">
             {viewMode === 'list' ? (

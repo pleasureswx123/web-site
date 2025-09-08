@@ -43,7 +43,7 @@ export default function ImprovedIndexSection() {
       <div className="absolute bottom-[20%] left-[10%] w-36 h-36 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse delay-1000"></div>
       <div className="absolute top-[60%] right-[40%] w-24 h-24 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse delay-500"></div>
 
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-[50] select-none pointer-events-none">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-[50] select-none pointer-events-none">
         <div className="relative w-full h-full z-[20]">
           {/* 镂空文字效果演示 - 最佳效果 */}
           <div className='opacity-20'>
@@ -77,14 +77,14 @@ export default function ImprovedIndexSection() {
 
           {/* Main content - Logo and title */}
           <motion.div
-            className="absolute top-1/2 left-[5%] -translate-y-1/2 z-30 text-white max-w-2xl"
+            className="absolute top-1/2 left-[5%] -translate-y-1/2 z-30 text-white max-w-2xl px-4 sm:px-0"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
             <div className="mb-8 space-y-6">
               <motion.h1
-                className="font-ak-title text-5xl lg:text-7xl xl:text-8xl font-bold tracking-wider leading-tight"
+                className="font-ak-title text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-wider leading-tight"
                 style={{textShadow: '2px 2px 8px rgba(0,0,0,0.8)'}}
                 initial={{opacity: 0, y: 30}}
                 animate={{opacity: 1, y: 0}}
@@ -95,14 +95,14 @@ export default function ImprovedIndexSection() {
 
               <div className="space-y-3">
                 <motion.div
-                  className="font-ak-title text-3xl lg:text-4xl xl:text-5xl font-medium tracking-wide text-ak-secondary"
+                  className="font-ak-title text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium tracking-wide text-ak-secondary"
                   initial={{opacity: 0, y: 20}}
                   animate={{opacity: 1, y: 0}}
                   transition={{duration: 0.8, delay: 0.9}}
                 >
                   连接平行世界
                 </motion.div>
-                <motion.div className="font-mono text-sm lg:text-base tracking-wider text-white/70 uppercase"
+                <motion.div className="font-mono text-xs sm:text-sm lg:text-base tracking-wider text-white/70 uppercase"
                             initial={{opacity: 0, y: 20}}
                             animate={{opacity: 1, y: 0}}
                             transition={{duration: 0.8, delay: 1.1}}
@@ -110,8 +110,8 @@ export default function ImprovedIndexSection() {
                   http://www.xinliuyuansu.com/
                 </motion.div>
               </div>
-              {/* Download links - Horizontal */}
-              <div className="flex flex-row gap-3">
+              {/* Download links - Responsive */}
+              <div className="flex flex-col sm:flex-row gap-3">
                 <motion.a
                   className="group flex items-center gap-2 px-3 py-2 bg-black/60 border border-white/15 text-white text-xs backdrop-blur-md transition-all duration-300 hover:bg-blue-500/30 hover:border-blue-500/60 hover:translate-x-1 hover:shadow-lg hover:shadow-blue-500/20"
                   target="_blank"

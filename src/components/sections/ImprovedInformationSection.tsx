@@ -291,7 +291,7 @@ export default function ImprovedInformationSection() {
         EVERCALL NEWS
       </div>
 
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full">
           <AnimatePresence mode="wait">
             {viewMode === 'list' ? (

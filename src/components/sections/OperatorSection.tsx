@@ -50,11 +50,11 @@ export default function OperatorSection() {
         <div className="absolute inset-0 bg-black/75  backdrop-blur-lg" />
       </div>
 
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full z-10">
-          <div className="flex w-full h-full">
+          <div className="flex flex-col lg:flex-row w-full h-full">
             {/* 左侧：角色头像列表 */}
-            <motion.div className="flex flex-col justify-center items-center py-8 px-8  pl-10 space-y-4" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>{operatorData.map((operator, index) => (
+            <motion.div className="flex flex-row lg:flex-col justify-center items-center py-4 lg:py-8 px-4 lg:px-8 lg:pl-10 space-x-4 lg:space-x-0 lg:space-y-4" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>{operatorData.map((operator, index) => (
               <motion.button
                 key={operator.id}
                 className={`group relative w-16 h-16 rounded-full overflow-hidden border-2 transition-all duration-300 ${selectedOperator.id === operator.id
@@ -83,7 +83,7 @@ export default function OperatorSection() {
             </motion.div>
 
             {/* 中间：角色信息 */}
-            <div className="flex-1 flex flex-col justify-center px-12 max-w-2xl">
+            <div className="flex-1 flex flex-col justify-center px-4 lg:px-12 max-w-2xl">
 
               {/* 角色名称 */}
               <AnimatePresence mode="wait">
@@ -94,10 +94,10 @@ export default function OperatorSection() {
                   exit={{opacity: 0, y: -30}}
                   transition={{duration: 0.5}}
                 >
-                  <h2 className="text-6xl font-bold text-white mb-2 tracking-wider font-mono">
+                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-2 tracking-wider font-mono">
                     {selectedOperator.nameCn}
                   </h2>
-                  <h1 className="text-2xl text-gray-300 mb-8 font-light">
+                  <h1 className="text-xl sm:text-2xl text-gray-300 mb-6 lg:mb-8 font-light">
                     {selectedOperator.name}
                   </h1>
                 </motion.div>

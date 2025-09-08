@@ -140,14 +140,14 @@ export default function Home() {
       {/* 背景图片层 */}
       <div className="absolute inset-0 bg-cover bg-center bg-fixed opacity-80" style={{backgroundImage: "url('/images/backgrounds/bg.jpg')"}}/>
       {/* 装饰性网格背景 */}
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden">
         <div className="relative w-full h-full">
           <div className="absolute inset-0 opacity-50">
             <div className="w-full h-full bg-grid-pattern bg-[length:40px_40px]"/>
           </div>
         </div>
       </div>
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50 pointer-events-none">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50 pointer-events-none">
         <div className="relative w-full h-full">
           {/* 顶部装饰线 */}
           <div
@@ -194,7 +194,7 @@ export default function Home() {
       </div>
 
       {/* 全新设计的右侧边栏 - 使用 Tailwind CSS */}
-      <div className="absolute w-52 top-20 right-0 bottom-10 z-20">
+      <div className="hidden lg:block absolute w-52 top-20 right-0 bottom-10 z-20">
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 blur-sm"
              style={{backgroundImage: "url('/images/roles/yoyo.jpg')"}}>
           {/* 添加渐变遮罩以增强视觉效果 */}
@@ -283,8 +283,27 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* 移动端页面指示器 */}
+      <div className="lg:hidden fixed top-1/2 right-4 -translate-y-1/2 z-[60] flex flex-col items-center gap-2">
+        {sections.map((section, index) => {
+          const isActive = sections.indexOf(currentSection) === index
+          return (
+            <motion.button
+              key={section}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                isActive ? 'bg-ak-primary scale-125' : 'bg-white/30 hover:bg-white/50'
+              }`}
+              onClick={() => navigateToSection(section)}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+            />
+          )
+        })}
+      </div>
+
       {/* 全新设计的滚动指示器 */}
-      <div className="fixed bottom-10 right-3 z-[50] flex flex-col items-center gap-4">
+      <div className="hidden lg:flex fixed bottom-4 right-4 lg:bottom-10 lg:right-3 z-[50] flex-col items-center gap-4">
         {/* 主要滚动区域 */}
         <div
           className="flex items-center gap-4 px-6 py-3 bg-slate-900/80 backdrop-blur-md border border-ak-primary/20 rounded-full shadow-lg shadow-ak-primary/10">
@@ -331,20 +350,21 @@ export default function Home() {
         <OriginalNavigation currentSection={currentSection}/>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 z-[90] h-10 w-full  opacity-60">
+      <div className="absolute bottom-0 left-0 right-0 z-[90] h-10 w-full opacity-60">
         <motion.div
-          className="flex items-center justify-center w-full h-full"
+          className="flex items-center justify-center w-full h-full px-4"
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8, delay: 0.6}}
         >
-          <p className="text-ak-text-secondary text-sm">
-            Copyright ©2025 - 2026 北京心流元素科技有限公司 |
+          <p className="text-ak-text-secondary text-xs sm:text-sm text-center">
+            <span className="block sm:inline">Copyright ©2025 - 2026 北京心流元素科技有限公司</span>
+            <span className="hidden sm:inline"> | </span>
             <a
               href="https://beian.miit.gov.cn/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-ak-text-secondary hover:text-ak-primary transition-colors duration-200 ml-1"
+              className="text-ak-text-secondary hover:text-ak-primary transition-colors duration-200 block sm:inline mt-1 sm:mt-0 sm:ml-1"
             >
               京ICP备2025138391号
             </a>

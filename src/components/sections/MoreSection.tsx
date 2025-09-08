@@ -260,7 +260,7 @@ export default function MoreSection() {
   return (
     <section className="w-full h-full relative overflow-hidden">
 
-      <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 overflow-hidden z-50">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
         <div className="relative w-full h-full z-[20]">
           <AnimatePresence mode="wait">
             {viewMode === 'list' ? (
