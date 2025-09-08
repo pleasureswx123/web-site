@@ -51,18 +51,59 @@ export default function Home() {
     }
   }, [currentSection, sections, navigateToSection])
 
-  // 手势处理 - 优化覆盖滑动效果
+  // 手势处理 - 支持水平和垂直滑动
   const handlePanEnd = useCallback((event: any, info: PanInfo) => {
-    const threshold = 80 // 降低滑动阈值，更敏感
-    const velocity = 400 // 降低速度阈值
+    const threshold = 60 // 滑动阈值，适合移动端
+    const velocity = 300 // 速度阈值
 
-    // 检查滑动距离或速度是否足够
+    // 检查水平滑动
     if (Math.abs(info.offset.x) > threshold || Math.abs(info.velocity.x) > velocity) {
       if (info.offset.x > 0) {
-        // 向右滑动，显示上一页（向左切换）
+        // 向右滑动，显示上一页
         prevSection()
       } else {
-        // 向左滑动，显示下一页（向右切换）
+        // 向左滑动，显示下一页
+        nextSection()
+      }
+      return
+    }
+
+    // 检查垂直滑动（移动端主要交互方式）
+    if (Math.abs(info.offset.y) > threshold || Math.abs(info.velocity.y) > velocity) {
+      if (info.offset.y > 0) {
+        // 向下滑动，显示上一页
+        prevSection()
+      } else {
+        // 向上滑动，显示下一页
+        nextSection()
+      }
+    }
+  }, [nextSection, prevSection])
+
+  // 移动端页面指示器专用手势处理 - 更敏感的设置
+  const handleMobileIndicatorPanEnd = useCallback((event: any, info: PanInfo) => {
+    const threshold = 40 // 更低的阈值，更敏感
+    const velocity = 200 // 更低的速度阈值
+
+    // 优先检查垂直滑动（移动端主要交互）
+    if (Math.abs(info.offset.y) > threshold || Math.abs(info.velocity.y) > velocity) {
+      if (info.offset.y > 0) {
+        // 向下滑动，显示上一页
+        prevSection()
+      } else {
+        // 向上滑动，显示下一页
+        nextSection()
+      }
+      return
+    }
+
+    // 备用：水平滑动
+    if (Math.abs(info.offset.x) > threshold || Math.abs(info.velocity.x) > velocity) {
+      if (info.offset.x > 0) {
+        // 向右滑动，显示上一页
+        prevSection()
+      } else {
+        // 向左滑动，显示下一页
         nextSection()
       }
     }
@@ -87,12 +128,12 @@ export default function Home() {
       setCurrentSection(hash)
     }
 
-    // 键盘导航支持
+    // 键盘导航支持 - 支持上下左右箭头键
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
         event.preventDefault()
         prevSection()
-      } else if (event.key === 'ArrowRight') {
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
         event.preventDefault()
         nextSection()
       }
@@ -134,9 +175,12 @@ export default function Home() {
   }
 
   return (
-    // 全新设计的主容器 - 使用 Tailwind CSS
-    <div
-      className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    // 全新设计的主容器 - 使用 Tailwind CSS，支持手势滑动
+    <motion.div
+      className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+      onPanEnd={handlePanEnd}
+      style={{ touchAction: 'none' }}
+    >
       {/* 背景图片层 */}
       <div className="absolute inset-0 bg-cover bg-center bg-fixed opacity-80" style={{backgroundImage: "url('/images/backgrounds/bg.jpg')"}}/>
       {/* 装饰性网格背景 */}
@@ -284,23 +328,37 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 移动端页面指示器 */}
-      <div className="lg:hidden fixed top-1/2 right-4 -translate-y-1/2 z-[60] flex flex-col items-center gap-2">
-        {sections.map((section, index) => {
-          const isActive = sections.indexOf(currentSection) === index
-          return (
-            <motion.button
-              key={section}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                isActive ? 'bg-ak-primary scale-125' : 'bg-white/30 hover:bg-white/50'
-              }`}
-              onClick={() => navigateToSection(section)}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-            />
-          )
-        })}
-      </div>
+      {/* 移动端页面指示器 - 支持滑动手势 */}
+      <motion.div
+        className="lg:hidden fixed top-1/2 right-0 -translate-y-1/2 z-[60] flex flex-col items-center"
+        onPanEnd={handleMobileIndicatorPanEnd}
+        style={{ touchAction: 'none' }}
+      >
+        {/* 扩大触摸区域 */}
+        <div className="flex flex-col items-center gap-2 py-8 px-6">
+          {sections.map((section, index) => {
+            const isActive = sections.indexOf(currentSection) === index
+            return (
+              <motion.button
+                key={section}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  isActive ? 'bg-ak-primary scale-125' : 'bg-white/30 hover:bg-white/50'
+                }`}
+                onClick={() => navigateToSection(section)}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              />
+            )
+          })}
+        </div>
+
+        {/* 滑动提示区域 */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="text-white/20 text-xs font-mono transform -rotate-90 whitespace-nowrap">
+            SWIPE
+          </div>
+        </div>
+      </motion.div>
 
       {/* 全新设计的滚动指示器 */}
       <div className="hidden lg:flex fixed bottom-4 right-4 lg:bottom-10 lg:right-3 z-[50] flex-col items-center gap-4">
@@ -376,6 +434,6 @@ export default function Home() {
         {/* 背景音乐控制器 */}
         <BackgroundMusic/>
       </div>
-    </div>
+    </motion.div>
   )
 }
