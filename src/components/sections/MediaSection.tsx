@@ -215,20 +215,20 @@ export default function MediaSection() {
       {/*</div>*/}
       <AnimatePresence mode="wait">
         {!isDetailView ? (
-          // 网格视图 - 现代化卡片布局
-            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-50">
+          // 网格视图 - 响应式卡片布局，为移动端导航栏预留更多空间
+            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 overflow-hidden z-50">
               <div className="relative w-full h-full z-10 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30 flex items-center justify-center">
-                <motion.div key="grid" className="relative z-10 p-8" initial={{opacity: 0}}
+                <motion.div key="grid" className="relative z-10 p-4 lg:p-8" initial={{opacity: 0}}
                             animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.6}}>{/* 页面标题 */}
                   <motion.div
-                    className="text-center mb-4"
+                    className="text-center mb-6 lg:mb-4"
                     initial={{opacity: 0, y: -30}}
                     animate={{opacity: 1, y: 0}}
                     transition={{duration: 0.8}}
                   >
                     <div className="inline-block">
                       <motion.h1
-                        className="text-6xl font-bold text-white mb-4 tracking-tight"
+                        className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-3 lg:mb-4 tracking-tight"
                         initial={{opacity: 0, y: 20}}
                         animate={{opacity: 1, y: 0}}
                         transition={{delay: 0.3}}
@@ -236,7 +236,7 @@ export default function MediaSection() {
                         WORLD
                       </motion.h1>
                       <motion.div
-                        className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-blue-600 mx-auto mb-2"
+                        className="w-24 lg:w-32 h-1 bg-gradient-to-r from-cyan-400 to-blue-600 mx-auto mb-2"
                         initial={{scaleX: 0}}
                         animate={{scaleX: 1}}
                         transition={{delay: 0.5, duration: 0.8}}
@@ -244,9 +244,9 @@ export default function MediaSection() {
                     </div>
                   </motion.div>
 
-                  {/* 卡片网格 */}
-                  <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {/* 卡片网格 - 移动端适配 */}
+                  <div className="max-w-7xl mx-auto px-2 lg:px-0">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
                       {mediaContent.map((item, index) => (
                         <motion.div
                           key={item.id}
@@ -258,7 +258,7 @@ export default function MediaSection() {
                           onClick={() => handleCardClick(index)}
                         >
                           <div
-                            className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 group-hover:border-cyan-400/50 transition-all duration-500">
+                            className="relative h-80 lg:h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 group-hover:border-cyan-400/50 transition-all duration-500">
                             {/* 背景图片 */}
                             <div className="absolute inset-0">
                               <Image
@@ -275,7 +275,7 @@ export default function MediaSection() {
                             </div>
 
                             {/* 内容 */}
-                            <div className="relative z-10 p-6 h-full flex flex-col justify-between">
+                            <div className="relative z-10 p-4 lg:p-6 h-full flex flex-col justify-between">
                               <div>
                                 <motion.div
                                   className="text-white/80 text-xs font-mono mb-2 tracking-wider"
@@ -286,7 +286,7 @@ export default function MediaSection() {
                                   {item.category} • {item.year}
                                 </motion.div>
                                 <motion.h3
-                                  className="text-white text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors duration-300"
+                                  className="text-white text-lg lg:text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors duration-300"
                                   initial={{opacity: 0, x: -20}}
                                   animate={{opacity: 1, x: 0}}
                                   transition={{delay: 0.9 + index * 0.1}}
@@ -366,12 +366,12 @@ export default function MediaSection() {
               <div className="absolute inset-0 bg-black/75"></div>
             </div>
 
-            {/* 可滚动内容区域 */}
-            <div className="absolute inset-0 pl-0 pr-52 pt-20 pb-10 z-50">
+            {/* 可滚动内容区域 - 移动端适配，为导航栏预留更多空间 */}
+            <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-24 lg:pt-20 pb-10 z-50">
               <div className="relative w-full h-full overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/40">
 
                 {/* 内容容器 */}
-                <div className="min-h-full px-8 lg:px-16 py-8">
+                <div className="min-h-full px-4 lg:px-8 xl:px-16 py-6 lg:py-8">
                   <div className="max-w-4xl mx-auto">
                     <AnimatePresence mode="wait">
                       <motion.div
@@ -382,11 +382,11 @@ export default function MediaSection() {
                         transition={{duration: 0.8}}
                         className="space-y-8"
                       >
-                        {/* 头部信息 */}
-                        <div className="space-y-6">
+                        {/* 头部信息 - 移动端适配 */}
+                        <div className="space-y-4 lg:space-y-6">
                           {/* 分类标签 */}
                           <motion.div
-                            className="text-white/80 text-sm font-mono tracking-wider"
+                            className="text-white/80 text-xs lg:text-sm font-mono tracking-wider"
                             initial={{opacity: 0, x: -30}}
                             animate={{opacity: 1, x: 0}}
                             transition={{delay: 0.2}}
@@ -396,7 +396,7 @@ export default function MediaSection() {
 
                           {/* 主标题 */}
                           <motion.h1
-                            className="text-4xl lg:text-6xl font-bold text-white tracking-tight"
+                            className="text-2xl sm:text-3xl lg:text-4xl xl:text-6xl font-bold text-white tracking-tight"
                             initial={{opacity: 0, y: 30}}
                             animate={{opacity: 1, y: 0}}
                             transition={{delay: 0.3}}
@@ -406,7 +406,7 @@ export default function MediaSection() {
 
                           {/* 副标题 */}
                           <motion.h2
-                            className={`text-2xl lg:text-3xl font-medium ${mediaContent[selectedIndex].accentColor}`}
+                            className={`text-lg sm:text-xl lg:text-2xl xl:text-3xl font-medium ${mediaContent[selectedIndex].accentColor}`}
                             initial={{opacity: 0, y: 30}}
                             animate={{opacity: 1, y: 0}}
                             transition={{delay: 0.4}}
@@ -416,7 +416,7 @@ export default function MediaSection() {
 
                           {/* 装饰线 */}
                           <motion.div
-                            className={`w-32 h-1 bg-gradient-to-r ${mediaContent[selectedIndex].color}`}
+                            className={`w-24 lg:w-32 h-1 bg-gradient-to-r ${mediaContent[selectedIndex].color}`}
                             initial={{scaleX: 0}}
                             animate={{scaleX: 1}}
                             transition={{delay: 0.5, duration: 0.8}}
@@ -424,7 +424,7 @@ export default function MediaSection() {
 
                           {/* 标签 */}
                           <motion.div
-                            className="flex flex-wrap gap-3"
+                            className="flex flex-wrap gap-2 lg:gap-3"
                             initial={{opacity: 0, y: 30}}
                             animate={{opacity: 1, y: 0}}
                             transition={{delay: 0.6}}
@@ -432,7 +432,7 @@ export default function MediaSection() {
                             {mediaContent[selectedIndex].tags.map((tag, index) => (
                               <span
                                 key={index}
-                                className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/80 border border-white/20 text-sm font-medium"
+                                className="px-3 lg:px-4 py-1 lg:py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/80 border border-white/20 text-xs lg:text-sm font-medium"
                               >
                                 {tag}
                               </span>
@@ -498,24 +498,24 @@ export default function MediaSection() {
               </div>
             </div>
 
-            {/* 固定导航控制 */}
-            <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 z-[60]">
+            {/* 固定导航控制 - 移动端适配 */}
+            <div className="fixed bottom-6 lg:bottom-12 left-1/2 transform -translate-x-1/2 z-[60]">
               <motion.div
-                className="flex items-center space-x-6 bg-black/50 backdrop-blur-md rounded-full px-6 py-3 border border-white/30 shadow-2xl"
+                className="flex items-center space-x-4 lg:space-x-6 bg-black/50 backdrop-blur-md rounded-full px-4 lg:px-6 py-2 lg:py-3 border border-white/30 shadow-2xl"
                 initial={{opacity: 0, y: 30}}
                 animate={{opacity: 1, y: 0}}
                 transition={{delay: 0.8}}
               >
                 <motion.button
-                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                  className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
                   onClick={handlePrevious}
                   whileHover={{scale: 1.1}}
                   whileTap={{scale: 0.9}}
                 >
-                  <ChevronLeft className="w-5 h-5 text-white"/>
+                  <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5 text-white"/>
                 </motion.button>
 
-                <div className="flex space-x-2">
+                <div className="flex space-x-1.5 lg:space-x-2">
                   {mediaContent.map((_, index) => (
                     <button
                       key={index}
@@ -528,19 +528,19 @@ export default function MediaSection() {
                 </div>
 
                 <motion.button
-                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                  className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
                   onClick={handleNext}
                   whileHover={{scale: 1.1}}
                   whileTap={{scale: 0.9}}
                 >
-                  <ChevronRight className="w-5 h-5 text-white"/>
+                  <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5 text-white"/>
                 </motion.button>
               </motion.div>
             </div>
 
-            {/* 固定返回按钮 */}
+            {/* 固定返回按钮 - 移动端适配，避免被导航栏遮挡 */}
             <motion.button
-              className="fixed top-24 right-60 flex items-center space-x-3 bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/30 hover:border-white/50 px-6 py-3 rounded-full transition-all duration-300 z-[60] shadow-2xl"
+              className="fixed top-20 right-4 lg:top-24 lg:right-60 flex items-center space-x-2 lg:space-x-3 bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/30 hover:border-white/50 px-4 lg:px-6 py-2 lg:py-3 rounded-full transition-all duration-300 z-[60] shadow-2xl"
               onClick={handleBackToGrid}
               initial={{opacity: 0, y: -20}}
               animate={{opacity: 1, y: 0}}
@@ -549,12 +549,12 @@ export default function MediaSection() {
               whileTap={{scale: 0.95}}
             >
               <ArrowLeft className="w-4 h-4 text-white"/>
-              <span className="text-white font-medium">返回</span>
+              <span className="text-white font-medium text-sm lg:text-base">返回</span>
             </motion.button>
 
-            {/* 固定项目计数器 */}
+            {/* 固定项目计数器 - 移动端适配，避免被导航栏遮挡 */}
             <motion.div
-              className="fixed top-24 left-8 text-white/80 font-mono text-sm z-[60] bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/30 shadow-2xl"
+              className="fixed top-20 left-4 lg:top-24 lg:left-8 text-white/80 font-mono text-xs lg:text-sm z-[60] bg-black/50 backdrop-blur-md px-3 lg:px-4 py-1.5 lg:py-2 rounded-full border border-white/30 shadow-2xl"
               initial={{opacity: 0, x: -20}}
               animate={{opacity: 1, x: 0}}
               transition={{delay: 0.5}}
