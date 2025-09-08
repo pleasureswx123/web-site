@@ -63,10 +63,6 @@ export default function Home() {
         onPanEnd={handlePanEnd}
         style={{ touchAction: 'none' }}
       >
-
-
-
-
         {/* 页面内容区域 - 层级低于所有布局元素 */}
         <div className="absolute inset-0 z-[10]">
           {sections.map((section, index) => {

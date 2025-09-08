@@ -178,7 +178,7 @@ export default function RootLayout({
           </defs>
         </svg>
 
-        <div id="root" className="min-h-screen">
+        <div id="root" className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
           <LayoutProvider>
             {children}
           </LayoutProvider>

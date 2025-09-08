@@ -49,12 +49,12 @@ export default function AppLayout({
   }
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <>
       {/* 背景图片层 */}
-      <div className="absolute inset-0 bg-cover bg-center bg-fixed opacity-80" style={{backgroundImage: "url('/images/backgrounds/bg.jpg')"}}/>
+      <div className="fixed inset-0 z-[1] bg-cover bg-center bg-fixed opacity-80" style={{backgroundImage: "url('/images/backgrounds/bg.jpg')"}}/>
 
       {/* 装饰性网格背景 */}
-      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden">
+      <div className="fixed inset-0 z-[2] pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden">
         <div className="relative w-full h-full">
           <div className="absolute inset-0 opacity-50">
             <div className="w-full h-full bg-grid-pattern bg-[length:40px_40px]"/>
@@ -63,7 +63,7 @@ export default function AppLayout({
       </div>
 
       {/* 右侧边栏 - 层级低于页头页脚 */}
-      <div className="hidden lg:block absolute w-52 top-20 right-0 bottom-10 z-[80]">
+      <div className="hidden lg:block fixed w-52 top-20 right-0 bottom-10 z-[80]">
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 blur-sm"
              style={{backgroundImage: "url('/images/roles/yoyo.jpg')"}}>
           <div
@@ -176,16 +176,10 @@ export default function AppLayout({
             )
           })}
         </div>
-
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="text-white/20 text-xs font-mono transform -rotate-90 whitespace-nowrap">
-            SWIPE
-          </div>
-        </div>
       </motion.div>
 
       {/* 滚动指示器 - 层级低于页头页脚和侧边栏 */}
-      <div className="hidden lg:flex fixed bottom-4 right-4 lg:bottom-10 lg:right-3 z-[70] flex-col items-center gap-4">
+      <div className="hidden lg:flex fixed bottom-4 right-4 lg:bottom-10 lg:right-3 z-[81] flex-col items-center gap-4">
         <div
           className="flex items-center gap-4 px-6 py-3 bg-slate-900/80 backdrop-blur-md border border-ak-primary/20 rounded-full shadow-lg shadow-ak-primary/10">
           <div className="w-8 h-8 text-ak-primary">
@@ -231,16 +225,16 @@ export default function AppLayout({
       </div>
 
       {/* 页脚 - 最高层级 */}
-      <div className="fixed bottom-0 left-0 right-0 z-[100] h-10 w-full opacity-60">
+      <div className="fixed bottom-0 left-0 right-0 z-[100] h-11 w-full opacity-60">
         {/* 页脚上边框装饰线 */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none shadow-sm"></div>
+        <div className="h-px bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none shadow-sm"></div>
         <motion.div
           className="flex items-center justify-center w-full h-full px-4"
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8, delay: 0.6}}
         >
-          <p className="text-ak-text-secondary text-xs sm:text-sm text-center">
+          <p className="text-ak-text-secondary text-xs sm:text-sm leading-none text-center">
             <span className="block sm:inline">Copyright ©2025 - 2026 北京心流元素科技有限公司</span>
             <span className="hidden sm:inline"> | </span>
             <a
@@ -262,6 +256,6 @@ export default function AppLayout({
 
       {/* 主要内容区域 */}
       {children}
-    </div>
+    </>
   )
 }
