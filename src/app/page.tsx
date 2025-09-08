@@ -59,45 +59,43 @@ export default function Home() {
     >
       {/* 页面内容容器 - 支持手势滑动 */}
       <motion.div
-        className="relative w-full h-screen overflow-hidden"
+        className="relative w-full h-screen"
         onPanEnd={handlePanEnd}
         style={{ touchAction: 'none' }}
       >
         {/* 页面内容区域 - 层级低于所有布局元素 */}
-        <div className="absolute inset-0 z-[10]">
-          {sections.map((section, index) => {
-            const currentIndex = sections.indexOf(currentSection)
-            const sectionIndex = index
-            const isActive = sectionIndex === currentIndex
-            return (
-              <motion.div
-                key={section}
-                className={`absolute inset-0 overflow-hidden ${isActive ? 'z-[20]' : 'z-[10]'}`}
-                initial={false}
-                animate={{
-                  x: isActive ? '0%' : sectionIndex < currentIndex ? '-100%' : '100%',
-                  opacity: isActive ? 1 : 0,
-                  scale: isActive ? 1 : 0.95,
-                }}
-                transition={{
-                  duration: 0.8,
-                  ease: [0.25, 0.1, 0.25, 1],
-                  opacity: {duration: 0.4, delay: isActive ? 0.2 : 0}
-                }}
-              >
-                <div className={`
-                    relative w-full h-full
-                    shadow-2xl shadow-ak-primary/5
-                    overflow-y-auto overflow-x-hidden
-                    scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30
-                    ${isActive ? 'animate-fade-in' : ''}
-                  `}>
-                  {renderSection(section)}
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
+        {sections.map((section, index) => {
+          const currentIndex = sections.indexOf(currentSection)
+          const sectionIndex = index
+          const isActive = sectionIndex === currentIndex
+          return (
+            <motion.div
+              key={section}
+              className={`absolute inset-0 ${isActive ? 'z-[20]' : 'z-[10]'}`}
+              initial={false}
+              animate={{
+                x: isActive ? '0%' : sectionIndex < currentIndex ? '-100%' : '100%',
+                opacity: isActive ? 1 : 0,
+                scale: isActive ? 1 : 0.95,
+              }}
+              transition={{
+                duration: 0.8,
+                ease: [0.25, 0.1, 0.25, 1],
+                opacity: {duration: 0.4, delay: isActive ? 0.2 : 0}
+              }}
+            >
+              <div className={`
+                  relative w-full h-full
+                  shadow-2xl shadow-ak-primary/5
+                  overflow-y-auto overflow-x-hidden
+                  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30
+                  ${isActive ? 'animate-fade-in' : ''}
+                `}>
+                {renderSection(section)}
+              </div>
+            </motion.div>
+          )
+        })}
       </motion.div>
     </AppLayout>
   )

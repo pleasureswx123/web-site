@@ -284,7 +284,7 @@ export default function ImprovedInformationSection() {
 
   return (
     <section
-      className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-black/20 to-slate-800">
+      className="relative w-full h-screen bg-gradient-to-br from-slate-900 via-black/20 to-slate-800">
       {/* 背景装饰 */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
       <div className="absolute left-5 bottom-[10px] text-[100px] font-bold text-white/20 z-10]">
