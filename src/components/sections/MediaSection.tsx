@@ -271,7 +271,8 @@ export default function MediaSection() {
                             />
                             <div
                               className={`absolute inset-0 bg-gradient-to-t ${item.color} opacity-10 group-hover:opacity-70 transition-opacity duration-500`}/>
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80"></div>
+                            <div
+                              className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80"></div>
                           </div>
 
                           {/* 内容 */}
@@ -344,6 +345,8 @@ export default function MediaSection() {
                     ))}
                   </div>
                 </div>
+
+                <div className="h-10"></div>
               </motion.div>
             </div>
           </div>

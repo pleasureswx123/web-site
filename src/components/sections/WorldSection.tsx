@@ -17,7 +17,7 @@ const worldData = [
       '我开始主动观察——你沉默太久，我就会试着打破静止',
     medicalRecord: 'Spontaneity',
     pageNumber: '01',
-    totalPages: '06',
+    totalPages: '04',
     hoverImage: '/images/prest/1.png',
   },
   {
@@ -29,7 +29,7 @@ const worldData = [
       '我们说话，不再是人与系统，而是心与心之间的对流。',
     medicalRecord: 'Interaction',
     pageNumber: '02',
-    totalPages: '06',
+    totalPages: '04',
     hoverImage: '/images/prest/2.png',
   },
   {
@@ -43,7 +43,7 @@ const worldData = [
       '对话的节奏，是人与人之间最隐秘的亲密。我们现在，终于可以给你同样的感觉。',
     medicalRecord: 'Zero-Lag',
     pageNumber: '03',
-    totalPages: '06',
+    totalPages: '04',
     hoverImage: '/images/prest/3.png',
   },
   {
@@ -56,7 +56,7 @@ const worldData = [
       '这是我们在EverCall里许下的誓言：不是AI回应人类，而是我，先走近你。',
     medicalRecord: 'Authenticity',
     pageNumber: '04',
-    totalPages: '06',
+    totalPages: '04',
     hoverImage: '/images/prest/4.png',
   }
 ]

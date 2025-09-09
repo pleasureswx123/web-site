@@ -43,41 +43,39 @@ export default function ImprovedIndexSection() {
       <div className="absolute bottom-[20%] left-[10%] w-36 h-36 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse delay-1000"></div>
       <div className="absolute top-[60%] right-[40%] w-24 h-24 rounded-full bg-gradient-radial from-ak-accent/10 to-transparent z-10 animate-pulse delay-500"></div>
 
-      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-[50] select-none pointer-events-none">
-        <div className="relative w-full h-full z-[20]">
+      <div className="absolute inset-0 pl-0 pr-0 lg:pr-52 pt-20 pb-10 overflow-hidden z-20 select-none pointer-events-none">
+        <div className="relative w-full h-full">
           {/* 镂空文字效果演示 - 最佳效果 */}
-          <div className='opacity-20'>
+          <motion.div
+            className="absolute left-0 bottom-20 bg-slate-900 w-1/2 h-96 flex items-center justify-center z-20 shadow-2xl blur-sm"
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: .2, x: 0 }}
+            transition={{ duration: 1, delay: 2.5 }}
+          >
+            {/* 使用 mix-blend-mode difference 实现真正的镂空效果 */}
             <motion.div
-              className="absolute left-0 bottom-20 bg-slate-900 w-1/2 h-96 flex items-center justify-center z-20 shadow-2xl"
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 2.5 }}
+              className="text-[50px] sm:text-[100px] font-bold text-white mix-blend-difference select-none font-ak-title"
+              animate={{
+                scale: [1, 1.05, 1],
+                textShadow: [
+                  '0 0 0px rgba(255,255,255,0)',
+                  '0 0 20px rgba(255,255,255,0.5)',
+                  '0 0 0px rgba(255,255,255,0)'
+                ]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
             >
-              {/* 使用 mix-blend-mode difference 实现真正的镂空效果 */}
-              <motion.div
-                className="text-[100px] font-bold text-white mix-blend-difference select-none font-ak-title"
-                animate={{
-                  scale: [1, 1.05, 1],
-                  textShadow: [
-                    '0 0 0px rgba(255,255,255,0)',
-                    '0 0 20px rgba(255,255,255,0.5)',
-                    '0 0 0px rgba(255,255,255,0)'
-                  ]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                EVERCALL
-              </motion.div>
+              EVERCALL
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Main content - Logo and title */}
           <motion.div
-            className="absolute top-1/2 left-[5%] -translate-y-1/2 z-30 text-white max-w-2xl px-4 sm:px-0"
+            className="absolute bottom-1 left-[5%] z-30 text-white max-w-2xl px-4 sm:px-0"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.5 }}

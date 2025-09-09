@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+
 /* Custom fonts from vercall official website */
 @font-face {
   font-family: 'SourceHanSansSC';
@@ -81,12 +87,16 @@
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* 完全禁用滚动，由手势控制翻页 */
   background-color: #0a0a0a;
   color: #ffffff;
   font-family: var(--font-ak-primary);
   font-weight: 500; /* 使用 Medium 字重 */
+  position: fixed; /* 防止移动端地址栏影响高度 */
+  top: 0;
+  left: 0;
 }
 
 a {
@@ -96,7 +106,8 @@ a {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 2px;
+  height: 2px;
 }
 
 ::-webkit-scrollbar-track {
@@ -178,6 +189,12 @@ a {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  /* 移动端触摸优化 */
+  overscroll-behavior-y: contain;
+  overscroll-behavior-x: none;
+  /* 性能优化 */
+  will-change: scroll-position;
+  transform: translateZ(0); /* 启用硬件加速 */
 }
 
 /* 各个页面的特定样式类名 */
@@ -234,15 +251,72 @@ a {
   will-change: auto;
 }
 
-/* 触摸设备优化 */
+/* 移动端手势优化 */
 @media (hover: none) and (pointer: coarse) {
-  ._d3fe6857 {
-    touch-action: pan-x;
-    -webkit-overflow-scrolling: touch;
+  /* 根容器 - 禁用所有默认触摸行为 */
+  html, body {
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
   }
 
+  /* 手势检测容器 */
+  .gesture-container {
+    touch-action: none;
+    -webkit-overflow-scrolling: auto;
+    overscroll-behavior: none;
+  }
+
+  /* 页面内容容器 - 允许内部滚动 */
   .ak-section-content {
+    touch-action: pan-y; /* 只允许垂直滚动 */
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: none; /* 禁用水平过度滚动 */
+    overscroll-behavior-y: contain; /* 限制垂直过度滚动 */
+  }
+
+  /* 详情页面滚动容器 - 移动端优先滚动 */
+  .detail-scroll-container {
+    touch-action: pan-y !important; /* 强制允许垂直滚动 */
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    /* 确保在移动端有最高的触摸事件优先级 */
+    pointer-events: auto !important;
+  }
+
+  /* 移动端详情页面特殊处理 */
+  @media (hover: none) and (pointer: coarse) {
+    .detail-scroll-container {
+      /* 移动端强制启用滚动 */
+      -webkit-overflow-scrolling: touch !important;
+      overflow-y: auto !important;
+      touch-action: pan-y !important;
+      /* 防止被全局触摸设置覆盖 */
+      position: relative !important;
+      z-index: 999 !important;
+    }
+  }
+
+  /* 边缘手势检测区域 */
+  .edge-gesture-left,
+  .edge-gesture-right {
+    position: fixed;
+    top: 0;
+    width: 50px;
+    height: 100vh;
+    z-index: 9999;
+    touch-action: none;
+    pointer-events: auto;
+  }
+
+  .edge-gesture-left {
+    left: 0;
+  }
+
+  .edge-gesture-right {
+    right: 0;
   }
 }
 
@@ -2518,6 +2592,40 @@ rovedInformationSection 额外优化样式 */
 }
 
 
+
+/* 滚动条样式工具类 */
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thumb-ak-primary\/30::-webkit-scrollbar-thumb {
+    background: rgba(0, 153, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thumb-ak-primary\/30::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 153, 255, 0.5);
+  }
+}
 
 @layer base {
   * {

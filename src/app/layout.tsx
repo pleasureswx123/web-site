@@ -178,7 +178,16 @@ export default function RootLayout({
           </defs>
         </svg>
 
-        <div id="root" className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div
+          id="root"
+          className="fixed inset-0 w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
+          style={{
+            touchAction: 'none',
+            WebkitTouchCallout: 'none',
+            WebkitUserSelect: 'none',
+            WebkitTapHighlightColor: 'transparent'
+          }}
+        >
           <LayoutProvider>
             {children}
           </LayoutProvider>

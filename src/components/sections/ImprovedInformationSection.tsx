@@ -334,7 +334,7 @@ export default function ImprovedInformationSection() {
 
                   {/* 新闻列表 - 响应式设计 */}
                   <motion.div
-                    className="flex-1 overflow-y-auto max-h-48 lg:max-h-none"
+                    className="flex-1 overflow-x-hidden overflow-y-auto max-h-48 lg:max-h-none"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.6 }}
@@ -468,7 +468,7 @@ export default function ImprovedInformationSection() {
               // 详情视图 - 借鉴 MoreSection 但保持新闻特色
               <motion.div
                 key="detail"
-                className="h-full w-full relative z-[20]"
+                className="w-full h-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -477,7 +477,7 @@ export default function ImprovedInformationSection() {
                 {selectedNews && newsDetailContent[selectedNews] && (
                   <>
                     {/* 全屏背景图 */}
-                    <div className="fixed inset-0">
+                    <div className="fixed inset-0 z-2">
                       <Image
                         src={newsDetailContent[selectedNews].image}
                         alt={newsDetailContent[selectedNews].title}
@@ -491,7 +491,7 @@ export default function ImprovedInformationSection() {
                     {/* 返回按钮 - 响应式位置 */}
                     <motion.button
                       onClick={handleBackToList}
-                      className="fixed bottom-11 right-6 lg:bottom-12 lg:right-60 z-50 flex items-center gap-2 lg:gap-3 px-4 lg:px-6 py-2 lg:py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
+                      className="fixed bottom-12 right-6 lg:right-60 z-50 flex items-center gap-2 lg:gap-3 px-4 lg:px-6 py-2 lg:py-3 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-black/70 transition-all duration-300 border border-white/20"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, x: -20 }}
@@ -503,8 +503,10 @@ export default function ImprovedInformationSection() {
                     </motion.button>
 
                     {/* 内容区域 - 响应式布局 */}
-                    <div className="relative z-10 h-full overflow-y-auto">
-                      <div className="w-full flex flex-col lg:flex-row px-4 lg:px-20 py-8 lg:py-16 gap-4 lg:gap-8 min-h-screen pb-20">
+                    <div
+                      className="absolute inset-0 z-10 overflow-hidden overflow-y-auto"
+                    >
+                      <div className="w-full flex flex-col lg:flex-row px-4 lg:px-20 py-8 lg:py-16 gap-4 lg:gap-8 min-h-full pb-32">
                         {/* 主要内容 */}
                         <div className="flex-1">
                           <motion.div

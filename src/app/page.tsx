@@ -14,7 +14,17 @@ import { useLayout } from '@/components/providers/LayoutProvider'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
-  const { currentSection, sections, handlePanEnd, navigateToSection, nextSection, prevSection } = useLayout()
+  const {
+    currentSection,
+    sections,
+    handlePanEnd,
+    handlePanStart,
+    handlePanEndWithLongPress,
+    handleDoubleClick,
+    navigateToSection,
+    nextSection,
+    prevSection
+  } = useLayout()
 
   // 加载完成处理
   useEffect(() => {
@@ -57,11 +67,18 @@ export default function Home() {
       onNavigateToSection={navigateToSection}
       sections={sections}
     >
-      {/* 页面内容容器 - 支持手势滑动 */}
+      {/* 页面内容容器 - 支持多种翻页手势 */}
       <motion.div
-        className="relative w-full h-screen"
-        onPanEnd={handlePanEnd}
-        style={{ touchAction: 'none' }}
+        className="gesture-container relative w-full h-screen overflow-hidden"
+        onPanStart={handlePanStart}
+        onPanEnd={handlePanEndWithLongPress}
+        onDoubleClick={handleDoubleClick}
+        style={{
+          touchAction: 'none',
+          WebkitTouchCallout: 'none',
+          WebkitUserSelect: 'none',
+          overscrollBehavior: 'none'
+        }}
       >
         {/* 页面内容区域 - 层级低于所有布局元素 */}
         {sections.map((section, index) => {
@@ -71,7 +88,7 @@ export default function Home() {
           return (
             <motion.div
               key={section}
-              className={`absolute inset-0 ${isActive ? 'z-[20]' : 'z-[10]'}`}
+              className={`absolute inset-0 w-full h-full overflow-hidden ${isActive ? 'z-[20]' : 'z-[10]'}`}
               initial={false}
               animate={{
                 x: isActive ? '0%' : sectionIndex < currentIndex ? '-100%' : '100%',
@@ -84,18 +101,53 @@ export default function Home() {
                 opacity: {duration: 0.4, delay: isActive ? 0.2 : 0}
               }}
             >
-              <div className={`
-                  relative w-full h-full
+              <div
+                className={`
+                  ak-section-content relative w-full h-full
                   shadow-2xl shadow-ak-primary/5
                   overflow-y-auto overflow-x-hidden
-                  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-ak-primary/30
-                  ${isActive ? 'animate-fade-in' : ''}
+                  md:scrollbar-thin md:scrollbar-track-transparent md:scrollbar-thumb-ak-primary/30
+                  scrollbar-none
+                  transition-all duration-500 ease-in-out
+                  ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
                 `}>
                 {renderSection(section)}
               </div>
             </motion.div>
           )
         })}
+
+        {/* 边缘手势检测区域 - 移动端专用 */}
+        {/*<div
+          className="edge-gesture-left md:hidden"
+          onTouchStart={(e) => handlePanStart(e, { point: { x: 0, y: 0 } })}
+          onTouchEnd={(e) => {
+            const touch = e.changedTouches[0]
+            const deltaX = touch.clientX
+            if (deltaX > 50) {
+              handlePanEndWithLongPress(e, {
+                offset: { x: deltaX, y: 0 },
+                velocity: { x: 0, y: 0 },
+                point: { x: 0, y: 0 }
+              })
+            }
+          }}
+        />
+        <div
+          className="edge-gesture-right md:hidden"
+          onTouchStart={(e) => handlePanStart(e, { point: { x: window.innerWidth, y: 0 } })}
+          onTouchEnd={(e) => {
+            const touch = e.changedTouches[0]
+            const deltaX = window.innerWidth - touch.clientX
+            if (deltaX > 50) {
+              handlePanEndWithLongPress(e, {
+                offset: { x: -deltaX, y: 0 },
+                velocity: { x: 0, y: 0 },
+                point: { x: window.innerWidth, y: 0 }
+              })
+            }
+          }}
+        />*/}
       </motion.div>
     </AppLayout>
   )
