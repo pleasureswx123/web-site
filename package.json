@@ -5,8 +5,14 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
+    "build:optimized": "node scripts/build-with-cache-optimization.js",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "npm run build:optimized && chmod +x scripts/smart-deploy.sh && ./scripts/smart-deploy.sh",
+    "deploy:force": "npm run build && chmod +x deploy.sh && ./deploy.sh",
+    "cache:analyze": "node scripts/build-with-cache-optimization.js",
+    "cache:test": "chmod +x scripts/test-cache-strategy.sh && ./scripts/test-cache-strategy.sh",
+    "cache:validate": "node scripts/cache-validator.js"
   },
   "dependencies": {
     "@pixi/react": "^8.0.3",
