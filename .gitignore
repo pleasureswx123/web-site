@@ -4,3 +4,4 @@ dist
 out
 deploy.sh
 scripts/setup-ssl.sh
+examples
